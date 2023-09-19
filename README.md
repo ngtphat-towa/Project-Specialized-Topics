@@ -22,7 +22,9 @@ This project is a part of my coursework at Cantho University. It demonstrates ho
 ## Contributing
 
 ## License
+
 This project is licensed under the MIT License - see the LICENSE file for details
+
 ---
 
 For more information, please contact: `ngtphat.towa@gmail.com`
