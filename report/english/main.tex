@@ -1,0 +1,71 @@
+\documentclass[a4paper,12pt,oneside]{report} 
+
+% Language setting : English, Vietnamese
+\usepackage[utf8]{inputenc}
+\usepackage[utf8]{vietnam}
+\usepackage[vietnamese=nohyphenation]{hyphsubst}
+\usepackage[vietnamese,english]{babel}
+
+
+% Set page size and margins
+\usepackage[a4paper,top=3cm, bottom=3cm, left=3.5cm, right=2cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+% Write math equation
+\usepackage{amsmath}
+% Insert images
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{setspace}
+\graphicspath{ {../images/} }
+
+
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\usepackage{tikz}
+
+\title{ASP.NET Souvenir Shop Application}
+\author{Nguyen Thanh Phat}
+
+\begin{document}
+
+% Covers
+\input{covers/outside.tex}
+\input{covers/inside.tex}
+
+% Table of Content
+\tableofcontents
+\listoffigures
+\listoftables
+
+
+% English Abtract
+\input{outsides/en-abstract.tex}
+
+% Vietnamese Abstract
+\input{outsides/vi-abstract.tex}
+
+\chapter{Introduction}
+\input{chapters/chapter-1-introduction.tex}
+
+\chapter{Literature reiview}
+\input{chapters/chapter-2-literature-review.tex}
+
+% \chapter{Methods}
+% \input{chapters/chapter-3-methods.tex}
+
+\chapter{System design and implementation}
+\input{chapters/chapter-4-system-design-and-implementation.tex}
+
+\chapter{Testing and evaluation.}
+\input{chapters/chapter-5-testing-and-evaluation..tex}
+
+\chapter{Conclusion}
+\input{chapters/chapter-6-conclusion.tex}
+
+\bibliographystyle{alpha}
+\bibliography{sample}
+
+\end{document}
