@@ -1,6 +1,16 @@
 
 \begin{titlepage}
-
+    \begin{tikzpicture}[remember picture, overlay]
+        %   \draw[line width = 4pt] ($(current page.north west) + (1in,-1in)$) rectangle ($(current page.south east) + (-1in,1in)$);
+        \draw [line width=1pt]
+            ($ (current page.north west) + (3.0cm,-2.0cm) $)
+            rectangle
+            ($ (current page.south east) + (-1.5cm,1.5cm) $);
+        \draw [line width=3pt]
+            ($ (current page.north west) + (3.15cm,-2.15cm) $)
+            rectangle
+            ($ (current page.south east) + (-1.65cm,1.65cm) $); 
+        \end{tikzpicture}
     \begin{center}
 
         % Organization
@@ -19,10 +29,10 @@
         \textbf{(HIGH-QUALITY PROGRAM)\\[2cm]}
 
         % Project title
-        \begin{large}
-            \textbf{Title\\[0.5cm]}
-        \end{large}
-        \textbf{{\Large SOUVENIR APPLICATION WITH ASP.NET\\ MICROSERVICES WEB API AND FLUTTER}}
+        % \begin{large}
+        %     \textbf{Title\\[0.5cm]}
+        % \end{large}
+        \textbf{{\Large SOUVENIR APPLICATION WITH\\ASP.NET MICROSERVICES WEB API\\ AND FLUTTER}}
         \\[3.5cm]
 
         % Advisor and student information
