@@ -1,6 +1,10 @@
-\begin{thebibliography}{Mar12}
+\begin{thebibliography}{1}
 
-\bibitem[Mar12]{unclebob2023}
+\bibitem{resocoder2019course1}
+Reso Coder.
+\newblock Flutter tdd clean architecture - explanation and project structure, 2019.
+
+\bibitem{unclebob2023}
 Robert~C. Martin.
 \newblock The clean architecture, 2012.
 \newblock Accessed: 2023-10-24.
