@@ -13,6 +13,7 @@
 % Useful packages
 % Write math equation
 \usepackage{amsmath}
+\usepackage{float}
 % Insert images
 \usepackage{graphicx}
 \usepackage{fancyhdr}
@@ -20,6 +21,8 @@
 \usepackage{parskip}
 \usepackage{setspace}
 \usepackage{tikz}
+% \usepackage[square]{natbib}
+\usepackage{url}
 \usetikzlibrary{calc}
 \graphicspath{ {../images/} }
 
@@ -66,7 +69,8 @@
 \chapter{Conclusion}
 \input{chapters/chapter-6-conclusion.tex}
 
-\bibliographystyle{alpha}
-\bibliography{sample}
+\bibliography{references}{}
+\bibliographystyle{plain}
+
 
 \end{document}
