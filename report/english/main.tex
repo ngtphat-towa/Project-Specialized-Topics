@@ -21,6 +21,7 @@
 \usepackage{parskip}
 \usepackage{setspace}
 \usepackage{tikz}
+\usepackage{fancyhdr}	
 % \usepackage[square]{natbib}
 \usepackage{url}
 \usetikzlibrary{calc}
@@ -32,6 +33,17 @@
 
 \title{ASP.NET Souvenir Shop Application}
 \author{Nguyen Thanh Phat}
+
+% Header và footer 
+\pagestyle{fancy}
+\fancyhf{}					% Định dạng cho cả header và footer
+\setlength{\headheight}{20.45002pt}
+% Header và footer nếu in 1 mặt
+\rhead{\fontsize{9}{11} \selectfont Intructor:\\DR. Lam Van Khang}						
+\lhead{\fontsize{9}{11} \selectfont Topic:\\ Souvenir Shop App with ASP.NET Microservices \& Flutter}		
+\rfoot{\fontsize{9}{11} \selectfont \thepage}														
+\lfoot{\fontsize{9}{11} \selectfont Nguyen Thanh Phat - B2005853}		
+
 
 \begin{document}
 
@@ -50,7 +62,10 @@
 
 % Vietnamese Abstract
 \input{outsides/vi-abstract.tex}
+\pagenumbering{roman}
 
+\clearpage
+\pagenumbering{arabic}
 \chapter{Introduction}
 \input{chapters/chapter-1-introduction.tex}
 
