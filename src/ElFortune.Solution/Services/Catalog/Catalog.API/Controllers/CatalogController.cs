@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace ElFortune.Services.Catalog.API.Controllers;
+namespace Catalog.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
