@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{25DD87A6-3345-4B9C-A35D-A94B3D28EA94}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{7781A1D9-FBF1-42A9-8038-3407887C203B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.API", "Services\Catalog.API\Catalog.API.csproj", "{697A6766-F827-404A-9F51-A0B7F9C03222}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{F2B02A7C-A2F5-41AB-A3D1-A4EB08F9CEF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.API", "Services\Catalog\Catalog.API\Catalog.API.csproj", "{81706FEB-2268-452B-A506-C05135361472}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,12 +18,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{697A6766-F827-404A-9F51-A0B7F9C03222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{697A6766-F827-404A-9F51-A0B7F9C03222}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{697A6766-F827-404A-9F51-A0B7F9C03222}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{697A6766-F827-404A-9F51-A0B7F9C03222}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81706FEB-2268-452B-A506-C05135361472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81706FEB-2268-452B-A506-C05135361472}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81706FEB-2268-452B-A506-C05135361472}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81706FEB-2268-452B-A506-C05135361472}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{697A6766-F827-404A-9F51-A0B7F9C03222} = {25DD87A6-3345-4B9C-A35D-A94B3D28EA94}
+		{F2B02A7C-A2F5-41AB-A3D1-A4EB08F9CEF1} = {7781A1D9-FBF1-42A9-8038-3407887C203B}
+		{81706FEB-2268-452B-A506-C05135361472} = {F2B02A7C-A2F5-41AB-A3D1-A4EB08F9CEF1}
 	EndGlobalSection
 EndGlobal
