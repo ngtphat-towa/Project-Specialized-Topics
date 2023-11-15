@@ -34,7 +34,7 @@ const error = (namespace: string, message: string, object?: any) => {
   if (object) {
     console.error(
       chalk.bgRed(`[${getTimeStamp()}] [ERROR]`) +
-        chalk.redBright(` [${namespace}] ${message}`),
+        chalk.redBright(` [${namespace}] : ${message}\n`),
       object
     );
   } else {

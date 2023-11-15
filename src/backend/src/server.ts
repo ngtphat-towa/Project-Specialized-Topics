@@ -37,7 +37,11 @@ const StartServer = () => {
 
   server.use("/api", routers);
 
-  // Handle error
+  /// Handle errors
+  // Apply the "Resource Not Found" middleware
+  server.use(errorController.resourceNotFound);
+
+  // Apply the error handling middleware
   server.use(errorController.handleError);
 
   // Server listenning
