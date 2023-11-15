@@ -7,6 +7,7 @@ import errorController from "./controllers/error.controller";
 import loggerMiddleware from "./middlewares/logger.middleware";
 import logging from "./configs/logging";
 import mongoose from "mongoose";
+import routers from "./routers/routers";
 
 // Declare  server
 const server = express();
@@ -33,6 +34,8 @@ const StartServer = () => {
 
   // This will logger the request
   server.use(loggerMiddleware.apiRequestLogger);
+
+  server.use("/api", routers);
 
   // Handle error
   server.use(errorController.handleError);

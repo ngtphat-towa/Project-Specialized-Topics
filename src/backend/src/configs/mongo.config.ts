@@ -5,7 +5,7 @@ dotenv.config();
 const MONGO_OPTIONS = {
   maxPoolSize: 50,
   wtimeoutMS: 2500,
-  useNewUrlParser: true,
+  // useNewUrlParser: true,
 };
 
 // const MONGO_USERNAME = process.env.MONGO_USERNAME || "";
