@@ -1,51 +1,15 @@
+import { SERVER, CLIENT } from "./server.config";
+import { MONGO_DB } from "./mongo.config";
 import dotenv from "dotenv";
 
-
 dotenv.config();
-
-const DB_HOST = process.env.DB_HOST || "localhost";
-const DB_DATABASE = process.env.DB_DATABASE || "ecommercedb";
-const DB_USERNAME = process.env.DB_USERNAME || "root";
-const DB_PASSWORD = process.env.DB_PASSWORD || "root";
-const DB_PORT = process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306;
-
-const MYSQL = {
-  host: DB_HOST,
-  port: DB_PORT,
-  database: DB_DATABASE,
-
-  user: DB_USERNAME,
-  password: DB_PASSWORD,
-};
-
-const SERVER_HOSTNAME = process.env.SERVER_HOSTNAME || "localhost";
-const SERVER_PORT = process.env.SERVER_PORT || 3000;
-const SERVER_TOKEN_EXPIRETIME = process.env.SERVER_TOKEN_EXPIRETIME || 36000;
-const SERVER_TOKEN_ISSUER = process.env.SERVER_TOKEN_ISSUER || "coolIssuer";
-const SERVER_TOKEN_SECRET =
-  process.env.SERVER_TOKEN_SECRET || "superencryptedsecret";
-
-const SERVER = {
-  hostname: SERVER_HOSTNAME,
-  port: SERVER_PORT ?? 3000,
-  token: {
-    expireTime: SERVER_TOKEN_EXPIRETIME,
-    issuer: SERVER_TOKEN_ISSUER,
-    secret: SERVER_TOKEN_SECRET,
-  },
-};
-
 const STRIPE = {
   public: process.env.STRIPE_PUBLIC_KEY || "",
   secret: process.env.STRIPE_SECRET_KEY || "",
 };
 
-const CLIENT = {
-  baseUrl: process.env.BASE_URL || "",
-};
-
 const config = {
-  db: MYSQL,
+  mongo: MONGO_DB,
   server: SERVER,
   payment: STRIPE,
   client: CLIENT,
