@@ -8,6 +8,7 @@ import loggerMiddleware from "./middlewares/logger.middleware";
 import logging from "./configs/logging";
 import mongoose from "mongoose";
 import routers from "./routers/routers";
+import { resourceNotFound } from "./middlewares/common.middleware";
 
 // Declare  server
 const server = express();
@@ -39,7 +40,7 @@ const StartServer = () => {
 
   /// Handle errors
   // Apply the "Resource Not Found" middleware
-  server.use(errorController.resourceNotFound);
+  server.use(resourceNotFound);
 
   // Apply the error handling middleware
   server.use(errorController.handleError);
@@ -51,3 +52,4 @@ const StartServer = () => {
       logging.info(NAMESPACE, `running at http://localhost:${PORT}/ping`)
     );
 };
+// StartServer();
