@@ -2,22 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import ApiError from "../common/err.common";
 import logging from "../configs/logging";
 
-function methodNotAllowed(req: Request, res: Response, next: NextFunction) {
-  if (req.route) {
-    const httpMethods = Object.keys(req.route.methods)
-      .filter((method) => method !== "_all")
-      .map((method) => method.toUpperCase());
-    return next(
-      new ApiError(405, "Method Not Allowed", {
-        Allow: httpMethods.join(", "),
-      })
-    );
-  }
-  return next();
-}
-function resourceNotFound(req: Request, res: Response, next: NextFunction) {
-  return next(new ApiError(404, `API Resource ${req.url} not found`));
-}
 function handleError(
   error: Error,
   req: Request,
@@ -43,7 +27,5 @@ function handleError(
   });
 }
 export default {
-  methodNotAllowed,
-  resourceNotFound,
   handleError,
 };
