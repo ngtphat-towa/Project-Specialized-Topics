@@ -8,7 +8,7 @@ import loggerMiddleware from "./middlewares/logger.middleware";
 import logging from "./configs/logging";
 import mongoose from "mongoose";
 import routers from "./routers/routers";
-import { resourceNotFound } from "./middlewares/common.middleware";
+import { resourceNotFound } from "./middlewares/error.middleware";
 
 // Declare  server
 const server = express();

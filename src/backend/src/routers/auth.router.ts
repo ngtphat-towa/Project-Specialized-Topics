@@ -1,6 +1,6 @@
 import express from "express";
 import controller from "../controllers/auth.controller";
-import { methodNotAllowed } from "../middlewares/common.middleware";
+import { methodNotAllowed } from "../middlewares/error.middleware";
 const AuthRouter = express.Router();
 
 AuthRouter.post("/register", controller.register)

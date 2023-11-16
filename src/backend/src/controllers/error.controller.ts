@@ -14,16 +14,13 @@ function handleError(
   logging.error("handleError", error.name, error);
   if (error instanceof ApiError) {
     return res
-      .status(error.statusCode || 500)
+      .status(error.status || 500)
       .set(error.headers || {})
-      .json({
-        message: error.message,
-        type: error.name,
-      });
+      .json(error);
   }
   return res.status(500).json({
     type: error.name,
-    message: error.message || "Internal Server Error",
+    message: error.message.replace(/\\"/g, '"') || "Internal Server Error",
   });
 }
 export default {

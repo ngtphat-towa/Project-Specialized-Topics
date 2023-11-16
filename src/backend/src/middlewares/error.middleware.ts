@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import ApiError from "../common/err.common";
+import {
+  MethodNotAllowedError,
+  ApiResourceNotFoundError,
+} from "../common/err.common";
 
 export function methodNotAllowed(
   req: Request,
@@ -11,7 +14,7 @@ export function methodNotAllowed(
       .filter((method) => method !== "_all")
       .map((method) => method.toUpperCase());
     return next(
-      new ApiError(405, "Method Not Allowed", {
+      new MethodNotAllowedError("", req.path, {
         Allow: httpMethods.join(", "),
       })
     );
@@ -23,7 +26,7 @@ export function resourceNotFound(
   res: Response,
   next: NextFunction
 ) {
-  return next(new ApiError(404, `API Resource ${req.url} not found`));
+  return next(new ApiResourceNotFoundError(req.path));
 }
 
 export default {

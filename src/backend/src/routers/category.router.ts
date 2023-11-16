@@ -1,6 +1,6 @@
 import express from "express";
 import categoryController from "../controllers/category.controller";
-import { methodNotAllowed } from "../middlewares/common.middleware";
+import { methodNotAllowed } from "../middlewares/error.middleware";
 
 const CategoryRouter = express.Router();
 
