@@ -9,6 +9,7 @@ import logging from "./configs/logging";
 import mongoose from "mongoose";
 import routers from "./routers/routers";
 import { resourceNotFound } from "./middlewares/error.middleware";
+import path from "path";
 
 // Declare  server
 const server = express();
@@ -36,7 +37,14 @@ const StartServer = () => {
   // This will logger the request
   server.use(loggerMiddleware.apiRequestLogger);
 
+  server.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+  });
   server.use("/api", routers);
+
+  server.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+  });
 
   /// Handle errors
   // Apply the "Resource Not Found" middleware

@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <body>
+    <h2>Categories</h2>
+
+    <div id="categories"></div>
+
+    <script>
+      function fetchData() {
+        var requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+
+        fetch("http://localhost:3000/api/category/", requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            var categoriesDiv = document.getElementById("categories");
+            result.forEach(function (category) {
+              var categoryDiv = document.createElement("div");
+              var nameH3 = document.createElement("h3");
+              nameH3.textContent = category.name;
+              categoryDiv.appendChild(nameH3);
+              if (category.image && category.image.data) {
+                var img = document.createElement("img");
+
+                // Convert the Buffer from the server into a Uint8Array
+                var bytes = new Uint8Array(category.image.data.data);
+
+                // Convert the Uint8Array into a string
+                var binary = "";
+                bytes.forEach((byte) => (binary += String.fromCharCode(byte)));
+
+                // Convert the string into a base64 string
+                var base64String = window.btoa(binary);
+
+                img.src = "data:image/png;base64," + base64String;
+                categoryDiv.appendChild(img);
+              }
+
+              categoriesDiv.appendChild(categoryDiv);
+            });
+          })
+          .catch((error) => console.log("error", error));
+      }
+
+      fetchData();
+    </script>
+  </body>
+</html>
