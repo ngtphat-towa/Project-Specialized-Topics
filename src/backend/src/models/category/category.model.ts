@@ -15,10 +15,7 @@ const CategorySchema = new Schema({
     trim: true,
     maxlength: 200,
   },
-  imageUrl: {
-    type: String,
-    trim: true,
-  },
+  image: { data: Buffer, contentType: String },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -40,7 +37,7 @@ CategorySchema.pre("save", function (next) {
 export interface ICategory extends Document {
   name: string;
   description?: string;
-  imageUrl?: string;
+  image?: { data: Buffer; contentType: String };
   createdAt: Date;
   updatedAt?: Date;
 }
