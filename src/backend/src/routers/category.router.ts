@@ -21,7 +21,7 @@ CategoryRouter.route("/")
   .all(methodNotAllowed);
 CategoryRouter.route("/:id")
   .get(categoryController.getCategory)
-  .put(categoryController.updateCategory)
+  .put(upload.single("image"), categoryController.updateCategory)
 
   .all(methodNotAllowed);
 
