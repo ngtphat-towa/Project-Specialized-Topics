@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
-import typeController from "../controllers/catalog/type.controller";
-import { methodNotAllowed } from "../middlewares/error.middleware";
+import typeController from "../../controllers/catalog/type.controller";
+import { methodNotAllowed } from "../../middlewares/error.middleware";
 
 const TypeRouter = express.Router();
 var storage = multer.diskStorage({

@@ -1,38 +1,38 @@
 import { NextFunction, Request, Response } from "express";
 
-const getCatalogsByFilter = async (
+const getItemsByFilter = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    return res.status(200).json({ message: "getCatalogsByFilter" });
+    return res.status(200).json({ message: "getItemsByFilter" });
   } catch (error) {
     next(error);
   }
 };
 
-const getCatalog = async (req: Request, res: Response, next: NextFunction) => {
+const getItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    return res.status(200).json({ message: "getCatalog" });
+    return res.status(200).json({ message: "getItem" });
   } catch (error) {
     next(error);
   }
 };
 
-const createCatalog = async (
+const createItem = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    return res.status(200).json({ message: "createCatalog" });
+    return res.status(200).json({ message: "createItem" });
   } catch (error) {
     next(error);
   }
 };
 
-const updateCatalog = async (
+const updateItem = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -44,7 +44,7 @@ const updateCatalog = async (
   }
 };
 
-const deleteCatalog = async (
+const deleteItem = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -55,23 +55,23 @@ const deleteCatalog = async (
     next(error);
   }
 };
-const deleteAllCatalogs = async (
+const deleteAllItems = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    return res.status(200).json({ message: "deleteAllCatalog" });
+    return res.status(200).json({ message: "deleteAllItem" });
   } catch (error) {
     next(error);
   }
 };
 
 export default {
-  getCatalogsByFilter,
-  getCatalog,
-  createCatalog,
-  updateCatalog,
-  deleteCatalog,
-  deleteAllCatalogs,
+  getItemsByFilter,
+  getItem,
+  createItem,
+  updateItem,
+  deleteItem,
+  deleteAllItems,
 };

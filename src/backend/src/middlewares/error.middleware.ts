@@ -26,7 +26,7 @@ export function resourceNotFound(
   res: Response,
   next: NextFunction
 ) {
-  return next(new ApiResourceNotFoundError(req.path));
+  return next(new ApiResourceNotFoundError(`${req.method} ${req.path}`));
 }
 
 export default {
