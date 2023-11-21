@@ -1,8 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import { Category, ICategory } from "../models/category/category.model";
-import path from "path";
-import fs from "fs";
-import logging from "../configs/logging";
 
 import {
   ICreateCategory,
@@ -15,6 +12,7 @@ import {
 import { BadRequestError, NotFoundError } from "../common/err.common";
 import { IIdParam, idSchema } from "../models/commons/id.dto";
 import { validateBody, validateParams } from "../models/commons/validate.dto";
+import { validateAndReturnImage } from "./image.controller";
 const getCategoriesByFilter = async (
   req: Request,
   res: Response,
@@ -105,43 +103,6 @@ const deleteCategory = async (
     next(error);
   }
 };
-
-function validateAndReturnImage(req: Request): {
-  data: Buffer;
-  contentType: String;
-} {
-  if (!req.file) {
-    throw new BadRequestError("No file provided", req.url);
-  }
-
-  const img = fs.readFileSync(path.join(__dirname, "..", "..", req.file.path));
-  const encode_img = img.toString("base64");
-  const data = Buffer.from(encode_img, "base64");
-
-  var image = {
-    data: data,
-    contentType: req.file.mimetype,
-  };
-
-  fs.unlink(req.file.path, (err) => {
-    if (err) {
-      logging.error("IMAGE FILE", `Failed to delete file: ${err}`);
-    } else {
-      logging.debug("IMAGE FILE", `Deleted file: ${req?.file?.path}`);
-    }
-  });
-  return image;
-}
-
-function deleteImage(filePath: string): void {
-  fs.unlink(filePath, (err) => {
-    if (err) {
-      console.error(`Failed to delete file: ${err}`);
-    } else {
-      console.log(`Deleted file: ${filePath}`);
-    }
-  });
-}
 
 export default {
   getCategoriesByFilter,
