@@ -1,6 +1,6 @@
 import express from "express";
 import AuthRouter from "./auth.router";
-import ProductRouter from "./product.router";
+import CatalogRouter from "./catalog.router";
 import CategoryRouter from "./category.router";
 import CartRouter from "./cart.router";
 import WishlistRouter from "./wishlist.router";
@@ -11,7 +11,7 @@ import CheckoutRouter from "./checkout.router";
 const routers = express.Router();
 
 routers.use("/auth", AuthRouter);
-routers.use("/product", ProductRouter);
+routers.use("/catalog", CatalogRouter);
 routers.use("/category", CategoryRouter);
 routers.use("/cart", CartRouter);
 

@@ -1,19 +1,19 @@
 import express from "express";
-import productController from "../controllers/catalog.controller";
+import catalogController from "../controllers/catalog.controller";
 import { methodNotAllowed } from "../middlewares/error.middleware";
 import validateToken from "../middlewares/auth.middleware";
 
-const ProductRouter = express.Router();
+const CatalogRouter = express.Router();
 
-ProductRouter.route("/")
-  .get(productController.getProductsByFilter)
-  .post(productController.createProduct)
-  .delete(productController.deleteAllProducts)
+CatalogRouter.route("/")
+  .get(catalogController.getCatalogsByFilter)
+  .post(catalogController.createCatalog)
+  .delete(catalogController.deleteAllCatalogs)
   .all(methodNotAllowed);
-ProductRouter.route("/:id")
-  .get(productController.getProduct)
-  .put(productController.updateProduct)
-  .delete(productController.deleteProduct)
+CatalogRouter.route("/:id")
+  .get(catalogController.getCatalog)
+  .put(catalogController.updateCatalog)
+  .delete(catalogController.deleteCatalog)
   .all(methodNotAllowed);
 
-export default ProductRouter;
+export default CatalogRouter;
