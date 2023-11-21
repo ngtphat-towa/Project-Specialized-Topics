@@ -63,9 +63,11 @@ const updateType = async (req: Request, res: Response, next: NextFunction) => {
   try {
     var image = validateAndReturnImage(req);
     const params: IIdParam = validateParams(req, idSchema);
-    const body: IUpdateType = validateBody(req, updateTypeSchema);
+    const updateTypeData: IUpdateType = validateBody(req, updateTypeSchema);
 
-    const updateTypeData: IUpdateType = { ...body, image };
+    if (image !== null) {
+      updateTypeData.image = image;
+    }
 
     const type = await Type.findByIdAndUpdate(params.id, updateTypeData, {
       new: true,

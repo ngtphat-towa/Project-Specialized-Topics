@@ -4,6 +4,7 @@
     <h2>Types</h2>
 
     <div id="categories"></div>
+    <div id="items"></div>
 
     <script>
       function fetchData() {
@@ -39,6 +40,36 @@
               }
 
               categoriesDiv.appendChild(typeDiv);
+            });
+          })
+          .catch((error) => console.log("error", error));
+        fetch("http://localhost:3000/api/item/", requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            var itemsDiv = document.getElementById("items");
+            result.data.forEach(function (item) {
+              var itemDiv = document.createElement("div");
+              var nameH3 = document.createElement("h3");
+              nameH3.textContent = item.name;
+              itemDiv.appendChild(nameH3);
+              if (item.image && item.image.data) {
+                var img = document.createElement("img");
+
+                // Convert the Buffer from the server into a Uint8Array
+                var bytes = new Uint8Array(item.image.data.data);
+
+                // Convert the Uint8Array into a string
+                var binary = "";
+                bytes.forEach((byte) => (binary += String.fromCharCode(byte)));
+
+                // Convert the string into a base64 string
+                var base64String = window.btoa(binary);
+
+                img.src = "data:image/png;base64," + base64String;
+                itemDiv.appendChild(img);
+              }
+
+              itemsDiv.appendChild(itemDiv);
             });
           })
           .catch((error) => console.log("error", error));

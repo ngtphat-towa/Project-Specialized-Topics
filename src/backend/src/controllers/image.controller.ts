@@ -3,12 +3,16 @@ import { BadRequestError } from "../common/err.common";
 import path from "path";
 import fs from "fs";
 import logging from "../configs/logging";
-export function validateAndReturnImage(req: Request): {
+export function validateAndReturnImage(
+  req: Request,
+  isRequired: boolean = true
+): {
   data: Buffer;
   contentType: String;
-} {
+} | null {
   if (!req.file) {
-    throw new BadRequestError("No file provided", req.url);
+    if (isRequired) throw new BadRequestError("No file provided", req.url);
+    return null;
   }
 
   const img = fs.readFileSync(path.join(__dirname, "..", "..", req.file.path));

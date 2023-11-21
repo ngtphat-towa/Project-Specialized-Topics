@@ -61,11 +61,13 @@ const createBrand = async (req: Request, res: Response, next: NextFunction) => {
 
 const updateBrand = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    var image = validateAndReturnImage(req);
+    var image = validateAndReturnImage(req, false);
     const params: IIdParam = validateParams(req, idSchema);
-    const body: IUpdateBrand = validateBody(req, updateBrandSchema);
+    const updateBrandData: IUpdateBrand = validateBody(req, updateBrandSchema);
 
-    const updateBrandData: IUpdateBrand = { ...body, image };
+    if (image !== null) {
+      updateBrandData.image = image;
+    }
 
     const brand = await Brand.findByIdAndUpdate(params.id, updateBrandData, {
       new: true,
