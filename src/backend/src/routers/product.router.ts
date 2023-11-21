@@ -1,5 +1,5 @@
 import express from "express";
-import catalogController from "../controllers/catalog.controller";
+import catalogController from "../controllers/catalog/catalog.controller";
 import { methodNotAllowed } from "../middlewares/error.middleware";
 import validateToken from "../middlewares/auth.middleware";
 

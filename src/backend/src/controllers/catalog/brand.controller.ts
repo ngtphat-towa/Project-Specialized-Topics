@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { Brand, IBrand } from "../models/brand/brand.model";
+import { Brand, IBrand } from "../../models/brand/brand.model";
 import {
   ICreateBrand,
   IFindBrands,
@@ -7,11 +7,11 @@ import {
   createBrandSchema,
   findBrandsSchema,
   updateBrandSchema,
-} from "../models/brand/brand.dto";
-import { IIdParam, idSchema } from "../models/commons/id.dto";
-import { validateBody, validateParams } from "../models/commons/validate.dto";
-import { validateAndReturnImage } from "./image.controller";
-import { NotFoundError } from "../common/err.common";
+} from "../../models/brand/brand.dto";
+import { IIdParam, idSchema } from "../../models/commons/id.dto";
+import { validateBody, validateParams } from "../../models/commons/validate.dto";
+import { validateAndReturnImage } from "../image.controller";
+import { NotFoundError } from "../../common/err.common";
 
 const getBrandsByFilter = async (
   req: Request,

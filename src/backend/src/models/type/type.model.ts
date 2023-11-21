@@ -1,8 +1,8 @@
 import mongoose, { Document, Schema } from "mongoose";
 import { IImage } from "../commons/image.model";
 
-// Define the Category schema
-const CategorySchema = new Schema({
+// Define the Type schema
+const TypeSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -27,15 +27,15 @@ const CategorySchema = new Schema({
 });
 
 // Add a pre-save middleware to handle updatedAt
-CategorySchema.pre("save", function (next) {
+TypeSchema.pre("save", function (next) {
   if (this.isModified()) {
     this.updatedAt = new Date();
   }
   next();
 });
 
-// Define the Category model
-export interface ICategory extends Document {
+// Define the Type model
+export interface IType extends Document {
   name: string;
   description?: string;
   image?: IImage;
@@ -43,5 +43,5 @@ export interface ICategory extends Document {
   updatedAt?: Date;
 }
 
-// Create the Category model
-export const Category = mongoose.model<ICategory>("Category", CategorySchema);
+// Create the Type model
+export const Type = mongoose.model<IType>("Type", TypeSchema);

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <body>
-    <h2>Categories</h2>
+    <h2>Types</h2>
 
     <div id="categories"></div>
 
@@ -12,20 +12,20 @@
           redirect: "follow",
         };
 
-        fetch("http://localhost:3000/api/category/", requestOptions)
+        fetch("http://localhost:3000/api/type/", requestOptions)
           .then((response) => response.json())
           .then((result) => {
             var categoriesDiv = document.getElementById("categories");
-            result.forEach(function (category) {
-              var categoryDiv = document.createElement("div");
+            result.forEach(function (type) {
+              var typeDiv = document.createElement("div");
               var nameH3 = document.createElement("h3");
-              nameH3.textContent = category.name;
-              categoryDiv.appendChild(nameH3);
-              if (category.image && category.image.data) {
+              nameH3.textContent = type.name;
+              typeDiv.appendChild(nameH3);
+              if (type.image && type.image.data) {
                 var img = document.createElement("img");
 
                 // Convert the Buffer from the server into a Uint8Array
-                var bytes = new Uint8Array(category.image.data.data);
+                var bytes = new Uint8Array(type.image.data.data);
 
                 // Convert the Uint8Array into a string
                 var binary = "";
@@ -35,10 +35,10 @@
                 var base64String = window.btoa(binary);
 
                 img.src = "data:image/png;base64," + base64String;
-                categoryDiv.appendChild(img);
+                typeDiv.appendChild(img);
               }
 
-              categoriesDiv.appendChild(categoryDiv);
+              categoriesDiv.appendChild(typeDiv);
             });
           })
           .catch((error) => console.log("error", error));

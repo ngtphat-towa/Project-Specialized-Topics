@@ -1,9 +1,9 @@
 import express from "express";
 import multer from "multer";
-import categoryController from "../controllers/category.controller";
+import typeController from "../controllers/catalog/type.controller";
 import { methodNotAllowed } from "../middlewares/error.middleware";
 
-const CategoryRouter = express.Router();
+const TypeRouter = express.Router();
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
@@ -15,14 +15,14 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
-CategoryRouter.route("/")
-  .get(categoryController.getCategoriesByFilter)
-  .post(upload.single("image"), categoryController.createCategory)
+TypeRouter.route("/")
+  .get(typeController.getTypesByFilter)
+  .post(upload.single("image"), typeController.createType)
   .all(methodNotAllowed);
-CategoryRouter.route("/:id")
-  .get(categoryController.getCategory)
-  .put(upload.single("image"), categoryController.updateCategory)
+TypeRouter.route("/:id")
+  .get(typeController.getType)
+  .put(upload.single("image"), typeController.updateType)
 
   .all(methodNotAllowed);
 
-export default CategoryRouter;
+export default TypeRouter;

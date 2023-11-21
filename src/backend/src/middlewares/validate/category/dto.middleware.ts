@@ -1,18 +1,17 @@
 // middleware/validate.middleware.js
 import { NextFunction, Request, Response } from "express";
 import {
-  createCategorySchema,
-  updateCategorySchema,
-} from "../../../models/category/category.dto";
+  createTypeSchema,
+  updateTypeSchema,
+} from "../../../models/type/type.dto";
 import { BadRequestError } from "../../../common/err.common";
 
-export const validateCategory = (
+export const validateType = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const schema =
-    req.method === "POST" ? createCategorySchema : updateCategorySchema;
+  const schema = req.method === "POST" ? createTypeSchema : updateTypeSchema;
   const { error } = schema.validate(req.body);
   if (error) {
     const errApi = new BadRequestError(error.details[0].message, req.path);
