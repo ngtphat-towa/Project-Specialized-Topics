@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { Type, IType } from "../../models/type/type.model";
+import { Type, IType } from "../../models/catalog/type/type.model";
 
 import {
   ICreateType,
@@ -8,7 +8,7 @@ import {
   createTypeSchema,
   findTypesSchema,
   updateTypeSchema,
-} from "../../models/type/type.dto";
+} from "../../models/catalog/type/type.dto";
 import { BadRequestError, NotFoundError } from "../../common/err.common";
 import { IIdParam, idSchema } from "../../models/commons/id.dto";
 import {

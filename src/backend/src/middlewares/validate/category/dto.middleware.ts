@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import {
   createTypeSchema,
   updateTypeSchema,
-} from "../../../models/type/type.dto";
+} from "../../../models/catalog/type/type.dto";
 import { BadRequestError } from "../../../common/err.common";
 
 export const validateType = (

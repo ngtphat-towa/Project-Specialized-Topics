@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { IImage } from "../commons/image.model";
+import { IImage } from "../../commons/image.model";
 
 // Define the Type schema
 const TypeSchema = new Schema({

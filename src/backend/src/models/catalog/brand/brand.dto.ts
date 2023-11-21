@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { IImage } from "../commons/image.model";
+import { IImage } from "../../commons/image.model";
 
 export const createBrandSchema = Joi.object({
   name: Joi.string().required().messages({
