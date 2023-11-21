@@ -2,6 +2,7 @@ import Joi from "joi";
 
 import { Request } from "express";
 import { BadRequestError } from "../../common/err.common";
+import logging from "../../configs/logging";
 
 function validateRequest<T>(
   req: Request,
@@ -33,6 +34,9 @@ export function validateBody<T>(req: Request, schema: Joi.ObjectSchema): T {
 
 export function validateParams<T>(req: Request, schema: Joi.ObjectSchema): T {
   return validateRequest(req, schema, "params");
+}
+export function validateQuery<T>(req: Request, schema: Joi.ObjectSchema): T {
+  return validateRequest(req, schema, "query");
 }
 
 export function validateHeaders<T>(req: Request, schema: Joi.ObjectSchema): T {
