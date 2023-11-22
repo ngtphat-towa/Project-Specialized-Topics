@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import {
   MethodNotAllowedError,
   ApiResourceNotFoundError,
-} from "../common/err.common";
+} from "../../common/err.common";
 
 export function methodNotAllowed(
   req: Request,

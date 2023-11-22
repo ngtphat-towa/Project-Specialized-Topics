@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from "express";
-import logging from "../configs/logging";
+import logging from "../../configs/logging";
 
 const SERVER = "SERVER";
 const CLIENT = "CLIENT";

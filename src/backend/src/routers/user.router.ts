@@ -1,7 +1,7 @@
 import express from "express";
 import userController from "../controllers/user.controller";
-import { methodNotAllowed } from "../middlewares/error.middleware";
-import validateToken from "../middlewares/auth.middleware";
+import { methodNotAllowed } from "../middlewares/utils/error.middleware";
+import validateToken from "../middlewares/auth/auth.middleware";
 
 const UserRouter = express.Router();
 

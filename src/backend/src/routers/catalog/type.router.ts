@@ -1,8 +1,8 @@
 import express from "express";
 
 import typeController from "../../controllers/catalog/type.controller";
-import { methodNotAllowed } from "../../middlewares/error.middleware";
-import processImageMiddleware from "../../middlewares/validate/mutler.middleware";
+import { methodNotAllowed } from "../../middlewares/utils/error.middleware";
+import processImageMiddleware from "../../middlewares/files/mutler.middleware";
 
 const TypeRouter = express.Router();
 

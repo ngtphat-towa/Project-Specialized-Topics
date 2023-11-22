@@ -1,8 +1,8 @@
 import express from "express";
-import { methodNotAllowed } from "../../middlewares/error.middleware";
-import validateToken from "../../middlewares/auth.middleware";
+import { methodNotAllowed } from "../../middlewares/utils/error.middleware";
+import validateToken from "../../middlewares/auth/auth.middleware";
 import itemController from "../../controllers/catalog/item.controller";
-import processImageMiddleware from "../../middlewares/validate/mutler.middleware";
+import processImageMiddleware from "../../middlewares/files/mutler.middleware";
 
 const ItemRouter = express.Router();
 

@@ -1,7 +1,7 @@
 import express from "express";
 import wishlistController from "../controllers/wishlist.controller";
-import { methodNotAllowed } from "../middlewares/error.middleware";
-import validateToken from "../middlewares/auth.middleware";
+import { methodNotAllowed } from "../middlewares/utils/error.middleware";
+import validateToken from "../middlewares/auth/auth.middleware";
 
 const WishlistRouter = express.Router();
 

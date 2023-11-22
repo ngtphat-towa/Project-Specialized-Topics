@@ -1,7 +1,7 @@
 // validate token
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import config from "../configs/config";
+import config from "../../configs/config";
 // Extend the Request interface with an optional user property
 
 function validateToken(req: Request, res: Response, next: NextFunction): void {

@@ -4,11 +4,11 @@ import http from "http";
 import config from "./configs/config";
 import samples from "./controllers/samples";
 import errorController from "./controllers/error.controller";
-import loggerMiddleware from "./middlewares/logger.middleware";
+import loggerMiddleware from "./middlewares/utils/logger.middleware";
 import logging from "./configs/logging";
 import mongoose from "mongoose";
 import routers from "./routers/routers";
-import { resourceNotFound } from "./middlewares/error.middleware";
+import { resourceNotFound } from "./middlewares/utils/error.middleware";
 import path from "path";
 
 // Declare  server
