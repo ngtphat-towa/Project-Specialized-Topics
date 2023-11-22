@@ -1,6 +1,7 @@
 import { SERVER, CLIENT } from "./server.config";
 import { MONGO_DB } from "./mongo.config";
 import dotenv from "dotenv";
+import { JWT_KEY } from "./jwt.config";
 
 dotenv.config();
 const STRIPE = {
@@ -13,6 +14,7 @@ const config = {
   server: SERVER,
   payment: STRIPE,
   client: CLIENT,
+  jwt: JWT_KEY,
 };
 
 export default config;
