@@ -2,7 +2,6 @@ import Joi from "joi";
 
 import { Request } from "express";
 import { BadRequestError } from "../../common/err.common";
-import logging from "../../configs/logging";
 
 function validateRequest<T>(
   req: Request,

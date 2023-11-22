@@ -10,14 +10,8 @@ import mongoose from "mongoose";
 import routers from "./routers/routers";
 import { resourceNotFound } from "./middlewares/utils/error.middleware";
 import path from "path";
-import { requireUser } from "./middlewares/session/user.require.middleware";
-import {
-  createSessionHandler,
-  deleteSessionHandler,
-  getSessionHandler,
-} from "./controllers/session.controller";
 import cookieParser from "cookie-parser";
-import deserializeUser from "./middlewares/session/deserialize.user.middleware";
+import deserializeUser from "./middlewares/auth/auth.middleware";
 
 // Declare  server
 const server = express();
@@ -48,21 +42,12 @@ const StartServer = () => {
   // This will logger the request
   server.use(loggerMiddleware.apiRequestLogger);
 
-  server.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
-  });
+  server.use(deserializeUser);
   server.use("/api", routers);
 
   server.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
   });
-
-  server.post("/api/session", createSessionHandler);
-  // get the current session
-  server.use(deserializeUser);
-  server.get("/api/session", requireUser, getSessionHandler);
-  // logout
-  server.delete("/api/session", requireUser, deleteSessionHandler);
 
   /// Handle errors
   // Apply the "Resource Not Found" middleware

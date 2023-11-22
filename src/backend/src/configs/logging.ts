@@ -48,13 +48,13 @@ const error = (namespace: string, message: string, object?: any) => {
 const debug = (namespace: string, message: string, object?: any) => {
   if (object) {
     console.debug(
-      chalk.bgWhite(`[${getTimeStamp()}] [DEBUG]`) +
+      chalk.bgGrey(`[${getTimeStamp()}] [DEBUG]`) +
         chalk.gray(` [${namespace}] ${message}`),
       object
     );
   } else {
     console.debug(
-      chalk.bgWhite(`[${getTimeStamp()}] [DEBUG]`) +
+      chalk.bgGrey(`[${getTimeStamp()}] [DEBUG]`) +
         chalk.gray(` [${namespace}] ${message}`)
     );
   }

@@ -8,6 +8,7 @@ import OrderRouter from "./order.router";
 import UserRouter from "./user.router";
 import CheckoutRouter from "./checkout.router";
 import ItemRouter from "./catalog/items.router";
+import AccountRouter from "./auth/account.router";
 
 const routers = express.Router();
 
