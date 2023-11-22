@@ -15,6 +15,9 @@ const apiRequestLogger = (req: Request, res: Response, next: NextFunction) => {
   if (req.headers.authorization) {
     logging.debug(REQUEST, `AUTHORIZATION: ]`, req.headers.authorization);
   }
+  if (req.query && Object.keys(req.query).length > 0) {
+    logging.debug(REQUEST, `QUERY:`, req.query);
+  }
   if (req.params && Object.keys(req.params).length > 0) {
     logging.debug(REQUEST, `PARAMS:`, req.params);
   }

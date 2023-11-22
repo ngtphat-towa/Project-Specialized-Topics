@@ -1,7 +1,7 @@
 import express from "express";
 import brandController from "../../controllers/catalog/brand.controller";
 import { methodNotAllowed } from "../../middlewares/error.middleware";
-import processImageMiddleware from "../../middlewares/validate/mutler.config";
+import processImageMiddleware from "../../middlewares/validate/mutler.middleware";
 
 const BrandRouter = express.Router();
 

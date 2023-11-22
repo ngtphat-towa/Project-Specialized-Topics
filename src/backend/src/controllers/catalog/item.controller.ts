@@ -128,7 +128,7 @@ const getCatlogTypes = async (
   next: NextFunction
 ) => {
   try {
-    const types = await Type.find();
+    const types = await Type.find().select("_id name description");
     return res.status(200).json(types);
   } catch (error) {
     next(error);
@@ -141,7 +141,7 @@ const getCatlogBrands = async (
   next: NextFunction
 ) => {
   try {
-    const brands = await Brand.find();
+    const brands = await Brand.find().select("_id name description");
     return res.status(200).json(brands);
   } catch (error) {
     next(error);
