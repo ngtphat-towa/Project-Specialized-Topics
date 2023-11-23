@@ -33,6 +33,12 @@ export const createUserProfileSchema = Joi.object({
   lastName: Joi.string()
     .required()
     .messages({ "string.empty": "Last Name is a required field" }),
+  email: Joi.string()
+    .required()
+    .messages({ "string.empty": "Gmail is a required field" }),
+  phoneNumber: Joi.string()
+    .optional()
+    .messages({ "string.empty": "Phone Number should not be empty" }),
 }).options({ stripUnknown: true });
 
 export const updateUserProfileSchema = Joi.object({
@@ -51,25 +57,35 @@ export const updateUserProfileSchema = Joi.object({
   zipCode: Joi.string().optional(),
   firstName: Joi.string().optional(),
   lastName: Joi.string().optional(),
+  email: Joi.string()
+    .optional()
+    .messages({ "string.empty": "Gmail should not be empty" }),
+  phoneNumber: Joi.string()
+    .optional()
+    .messages({ "string.empty": "Phone Number should not be empty" }),
 }).options({ stripUnknown: true });
 
 // Define the Joi validation schema
 export const queryUserSchema = Joi.object({
+  userAccount: Joi.string().optional(),
   username: Joi.string().optional(),
-  email: Joi.string().email().optional(),
+  email: Joi.string().optional(),
   firstName: Joi.string().optional(),
   lastName: Joi.string().optional(),
   city: Joi.string().optional(),
   country: Joi.string().optional(),
+  phone: Joi.string().optional(),
 }).options({ stripUnknown: true });
 
 export interface IQueryUser {
-  username?: string;
+  [key: string]: any;
+  userAccount: string;
   email?: string;
   firstName?: string;
   lastName?: string;
   city?: string;
   country?: string;
+  role: string;
 }
 export interface ICreateUserProfile {
   userAccount: string;
@@ -85,6 +101,8 @@ export interface ICreateUserProfile {
   zipCode?: string;
   firstName: string;
   lastName: string;
+  email: string;
+  phoneNumber?: string;
 }
 
 export interface IUpdateUserProfile {
@@ -101,5 +119,7 @@ export interface IUpdateUserProfile {
   zipCode?: string;
   firstName?: string;
   lastName?: string;
+  email?: string;
+  phoneNumber?: string;
   [key: string]: any;
 }

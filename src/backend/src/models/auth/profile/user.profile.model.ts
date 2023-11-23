@@ -3,7 +3,7 @@ import { IUserAccount } from "../account/user.account.model";
 
 // User Profile Schema
 export interface IUserProfile extends Document {
-  userAccount: IUserAccount["_id"];
+  userAccount: string;
   cardNumber?: string;
   securityNumber?: string;
   expiration?: string;
@@ -16,6 +16,9 @@ export interface IUserProfile extends Document {
   zipCode?: string;
   firstName: string;
   lastName: string;
+  email: string;
+  phoneNumber?: string;
+  [key: string]: any;
 }
 
 const UserProfileSchema: Schema = new Schema({
@@ -35,6 +38,8 @@ const UserProfileSchema: Schema = new Schema({
   zipCode: { type: String },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
+  email: { type: String, required: true },
+  phoneNumber: { type: String },
 });
 
 export const UserProfile = mongoose.model<IUserProfile>(
