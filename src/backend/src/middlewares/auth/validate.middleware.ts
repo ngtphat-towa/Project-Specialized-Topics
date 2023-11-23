@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { ForbiddenError, UnauthorizedError } from "../../common/err.common";
 import Joi from "joi";
+import logging from "../../configs/logging";
 
 // Define the schema for the JWT payload
 const jwtPayloadSchema = Joi.object({
   sessionId: Joi.string().required(),
   role: Joi.string().valid("user", "admin").required(),
   email: Joi.string().email().optional(),
-});
+}).options({ stripUnknown: true });
 
 /**
  * Middleware function to check if a user is authenticated.
@@ -22,7 +23,7 @@ export default function requireUser(
   next: NextFunction
 ) {
   if (!req.user) {
-    throw new ForbiddenError("Invalid session", req.url);
+    throw new ForbiddenError("Invalid session", req.originalUrl);
   }
 
   return next();
@@ -37,14 +38,15 @@ export default function requireUser(
  */
 export function requireAdmin(req: Request, res: Response, next: NextFunction) {
   if (!req.user) {
-    throw new ForbiddenError("Invalid session", req.url);
+    throw new ForbiddenError("Invalid session", req.originalUrl);
   }
 
   // Validate the JWT payload
   const { error, value } = jwtPayloadSchema.validate(req.user);
 
-  if (error || !value.role || value.role !== "admin") {
-    throw new ForbiddenError("User is not an admin", req.url);
+  logging.debug("requireAdmin", "Validate the JWT payload", { error, value });
+  if ((value.role as string).localeCompare("admin") !== 0) {
+    throw new ForbiddenError("User is not an admin", req.originalUrl);
   }
 
   return next();

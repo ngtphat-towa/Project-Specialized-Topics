@@ -3,6 +3,7 @@ import { methodNotAllowed } from "../../middlewares/utils/error.middleware";
 import validateToken from "../../middlewares/auth/auth.middleware";
 import itemController from "../../controllers/catalog/item.controller";
 import processImageMiddleware from "../../middlewares/files/mutler.middleware";
+import { requireAdmin } from "../../middlewares/auth/validate.middleware";
 
 const ItemRouter = express.Router();
 
@@ -21,10 +22,20 @@ ItemRouter.get("/by", itemController.getItemsByName);
 ItemRouter.get("/:id", itemController.getItemById);
 
 // Routes for modifying catalog items.
-ItemRouter.post("/", processImageMiddleware, itemController.createItem);
-ItemRouter.put("/:id", processImageMiddleware, itemController.updateItem);
-ItemRouter.delete("/:id", itemController.deleteItem);
-ItemRouter.delete("/", itemController.deleteAllItems);
+ItemRouter.post(
+  "/",
+  requireAdmin,
+  processImageMiddleware,
+  itemController.createItem
+);
+ItemRouter.put(
+  "/:id",
+  requireAdmin,
+  processImageMiddleware,
+  itemController.updateItem
+);
+ItemRouter.delete("/:id", requireAdmin, itemController.deleteItem);
+ItemRouter.delete("/", requireAdmin, itemController.deleteAllItems);
 
 ItemRouter.route("/").all(methodNotAllowed);
 

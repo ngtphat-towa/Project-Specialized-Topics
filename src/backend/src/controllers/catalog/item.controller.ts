@@ -63,7 +63,7 @@ const getItemsByName = async (
       .populate("catalogBrand", "name")
       .limit(5);
     if (!item) {
-      throw new NotFoundError("Item not found!", req.url);
+      throw new NotFoundError("Item not found!", req.originalUrl);
     }
     return res.status(200).json(item);
   } catch (error) {
@@ -78,7 +78,7 @@ const getItemById = async (req: Request, res: Response, next: NextFunction) => {
       .populate("catalogType", "name")
       .populate("catalogBrand", "name");
     if (!item) {
-      throw new NotFoundError("Item not found!", req.url);
+      throw new NotFoundError("Item not found!", req.originalUrl);
     }
     return res.status(200).json(item);
   } catch (error) {
@@ -179,7 +179,7 @@ const updateItem = async (req: Request, res: Response, next: NextFunction) => {
       .populate("catalogType", "name")
       .populate("catalogBrand", "name");
     if (!item) {
-      throw new NotFoundError("Item not found!", req.url);
+      throw new NotFoundError("Item not found!", req.originalUrl);
     }
     return res.status(200).json(item);
   } catch (error) {
@@ -192,7 +192,7 @@ const deleteItem = async (req: Request, res: Response, next: NextFunction) => {
     const params: IIdParam = validateParams(req, idSchema);
     const item = await CatalogItem.findByIdAndDelete(params.id);
     if (!item) {
-      throw new NotFoundError("Item not found!", req.url);
+      throw new NotFoundError("Item not found!", req.originalUrl);
     }
     return res.status(200).json({ message: "Item deleted successfully" });
   } catch (error) {

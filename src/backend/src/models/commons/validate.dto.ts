@@ -14,14 +14,14 @@ function validateRequest<T>(
   for (const key of keys) {
     data = data[key];
     if (!data) {
-      throw new BadRequestError(`Missing required parameter: ${key}`, req.url);
+      throw new BadRequestError(`Missing required parameter: ${key}`, req.originalUrl);
     }
   }
 
   const { error, value } = schema.validate(data);
 
   if (error) {
-    throw new BadRequestError(error.message, req.url);
+    throw new BadRequestError(error.message, req.originalUrl);
   }
 
   return value as T;
@@ -47,7 +47,7 @@ export function validateBodyList<T>(
   schema: Joi.ObjectSchema
 ): T[] {
   if (!Array.isArray(req.body)) {
-    throw new BadRequestError("Request body must be an array", req.url);
+    throw new BadRequestError("Request body must be an array", req.originalUrl);
   }
 
   return req.body.map((item) => {

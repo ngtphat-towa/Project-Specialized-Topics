@@ -1,6 +1,7 @@
 import express from "express";
 
 import accountController from "../../controllers/user/account.controller";
+import requireUser from "../../middlewares/auth/validate.middleware";
 
 const AccountRouter = express.Router();
 
@@ -8,6 +9,6 @@ const AccountRouter = express.Router();
 AccountRouter.post("/", accountController.createAccount);
 
 // Update account route
-AccountRouter.put("/:id", accountController.updateAccount);
+AccountRouter.put("/:id", requireUser, accountController.updateAccount);
 
 export default AccountRouter;
