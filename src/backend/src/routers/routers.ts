@@ -2,7 +2,7 @@ import express from "express";
 import AuthRouter from "./user/auth.router";
 import TypeRouter from "./catalog/type.router";
 import BrandRouter from "./catalog/brand.router";
-import CartRouter from "./basket/cart.router";
+import BasketRouter from "./basket/basket.router";
 import WishlistRouter from "./basket/wishlist.router";
 import OrderRouter from "./order/order.router";
 import UserRouter from "./user/profile.router";
@@ -21,7 +21,7 @@ routers.use("/type", TypeRouter);
 routers.use("/brand", BrandRouter);
 
 // Basket
-routers.use("/cart", CartRouter);
+routers.use("/basket", BasketRouter);
 routers.use("/wishlist", WishlistRouter);
 
 // Order

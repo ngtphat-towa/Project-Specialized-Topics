@@ -2,13 +2,12 @@ import Joi from "joi";
 import { IImage } from "../../commons/image.model";
 
 // Define the DTO for adding a single BasketItem
-export interface IAddBasketItem {
+export interface ICreateBasketItem {
   productId: string;
   productName: string;
   unitPrice: number;
   oldUnitPrice: number;
   quantity: number;
-  image?: IImage;
 }
 
 // Define the DTO for updating a single BasketItem
@@ -26,7 +25,7 @@ export interface IRemoveBasketItem {
 }
 
 // Define the Joi validation schema for adding a single BasketItem
-export const addBasketItemSchema = Joi.object({
+export const createBasketItemSchema = Joi.object({
   productId: Joi.string().required().messages({
     "string.empty": "Product id is required. Please provide a valid productId.",
   }),
@@ -46,15 +45,6 @@ export const addBasketItemSchema = Joi.object({
     "number.base":
       "Quantity is required and must be a number. Please provide a valid quantity.",
   }),
-  image: Joi.object({
-    data: Joi.binary().required().messages({
-      "binary.base": "Image data is required. Please provide valid image data.",
-    }),
-    contentType: Joi.string().required().messages({
-      "string.empty":
-        "Image contentType is required. Please provide a valid contentType.",
-    }),
-  }).optional(),
 }).options({ stripUnknown: true });
 
 // Define the Joi validation schema for removing a single BasketItem
@@ -79,12 +69,4 @@ export const updateBasketItemSchema = Joi.object({
   quantity: Joi.number()
     .optional()
     .messages({ "number.base": "Quantity must be a number." }),
-  image: Joi.object({
-    data: Joi.binary()
-      .optional()
-      .messages({ "binary.base": "Image data must be binary." }),
-    contentType: Joi.string()
-      .optional()
-      .messages({ "string.empty": "Image contentType must be a string." }),
-  }).optional(),
 }).options({ stripUnknown: true });

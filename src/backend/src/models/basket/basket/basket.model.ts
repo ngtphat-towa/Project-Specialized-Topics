@@ -5,7 +5,7 @@ import { BasketItemSchema, IBasketItem } from "../items/basket.item.model";
 // Define the CustomerBasket schema
 const CustomerBasketSchema = new Schema(
   {
-    buyerId: {
+    userId: {
       type: Schema.Types.ObjectId,
       ref: "UserAccount",
       required: true,
@@ -17,8 +17,8 @@ const CustomerBasketSchema = new Schema(
 
 // Define the CustomerBasket model
 export interface ICustomerBasket extends Document {
-  buyerId: string;
-  items?: IBasketItem[];
+  userId: string;
+  items: IBasketItem[];
 }
 
 // Create the CustomerBasket model

@@ -5,6 +5,7 @@ import { ICatalogItem } from "../../catalog/items/item.model";
 // Define the BasketItem schema
 export const BasketItemSchema = new Schema(
   {
+    id: { type: String, required: true },
     product: {
       type: Schema.Types.ObjectId,
       ref: "CatalogItem",
@@ -21,6 +22,7 @@ export const BasketItemSchema = new Schema(
 
 // Define the BasketItem model
 export interface IBasketItem extends Document {
+  id: string;
   product?: ICatalogItem;
   productId: string;
   productName: string;
@@ -29,6 +31,7 @@ export interface IBasketItem extends Document {
   quantity: number;
   image?: IImage;
 }
+
 // Create the BasketItem model
 export const BasketItem = mongoose.model<IBasketItem>(
   "BasketItem",

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ForbiddenError, UnauthorizedError } from "../../common/err.common";
 import Joi from "joi";
 import logging from "../../configs/logging";
+import { UserAccount } from "../../models/auth/account/user.account.model";
 
 // Define the schema for the JWT payload
 const jwtPayloadSchema = Joi.object({
@@ -17,7 +18,7 @@ const jwtPayloadSchema = Joi.object({
  * @param {NextFunction} next - The next function to call after the user is checked.
  * @throws {ForbiddenError} If the user is not authenticated.
  */
-export default function requireUser(
+export default async function requireUser(
   req: Request,
   res: Response,
   next: NextFunction
@@ -25,6 +26,24 @@ export default function requireUser(
   if (!req.user) {
     throw new ForbiddenError("Invalid session", req.originalUrl);
   }
+
+  return next();
+}
+
+export async function requireUserData(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  if (!req.user) {
+    throw new ForbiddenError("Invalid session", req.originalUrl);
+  }
+  // @ts-ignore
+  const email = req.user.email;
+  const existingUser = await UserAccount.findOne({ email });
+
+  // @ts-ignore
+  req.body.userId = existingUser?.id;
 
   return next();
 }
