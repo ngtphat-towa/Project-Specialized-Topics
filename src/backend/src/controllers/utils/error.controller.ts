@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import ApiError from "../common/err.common";
-import logging from "../configs/logging";
+import ApiError from "../../common/err.common";
+import logging from "../../configs/logging";
 
 function handleError(
   error: Error,

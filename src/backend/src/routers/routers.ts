@@ -1,14 +1,14 @@
 import express from "express";
-import AuthRouter from "./auth.router";
+import AuthRouter from "./user/auth.router";
 import TypeRouter from "./catalog/type.router";
 import BrandRouter from "./catalog/brand.router";
-import CartRouter from "./cart.router";
-import WishlistRouter from "./wishlist.router";
-import OrderRouter from "./order.router";
+import CartRouter from "./basket/cart.router";
+import WishlistRouter from "./basket/wishlist.router";
+import OrderRouter from "./order/order.router";
 import UserRouter from "./user.router";
-import CheckoutRouter from "./checkout.router";
+import CheckoutRouter from "./order/checkout.router";
 import ItemRouter from "./catalog/items.router";
-import AccountRouter from "./auth/account.router";
+import AccountRouter from "./user/account.router";
 
 const routers = express.Router();
 

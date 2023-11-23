@@ -1,7 +1,7 @@
 import express from "express";
-import cartController from "../controllers/cart.controller";
-import { methodNotAllowed } from "../middlewares/utils/error.middleware";
-import validateToken from "../middlewares/auth/auth.middleware";
+import cartController from "../../controllers/basket/cart.controller";
+import { methodNotAllowed } from "../../middlewares/utils/error.middleware";
+import validateToken from "../../middlewares/auth/auth.middleware";
 
 const CartRouter = express.Router();
 

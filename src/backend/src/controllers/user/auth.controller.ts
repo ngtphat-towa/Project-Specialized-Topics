@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import { signJWT } from "../handlers/jwt.handler";
+import { signJWT } from "../../handlers/jwt.handler";
 import {
   ILoginUserAccount,
   loginUserSchema,
-} from "../models/auth/account/user.account.dto";
-import { validateBody } from "../models/commons/validate.dto";
-import { UserAccount } from "../models/auth/account/user.account.model";
-import { UnauthorizedError } from "../common/err.common";
-import { Session } from "../models/auth/session/session.model";
+} from "../../models/auth/account/user.account.dto";
+import { validateBody } from "../../models/commons/validate.dto";
+import { UserAccount } from "../../models/auth/account/user.account.model";
+import { UnauthorizedError } from "../../common/err.common";
+import { Session } from "../../models/auth/session/session.model";
 
 /**
  * This module exports handlers for creating, getting, and deleting sessions.

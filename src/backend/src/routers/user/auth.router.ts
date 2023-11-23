@@ -1,7 +1,7 @@
 import express from "express";
-import controller from "../controllers/auth.controller";
-import { methodNotAllowed } from "../middlewares/utils/error.middleware";
-import requireUser from "../middlewares/auth/validate.middleware";
+import controller from "../../controllers/user/auth.controller";
+import { methodNotAllowed } from "../../middlewares/utils/error.middleware";
+import requireUser from "../../middlewares/auth/validate.middleware";
 
 const AuthRouter = express.Router();
 // Session
