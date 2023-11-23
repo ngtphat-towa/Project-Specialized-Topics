@@ -64,8 +64,7 @@ async function deserializeUser(
     if (!payload) {
       payload = await refreshAccessToken(refreshToken, res);
     }
-
-    // @ts-ignore
+    //@ts-ignore
     req.user = payload;
 
     return next();

@@ -50,7 +50,8 @@ async function createSessionHandler(
     const { accessToken, refreshToken } = createTokens(
       session.id,
       user.email,
-      user.username
+      user.username,
+      user.role
     );
 
     // set access token in cookie
@@ -141,11 +142,21 @@ function setCookies(
  * @param {string} sessionId - The session ID.
  * @param {string} email - The user's email.
  * @param {string} username - The user's username.
+ * @param {string} role - The user's role.
  * @returns {Object} The access and refresh tokens.
  */
-function createTokens(sessionId: string, email: string, username: string) {
-  const accessToken = signJWT({ email, username, sessionId }, "5m");
-  const refreshToken = signJWT({ sessionId }, "1y");
+function createTokens(
+  sessionId: string,
+  email: string,
+  username: string,
+  role: string
+) {
+  const claims = { sessionId, email, username, role };
+  const refreshClaims = { sessionId, email };
+
+  const accessToken = signJWT(claims, "15m");
+  const refreshToken = signJWT(refreshClaims, "7d");
+
   return { accessToken, refreshToken };
 }
 
