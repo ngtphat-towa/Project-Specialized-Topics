@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { IUserAccount } from "../../auth/account/user.account.model";
 import { BasketItemSchema, IBasketItem } from "../items/basket.item.model";
 
 // Define the CustomerBasket schema

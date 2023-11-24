@@ -53,13 +53,6 @@ const getBasketByUserId = async (
   }
 };
 
-const getCart = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    return res.status(200).json({ message: "getCart" });
-  } catch (error) {
-    next(error);
-  }
-};
 const createBasket = async (
   req: Request,
   res: Response,
@@ -232,7 +225,6 @@ const deleteBasketItem = async (
 
 export default {
   getBasketByUserId,
-  getCart,
   createBasket,
   createBasketItem,
   updateBasketItem,
