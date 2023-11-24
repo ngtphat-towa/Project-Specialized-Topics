@@ -3,15 +3,18 @@ import { IImage } from "../../commons/image.model";
 
 // Define the DTO for adding a single BasketItem
 export interface ICreateBasketItem {
+  userId: string;
   productId: string;
   productName: string;
   unitPrice: number;
   oldUnitPrice: number;
   quantity: number;
+  image?: IImage;
 }
 
 // Define the DTO for updating a single BasketItem
 export interface IUpdateBasketItem {
+  userId: string;
   productId: string;
   productName?: string;
   unitPrice?: number;
@@ -21,11 +24,15 @@ export interface IUpdateBasketItem {
 
 // Define the DTO for removing a single BasketItem
 export interface IRemoveBasketItem {
+  userId: string;
   productId: string;
 }
 
 // Define the Joi validation schema for adding a single BasketItem
 export const createBasketItemSchema = Joi.object({
+  userId: Joi.string().required().messages({
+    "string.empty": "userId is required. Please provide a valid userId.",
+  }),
   productId: Joi.string().required().messages({
     "string.empty": "Product id is required. Please provide a valid productId.",
   }),
@@ -45,10 +52,22 @@ export const createBasketItemSchema = Joi.object({
     "number.base":
       "Quantity is required and must be a number. Please provide a valid quantity.",
   }),
+  image: Joi.object({
+    data: Joi.binary().required().messages({
+      "binary.base": "Image data is required. Please provide valid image data.",
+    }),
+    contentType: Joi.string().required().messages({
+      "string.empty":
+        "Content type is required. Please provide a valid content type.",
+    }),
+  }).optional(),
 }).options({ stripUnknown: true });
 
 // Define the Joi validation schema for removing a single BasketItem
 export const removeBasketItemSchema = Joi.object({
+  userId: Joi.string().required().messages({
+    "string.empty": "userId is required. Please provide a valid userId.",
+  }),
   productId: Joi.string().required().messages({
     "string.empty": "Product id is required. Please provide a valid productId.",
   }),
@@ -56,6 +75,9 @@ export const removeBasketItemSchema = Joi.object({
 
 // Define the Joi validation schema for updating a single BasketItem
 export const updateBasketItemSchema = Joi.object({
+  userId: Joi.string().required().messages({
+    "string.empty": "userId is required. Please provide a valid userId.",
+  }),
   productId: Joi.string().required().messages({
     "string.empty": "Product id is required. Please provide a valid productId.",
   }),

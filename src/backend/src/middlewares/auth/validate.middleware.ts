@@ -23,11 +23,15 @@ export default async function requireUser(
   res: Response,
   next: NextFunction
 ) {
-  if (!req.user) {
-    throw new ForbiddenError("Invalid session", req.originalUrl);
-  }
+  try {
+    if (!req.user) {
+      throw new ForbiddenError("Invalid session", req.originalUrl);
+    }
 
-  return next();
+    return next();
+  } catch (error) {
+    return next(error);
+  }
 }
 
 export async function requireUserData(
@@ -35,17 +39,21 @@ export async function requireUserData(
   res: Response,
   next: NextFunction
 ) {
-  if (!req.user) {
-    throw new ForbiddenError("Invalid session", req.originalUrl);
+  try {
+    if (!req.user) {
+      throw new ForbiddenError("Invalid session", req.originalUrl);
+    }
+    // @ts-ignore
+    const email = req.user.email;
+    const existingUser = await UserAccount.findOne({ email });
+
+    // @ts-ignore
+    req.body.userId = existingUser?.id;
+
+    return next();
+  } catch (error) {
+    next(error);
   }
-  // @ts-ignore
-  const email = req.user.email;
-  const existingUser = await UserAccount.findOne({ email });
-
-  // @ts-ignore
-  req.body.userId = existingUser?.id;
-
-  return next();
 }
 
 /**
@@ -56,17 +64,20 @@ export async function requireUserData(
  * @throws {ForbiddenError} If the user is not an admin.
  */
 export function requireAdmin(req: Request, res: Response, next: NextFunction) {
-  if (!req.user) {
-    throw new ForbiddenError("Invalid session", req.originalUrl);
+  try {
+    if (!req.user) {
+      throw new ForbiddenError("Invalid session", req.originalUrl);
+    }
+
+    // Validate the JWT payload
+    const { error, value } = jwtPayloadSchema.validate(req.user);
+
+    if ((value.role as string).localeCompare("admin") !== 0) {
+      throw new ForbiddenError("User is not an admin", req.originalUrl);
+    }
+
+    return next();
+  } catch (error) {
+    next(error);
   }
-
-  // Validate the JWT payload
-  const { error, value } = jwtPayloadSchema.validate(req.user);
-
-  logging.debug("requireAdmin", "Validate the JWT payload", { error, value });
-  if ((value.role as string).localeCompare("admin") !== 0) {
-    throw new ForbiddenError("User is not an admin", req.originalUrl);
-  }
-
-  return next();
 }

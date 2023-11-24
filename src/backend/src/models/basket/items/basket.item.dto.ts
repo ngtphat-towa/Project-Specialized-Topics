@@ -24,4 +24,13 @@ export const basketItemSchema = Joi.object({
     "number.base":
       "Quantity is required and must be a number. Please provide a valid quantity.",
   }),
+  image: Joi.object({
+    data: Joi.binary().required().messages({
+      "binary.base": "Image data is required. Please provide valid image data.",
+    }),
+    contentType: Joi.string().required().messages({
+      "string.empty":
+        "Content type is required. Please provide a valid content type.",
+    }),
+  }).optional(),
 }).options({ stripUnknown: true });

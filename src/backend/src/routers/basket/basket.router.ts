@@ -8,11 +8,19 @@ import requireUser, {
 
 const BasketRouter = express.Router();
 
-BasketRouter.post("/items/:id", requireUser, basketController.createBasketItem);
-BasketRouter.put("/items/:id", requireUser, basketController.updateBasketItem);
+BasketRouter.post(
+  "/items/:id",
+  requireUserData,
+  basketController.createBasketItem
+);
+BasketRouter.put(
+  "/items/:id",
+  requireUserData,
+  basketController.updateBasketItem
+);
 BasketRouter.delete(
   "/items/:id",
-  requireUser,
+  requireUserData,
   basketController.deleteBasketItem
 );
 

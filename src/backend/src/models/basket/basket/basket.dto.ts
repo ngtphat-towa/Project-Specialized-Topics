@@ -7,7 +7,7 @@ export const createCustomerBasketSchema = Joi.object({
   userId: Joi.string().required().messages({
     "string.empty": "userId is required. Please provide a valid userId.",
   }),
-  items: Joi.array().items(basketItemSchema).required().messages({
+  items: Joi.array().items(basketItemSchema).optional().messages({
     "array.base": "Items are required. Please provide a valid array of items.",
   }),
 }).options({ stripUnknown: true });
@@ -24,7 +24,7 @@ export const updateCustomerBasketSchema = Joi.object({
 
 export interface ICreateCustomerBasket {
   userId: string;
-  items: IBasketItem[];
+  items?: IBasketItem[];
 }
 
 export interface IGetCustomerBasketByuserId {
