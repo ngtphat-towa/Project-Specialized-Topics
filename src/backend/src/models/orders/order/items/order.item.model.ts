@@ -1,19 +1,25 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import { IImage } from "../../../commons/image.model";
 
 export interface IOrderItem extends Document {
   productId: string;
-  unitPrice: number;
+  price: number;
   productName: string;
-  pictureUrl: string;
+  image?: IImage;
   quantity: number;
   discount: number;
 }
 
 export const OrderItemSchema: Schema = new Schema({
   productId: { type: String, required: true },
-  unitPrice: { type: Number, required: true },
+  price: { type: Number, required: true },
   productName: { type: String, required: true },
-  pictureUrl: { type: String, required: true },
+  image: { data: Buffer, contentType: String },
   quantity: { type: Number, required: true },
   discount: { type: Number, required: true },
 });
+// Create the OrderItem model
+export const OrderItem = mongoose.model<IOrderItem>(
+  "OrderItem",
+  OrderItemSchema
+);

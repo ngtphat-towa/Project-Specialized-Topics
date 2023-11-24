@@ -14,7 +14,7 @@ export interface IIdParam {
 }
 
 export const userIdSchema = Joi.object({
-  id: Joi.string().required().messages({
+  userId: Joi.string().required().messages({
     "string.invalid": "ID must be a valid string or number",
     "number.invalid": "ID must be a valid string or number",
   }),
@@ -22,4 +22,15 @@ export const userIdSchema = Joi.object({
 
 export interface IUserId {
   userId: string;
+}
+
+export const sessionIdSchema = Joi.object({
+  sessionId: Joi.string().required().messages({
+    "string.invalid": "ID must be a valid string or number",
+    "number.invalid": "ID must be a valid string or number",
+  }),
+}).options({ stripUnknown: true });
+
+export interface ISessionID {
+  sessionId: string;
 }

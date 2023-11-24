@@ -3,7 +3,7 @@ import {
   IIdParam,
   IUserId,
   idSchema,
-  userIdSchema,
+  sessionIdSchema,
 } from "../../models/commons/id.dto";
 import {
   validateBody,
@@ -87,7 +87,7 @@ const deleteBasket = async (
     );
     // check if the basket exist
     const existingBasket = await CustomerBasket.findOneAndDelete({
-      $or: [{ userId: deleteCustomerBasket.userId }],
+      userId: deleteCustomerBasket.userId,
     });
 
     // if existingBasket is null

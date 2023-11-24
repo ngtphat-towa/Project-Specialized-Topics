@@ -22,6 +22,12 @@ export const updateCustomerBasketSchema = Joi.object({
   }),
 }).options({ stripUnknown: true });
 
+// Define the Joi validation schema for updateCustomerBasket
+export const deleteCustomerBasketSchema = Joi.object({
+  userId: Joi.string().required().messages({
+    "string.empty": "userId is required. Please provide a valid userId.",
+  }),
+}).options({ stripUnknown: true });
 export interface ICreateCustomerBasket {
   userId: string;
   items?: IBasketItem[];
