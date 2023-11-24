@@ -1,21 +1,44 @@
 import express from "express";
 import orderController from "../../controllers/order/order.controller";
 import { methodNotAllowed } from "../../middlewares/utils/error.middleware";
-import validateToken from "../../middlewares/auth/auth.middleware";
-import requireUser from "../../middlewares/auth/validate.middleware";
+import requireUser, {
+  requireAdmin,
+  requireUserData,
+} from "../../middlewares/auth/validate.middleware";
 
 const OrderRouter = express.Router();
 
-OrderRouter.route("/")
-  .get(requireUser, orderController.getOrders)
-  .post(requireUser, orderController.createOrder)
-  .delete(requireUser, orderController.deleteAllOrders)
-  .all(methodNotAllowed);
+// GET routes
+OrderRouter.get("/", requireUserData, orderController.getOrderByUser);
+OrderRouter.get("/admin/all", requireAdmin, orderController.getAllOrders);
+OrderRouter.get(
+  "/item/:id",
+  requireUserData,
+  orderController.getOrderByOrderId
+);
 
-OrderRouter.route("/:id")
-  .get(requireUser, orderController.getOrderItems)
-  .put(requireUser, orderController.saveOrderItems)
-  .delete(requireUser, orderController.deleteOrder)
-  .all(methodNotAllowed);
+// PUT routes
+OrderRouter.put(
+  "/update/:id",
+  requireUserData,
+  orderController.updateCustomerShippingInfo
+);
+OrderRouter.put(
+  "/admin/update/:id",
+  requireAdmin,
+  orderController.updateCustomerOrder
+);
+OrderRouter.put(
+  "/admin/update/status/:id",
+  requireAdmin,
+  orderController.updateOrderStatus
+);
+
+// DELETE routes
+OrderRouter.delete("/:id", requireUser, orderController.deleteOrder);
+
+// Method not allowed routes
+OrderRouter.all("/:id", methodNotAllowed);
+OrderRouter.all("/", methodNotAllowed);
 
 export default OrderRouter;

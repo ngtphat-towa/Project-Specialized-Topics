@@ -28,13 +28,13 @@ export const OrderStatusUpdateSchema = Joi.object({
     }),
 }).options({ stripUnknown: true });
 
-export interface IShippingInfoUpdateDto {
+export interface IShippingInfoUpdate {
   shippingCity: string;
   shippingStreet: string;
   shippingState: string;
   shippingCountry: string;
   shippingZipCode: string;
 }
-export interface IOrderStatusUpdateDto {
-  orderStatus: OrderStatus;
+export interface IOrderStatusUpdate {
+  orderStatus: string;
 }
