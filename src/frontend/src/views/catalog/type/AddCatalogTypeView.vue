@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import catalogTypeService from '../../../services/catalog/type.service';
 import Swal from 'sweetalert2';
 export default {
   data() {
@@ -100,23 +100,19 @@ export default {
       formData.append('image', this.image);
 
       console.log(formData);
-      axios
-        .post('http://localhost:3000/api/type/', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
+      catalogTypeService
+        .postNewCatalogType(formData)
         .then((response) => {
           console.log(response.data);
-          Swal({
-            text: 'Catalog type added successfully!',
+          Swal.fire({
+            text: 'CatalogType Added Successfully!',
             icon: 'success',
-            closeOnClickOutside: false
+            allowOutsideClick: false
           });
         })
         .catch((error) => {
           console.error(error);
-          Swal({
+          Swal.fire({
             text: 'Catalog type added failt!',
             icon: 'error',
             closeOnClickOutside: false
