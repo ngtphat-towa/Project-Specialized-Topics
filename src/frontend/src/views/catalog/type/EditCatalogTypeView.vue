@@ -39,6 +39,7 @@
 
 <script>
 import catalogTypeService from '../../../services/catalog/type.service';
+import convertToBase64 from '../../../services/image/image.render';
 import Swal from 'sweetalert2';
 // import { Buffer } from 'buffer';
 export default {
@@ -71,19 +72,7 @@ export default {
       this.reviewImage = URL.createObjectURL(file);
       this.errors.image = '';
     },
-    convertToBase64(imageData) {
-      // Convert the Buffer from the server into a Uint8Array
-      var bytes = new Uint8Array(imageData.data);
 
-      // Convert the Uint8Array into a string
-      var binary = '';
-      bytes.forEach((byte) => (binary += String.fromCharCode(byte)));
-
-      // Convert the string into a base64 string
-      var base64String = window.btoa(binary);
-
-      return 'data:image/png;base64,' + base64String;
-    },
     validateFeild() {
       var isValid = true;
       if (!this.typeName) {
@@ -144,7 +133,7 @@ export default {
           this.typeName = catalogType.name;
           this.typeDescription = catalogType.description;
           if (catalogType && catalogType.image && catalogType.image.data) {
-            this.reviewImage = this.convertToBase64(catalogType.image.data);
+            this.reviewImage = convertToBase64(catalogType.image.data);
           } else {
             console.error('Image data not available', catalogType);
           }

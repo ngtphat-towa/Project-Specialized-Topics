@@ -39,6 +39,11 @@
               >Edit Catalog Type</RouterLink
             >
           </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" :to="{ name: 'CatalogTypeList' }"
+              >Catalog Type List View</RouterLink
+            >
+          </li>
         </ul>
       </div>
     </nav>

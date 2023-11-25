@@ -24,5 +24,13 @@ export default {
       },
       withCredentials: true
     });
+  },
+  fetchCatelogTypes() {
+    return axios.get('/api/type/', {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      withCredentials: true
+    });
   }
 };
