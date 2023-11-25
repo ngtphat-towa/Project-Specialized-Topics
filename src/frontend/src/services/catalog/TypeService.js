@@ -1,19 +1,24 @@
 import axios from 'axios';
 
+const api = axios.create({
+  baseURL: '/api/type',
+  withCredentials: true,
+});
+
 const getTypesByFilter = (filter) => {
-  return axios.get('/api/type', { params: filter });
+  return api.get('/', { params: filter });
 };
 
 const createType = (typeData) => {
-  return axios.post('/api/type', typeData);
+  return api.post('/', typeData);
 };
 
 const getType = (id) => {
-  return axios.get(`/api/type/${id}`);
+  return api.get(`/${id}`);
 };
 
 const updateType = (id, typeData) => {
-  return axios.put(`/api/type/${id}`, typeData);
+  return api.put(`/${id}`, typeData);
 };
 
 export default {

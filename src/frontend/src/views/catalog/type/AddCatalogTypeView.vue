@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import typeService from '../../../services/catalog/type.service';
+import catalogTypeService from '../../../services/catalog/TypeService';
 import sweetalert from 'sweetalert';
 
 export default {
@@ -76,7 +76,7 @@ export default {
 
         console.log('addCatalogType: FormData', formData);
 
-        await typeService
+        await catalogTypeService
           .createType(formData)
           .then(() => {
             sweetalert({

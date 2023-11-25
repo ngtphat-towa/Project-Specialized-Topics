@@ -1,0 +1,105 @@
+<template>
+  <div id="home">
+    <!--    display categories-->
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h3 class="display-5">Feature Categories</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div v-for="index in this.categorySize" :key="index" class="col-md-6 col-lg-4 col-12">
+          <CatalogTypeBox class="CatalogTypeBox" :category="categories[index - 1]" />
+        </div>
+      </div>
+    </div>
+
+    <!--    display top products-->
+    <div class="container my-5">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h3 class="display-5">Feature Products</h3>
+        </div>
+      </div>
+
+      <!-- display products-->
+      <div class="row">
+        <div v-for="index in this.productSize" :key="index" class="col-md-6 col-lg-4 col-12">
+          <CatalogItemBox class="ProductBox" :product="products[index - 1]" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import CatalogTypeBox from '../components/catalog/CatalogTypeBox.vue';
+import CatalogItemBox from '../components/catalog/CatalogItemBox.vue';
+
+export default {
+  name: 'HomeView',
+  components: { CatalogItemBox, CatalogTypeBox },
+  props: ['catalogTypes', 'catalogItems'],
+  data() {
+    return {
+      categorySize: 0,
+      productSize: 0,
+    };
+  },
+  mounted() {
+    this.categorySize = Math.min(6, this.categories.length);
+    this.productSize = Math.min(8, this.products.length);
+  },
+};
+</script>
+
+<style scoped>
+#home {
+  padding: 20px;
+}
+
+.display-5 {
+  color: #333;
+}
+
+.container {
+  margin-top: 20px;
+}
+
+.row {
+  margin-bottom: 20px;
+}
+
+/* Style for CatalogTypeBox and ProductBox */
+.col-md-6,
+.col-lg-4,
+.col-12 {
+  margin-bottom: 20px;
+}
+
+/* Add box shadow to CatalogTypeBox and ProductBox */
+.CatalogTypeBox,
+.ProductBox {
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.CatalogTypeBox:hover,
+.ProductBox:hover {
+  transform: scale(1.05);
+}
+
+/* Style for heading */
+h2 {
+  color: #333;
+}
+
+/* Responsive styling for small screens */
+@media (max-width: 576px) {
+  .col-md-6,
+  .col-lg-4,
+  .col-12 {
+    margin-bottom: 10px;
+  }
+}
+</style>

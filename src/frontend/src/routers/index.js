@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/home.view.vue'
-import AboutView from '../views/about.view.vue'
-import AddCatalogTypeView from '../views/catalog/type/AddCatalogTypeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import AddCatalogTypeView from '../views/catalog/type/AddCatalogTypeView.vue';
 
+import HomeView from '../views/HomeView.vue';
+import AboutView from '../views/AboutView.vue';
 const routes = [
   {
     path: '/admin/catalog/type/add',
@@ -19,11 +19,11 @@ const routes = [
     name: 'about',
     component: AboutView,
   },
-]
+];
 
 const router = createRouter({
   history: createWebHistory(),
   routes: routes,
-})
+});
 
-export default router
+export default router;
