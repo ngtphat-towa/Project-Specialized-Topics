@@ -1,62 +1,24 @@
 <template>
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">
-        <img
-          src="@/assets/logo.svg"
-          width="30"
-          height="30"
-          class="d-inline-block align-top"
-          alt="Vue logo"
-        />
-      </a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/">Home</RouterLink>
-          </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/about">About</RouterLink>
-          </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/admin/catalog/type/add">Add new type</RouterLink>
-          </li>
-          <li class="nav-item">
-            <RouterLink
-              class="nav-link"
-              :to="{ name: 'EditCatalogType', params: { id: tempolaryId } }"
-              >Edit Catalog Type</RouterLink
-            >
-          </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" :to="{ name: 'CatalogTypeList' }"
-              >Catalog Type List View</RouterLink
-            >
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
+  <div class="d-flex flex-column min-vh-100">
+    <header>
+      <NavigateBarComponent></NavigateBarComponent>
+    </header>
 
-  <RouterView />
+    <div class="flex-grow-1">
+      <RouterView></RouterView>
+    </div>
+
+    <FooterComponent></FooterComponent>
+  </div>
 </template>
+
 <script>
+import NavigateBarComponent from './components/NavigateBarComponent.vue';
+import FooterComponent from './components/FooterComponent.vue';
 export default {
   data() {
-    return {
-      tempolaryId: '6562067fdb0f4a59e98301d9'
-    };
-  }
+    return {};
+  },
+  components: { NavigateBarComponent, FooterComponent }
 };
 </script>
