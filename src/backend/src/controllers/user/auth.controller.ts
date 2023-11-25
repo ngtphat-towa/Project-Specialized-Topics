@@ -8,6 +8,7 @@ import { validateBody } from "../../models/commons/validate.dto";
 import { UserAccount } from "../../models/auth/account/user.account.model";
 import { UnauthorizedError } from "../../common/err.common";
 import { Session } from "../../models/auth/session/session.model";
+import config from "../../configs/config";
 
 /**
  * This module exports handlers for creating, getting, and deleting sessions.
@@ -154,8 +155,11 @@ function createTokens(
   const claims = { sessionId, email, username, role };
   const refreshClaims = { sessionId, email };
 
-  const accessToken = signJWT(claims, "15m");
-  const refreshToken = signJWT(refreshClaims, "7d");
+  const accessToken = signJWT(claims, config.jwt.accessTokenExpireTime);
+  const refreshToken = signJWT(
+    refreshClaims,
+    config.jwt.refreshTokenExpireTime
+  );
 
   return { accessToken, refreshToken };
 }
