@@ -61,7 +61,7 @@ const createType = async (req: Request, res: Response, next: NextFunction) => {
 
 const updateType = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    var image = validateAndReturnImage(req);
+    var image = validateAndReturnImage(req, false);
     const params: IIdParam = validateParams(req, idSchema);
     const updateTypeData: IUpdateType = validateBody(req, updateTypeSchema);
 

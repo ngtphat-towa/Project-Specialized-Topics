@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import AboutView from '../views/AboutView.vue';
 import AddCatalogTypeView from '../views/catalog/type/AddCatalogTypeView.vue';
+import EditCatalogTypeView from '../views/catalog/type/EditCatalogTypeView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +23,11 @@ const router = createRouter({
       path: '/admin/catalog/type/add',
       name: 'AddCatalogType',
       component: AddCatalogTypeView
+    },
+    {
+      path: '/admin/catalog/type/update/:id',
+      name: 'EditCatalogType',
+      component: EditCatalogTypeView
     }
   ]
 });

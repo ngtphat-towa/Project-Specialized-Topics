@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h4 class="pt-3">Add new catalog type</h4>
+        <h4 class="pt-3">Update catalog type</h4>
       </div>
     </div>
 
@@ -40,9 +40,11 @@
 <script>
 import catalogTypeService from '../../../services/catalog/type.service';
 import Swal from 'sweetalert2';
+// import { Buffer } from 'buffer';
 export default {
   data() {
     return {
+      oldCatlog: null,
       typeName: null,
       typeDescription: null,
       image: null,
@@ -69,6 +71,19 @@ export default {
       this.reviewImage = URL.createObjectURL(file);
       this.errors.image = '';
     },
+    convertToBase64(imageData) {
+      // Convert the Buffer from the server into a Uint8Array
+      var bytes = new Uint8Array(imageData.data);
+
+      // Convert the Uint8Array into a string
+      var binary = '';
+      bytes.forEach((byte) => (binary += String.fromCharCode(byte)));
+
+      // Convert the string into a base64 string
+      var base64String = window.btoa(binary);
+
+      return 'data:image/png;base64,' + base64String;
+    },
     validateFeild() {
       var isValid = true;
       if (!this.typeName) {
@@ -80,10 +95,10 @@ export default {
 
         this.errors.typeDescription = 'Description is required.';
       }
-      if (!this.image) {
-        isValid = false;
-        this.errors.image = 'Image is required.';
-      }
+      // if (!this.image) {
+      //   isValid = false;
+      //   this.errors.image = 'Image is required.';
+      // }
       return isValid;
     },
 
@@ -97,11 +112,13 @@ export default {
       // Append the data
       formData.append('name', this.typeName);
       formData.append('description', this.typeDescription);
-      formData.append('image', this.image);
+      if (this.image) {
+        formData.append('image', this.image);
+      }
 
       console.log(formData);
       await catalogTypeService
-        .postNewCatalogType(formData)
+        .putCatalogType(this.$route.params.id, formData)
         .then((response) => {
           console.log(response.data);
           Swal.fire({
@@ -118,9 +135,29 @@ export default {
             closeOnClickOutside: false
           });
         });
+    },
+    async fetchCatalogTypeByIdParam() {
+      await catalogTypeService
+        .getCatalogType(this.$route.params.id)
+        .then((response) => {
+          const catalogType = response.data;
+          this.typeName = catalogType.name;
+          this.typeDescription = catalogType.description;
+          if (catalogType && catalogType.image && catalogType.image.data) {
+            this.reviewImage = this.convertToBase64(catalogType.image.data);
+          } else {
+            console.error('Image data not available', catalogType);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   },
-  mounted() {}
+
+  mounted() {
+    this.fetchCatalogTypeByIdParam();
+  }
 };
 </script>
 

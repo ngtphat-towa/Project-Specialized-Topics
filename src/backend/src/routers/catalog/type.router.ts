@@ -14,7 +14,8 @@ TypeRouter.route("/")
   .all(methodNotAllowed);
 TypeRouter.route("/:id")
   .get(typeController.getType)
-  .put(requireAdmin, processImageMiddleware, typeController.updateType)
+  .put(processImageMiddleware, typeController.updateType)
+  // .put(requireAdmin, processImageMiddleware, typeController.updateType)
   .all(methodNotAllowed);
 
 export default TypeRouter;

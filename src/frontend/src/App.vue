@@ -1,21 +1,57 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router';
-</script>
-
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/admin/catalog/type/add">Add new type</RouterLink>
-      </nav>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img
+          src="@/assets/logo.svg"
+          width="30"
+          height="30"
+          class="d-inline-block align-top"
+          alt="Vue logo"
+        />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/">Home</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/about">About</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/admin/catalog/type/add">Add new type</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink
+              class="nav-link"
+              :to="{ name: 'EditCatalogType', params: { id: tempolaryId } }"
+              >Edit Catalog Type</RouterLink
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
   </header>
 
   <RouterView />
 </template>
-
-<style scoped></style>
+<script>
+export default {
+  data() {
+    return {
+      tempolaryId: '6562067fdb0f4a59e98301d9'
+    };
+  }
+};
+</script>
