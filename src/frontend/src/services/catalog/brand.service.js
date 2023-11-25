@@ -1,17 +1,17 @@
-import { api } from '../api';
+import axios from 'axios';
 
 export const getBrandsByFilter = async (filter) => {
-  return await api.get('/', { params: filter });
+  return await axios.get('/', { params: filter });
 };
 
 export const createBrand = async (brandData) => {
-  return await api.post('/', brandData);
+  return await axios.post('/', brandData);
 };
 
 export const getBrand = async (id) => {
-  return await api.get(`/${id}`);
+  return await axios.get(`/${id}`);
 };
 
 export const updateBrand = async (id, brandData) => {
-  return await api.put(`/${id}`, brandData);
+  return await axios.put(`/${id}`, brandData);
 };

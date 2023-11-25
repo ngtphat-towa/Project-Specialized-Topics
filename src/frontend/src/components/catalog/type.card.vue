@@ -3,19 +3,19 @@
     <div class="embed-responsive embed-responsive-16by9">
       <img
         class="card-img-top embed-responsive-item"
-        :src="category.imageUrl"
+        :src="catalogType.imageUrl"
         alt="Card image cap"
       />
     </div>
     <div class="card-body">
-      <router-link :to="{ name: 'ListProducts', params: { id: category.id } }">
-        <h5 class="card-title">{{ category.name }}</h5>
+      <router-link :to="{ name: 'ListProducts', params: { id: catalogType.id } }">
+        <h5 class="card-title">{{ catalogType.name }}</h5>
       </router-link>
       <p class="card-text">
-        {{ category.description }}
+        {{ catalogType.description }}
       </p>
       <router-link
-        :to="{ name: 'EditCatalogType', params: { id: category.id } }"
+        :to="{ name: 'EditCatalogType', params: { id: catalogType.id } }"
         v-show="$route.name == 'CatalogType'"
       >
         <button class="btn btn-primary">Edit</button>
@@ -26,7 +26,7 @@
 <script>
 export default {
   name: 'CatalogTypeBox',
-  props: ['category'],
+  props: ['catalogType'],
   methods: {},
 };
 </script>

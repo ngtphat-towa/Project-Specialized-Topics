@@ -1,17 +1,24 @@
-import { api } from '../api';
+import axios from 'axios';
 
-export const getTypesByFilter = (filter) => {
-  return api.get('/type', { params: filter });
+const getTypesByFilter = (filter) => {
+  return axios.get('/api/type', { params: filter });
 };
 
-export const createType = (typeData) => {
-  return api.post('/type', typeData);
+const createType = (typeData) => {
+  return axios.post('/api/type', typeData);
 };
 
-export const getType = (id) => {
-  return api.get(`/type/${id}`);
+const getType = (id) => {
+  return axios.get(`/api/type/${id}`);
 };
 
-export const updateType = (id, typeData) => {
-  return api.put(`/type/${id}`, typeData);
+const updateType = (id, typeData) => {
+  return axios.put(`/api/type/${id}`, typeData);
+};
+
+export default {
+  getTypesByFilter,
+  createType,
+  getType,
+  updateType,
 };
