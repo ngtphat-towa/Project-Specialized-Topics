@@ -13,8 +13,8 @@ ItemRouter.get(
   itemController.getItemsByBrandAndTypeId
 );
 ItemRouter.get("/type/all/brand/:brandId", itemController.getItemsByBrandId);
-ItemRouter.get("/catalogtypes", itemController.getCatlogTypes);
-ItemRouter.get("/catalogbrands", itemController.getCatlogBrands);
+ItemRouter.get("/catalogtypes", itemController.getCatalogTypes);
+ItemRouter.get("/catalogbrands", itemController.getCatalogBrands);
 
 // Routes for querying catalog items.
 ItemRouter.get("/", itemController.getAllItems);

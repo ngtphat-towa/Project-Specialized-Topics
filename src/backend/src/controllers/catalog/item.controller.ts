@@ -122,26 +122,26 @@ const getItemsByBrandId = async (
   }
 };
 
-const getCatlogTypes = async (
+const getCatalogTypes = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const types = await Type.find().select("_id name description");
+    const types = await Type.find().select("_id name");
     return res.status(200).json(types);
   } catch (error) {
     next(error);
   }
 };
 
-const getCatlogBrands = async (
+const getCatalogBrands = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const brands = await Brand.find().select("_id name description");
+    const brands = await Brand.find().select("_id name");
     return res.status(200).json(brands);
   } catch (error) {
     next(error);
@@ -150,7 +150,7 @@ const getCatlogBrands = async (
 
 const createItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    var image =(await validateAndReturnImage(req, false))!;
+    var image = (await validateAndReturnImage(req, false))!;
     const body: ICreateCatalogItem = validateBody(req, createCatalogItemSchema);
     const item: ICatalogItem = new CatalogItem({ ...body, image });
     const result = await item.save();
@@ -162,7 +162,7 @@ const createItem = async (req: Request, res: Response, next: NextFunction) => {
 
 const updateItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    var image =await validateAndReturnImage(req, false);
+    var image = await validateAndReturnImage(req, false);
     const params: IIdParam = validateParams(req, idSchema);
     const updateItemData: IUpdateCatalogItem = validateBody(
       req,
@@ -219,8 +219,8 @@ export default {
   getItemById,
   getItemsByBrandAndTypeId,
   getItemsByBrandId,
-  getCatlogTypes,
-  getCatlogBrands,
+  getCatalogTypes,
+  getCatalogBrands,
   createItem,
   updateItem,
   deleteItem,

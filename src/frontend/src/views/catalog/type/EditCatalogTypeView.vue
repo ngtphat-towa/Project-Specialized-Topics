@@ -45,7 +45,7 @@ import Swal from 'sweetalert2';
 export default {
   data() {
     return {
-      oldCatlogType: null,
+      oldCatalogType: null,
       typeName: null,
       typeDescription: null,
       image: null,
@@ -129,7 +129,7 @@ export default {
         .getCatalogType(this.$route.params.id)
         .then((response) => {
           const catalogType = response.data;
-          this.oldCatlogType = catalogType;
+          this.oldCatalogType = catalogType;
 
           this.typeName = catalogType.name;
           this.typeDescription = catalogType.description;

@@ -7,10 +7,10 @@ export default {
   getCatalogItemsByBrandId(brandId) {
     return axios.get(`/api/item/type/all/brand/${brandId}`, { withCredentials: true });
   },
-  getCatlogTypes() {
+  getCatalogTypes() {
     return axios.get(`/api/item/catalogtypes`, { withCredentials: true });
   },
-  getCatlogBrands() {
+  getCatalogBrands() {
     return axios.get(`/api/item/catalogbrands`, { withCredentials: true });
   },
   getAllCatalogItems() {

@@ -45,7 +45,7 @@ import Swal from 'sweetalert2';
 export default {
   data() {
     return {
-      oldCatlogBrand: null,
+      oldCatalogBrand: null,
       brandName: null,
       brandCountry: null,
       image: null,
@@ -128,7 +128,7 @@ export default {
         .getCatalogBrand(this.$route.params.id)
         .then((response) => {
           const catalogBrand = response.data;
-          this.oldCatlogBrand = catalogBrand;
+          this.oldCatalogBrand = catalogBrand;
 
           this.brandName = catalogBrand.name;
           this.brandCountry = catalogBrand.country;
