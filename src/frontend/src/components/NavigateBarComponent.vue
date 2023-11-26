@@ -36,13 +36,28 @@
         <li class="nav-item">
           <RouterLink
             class="nav-link"
-            :to="{ name: 'EditCatalogType', params: { id: tempolaryId } }"
+            :to="{ name: 'EditCatalogType', params: { id: tempolaryTypeId } }"
             >Edit Catalog Type</RouterLink
           >
         </li>
         <li class="nav-item">
           <RouterLink class="nav-link" :to="{ name: 'CatalogTypeList' }"
             >Catalog Type List View</RouterLink
+          >
+        </li>
+        <li class="nav-item">
+          <RouterLink class="nav-link" to="/admin/catalog/brand/add">Add new brand</RouterLink>
+        </li>
+        <li class="nav-item">
+          <RouterLink
+            class="nav-link"
+            :to="{ name: 'EditCatalogBrand', params: { id: tempolaryBrandId } }"
+            >Edit Catalog Brand</RouterLink
+          >
+        </li>
+        <li class="nav-item">
+          <RouterLink class="nav-link" :to="{ name: 'CatalogBrandList' }"
+            >Catalog Brand List View</RouterLink
           >
         </li>
       </ul>
@@ -53,7 +68,8 @@
 export default {
   data() {
     return {
-      tempolaryId: '6562067fdb0f4a59e98301d9'
+      tempolaryTypeId: '6562067fdb0f4a59e98301d9',
+      tempolaryBrandId: '655cc6eca8668f0aa83e38ea'
     };
   }
 };

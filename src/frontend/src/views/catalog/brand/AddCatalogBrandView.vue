@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h4 class="pt-3">Update catalog type</h4>
+        <h4 class="pt-3">Add new catalog brand</h4>
       </div>
     </div>
 
@@ -12,13 +12,13 @@
         <form>
           <div class="form-group">
             <label>Type Name</label>
-            <input type="text" class="form-control" v-model="typeName" required />
-            <p v-if="errors.typeName" class="text-danger">{{ errors.typeName }}</p>
+            <input type="text" class="form-control" v-model="brandName" required />
+            <p v-if="errors.brandName" class="text-danger">{{ errors.brandName }}</p>
           </div>
           <div class="form-group">
-            <label>Description</label>
-            <input type="text" class="form-control" v-model="typeDescription" required />
-            <p v-if="errors.typeDescription" class="text-danger">{{ errors.typeDescription }}</p>
+            <label>Country</label>
+            <input type="text" class="form-control" v-model="brandCountry" required />
+            <p v-if="errors.brandCountry" class="text-danger">{{ errors.brandCountry }}</p>
           </div>
           <div class="form-group">
             <label>Image</label>
@@ -38,21 +38,18 @@
 </template>
 
 <script>
-import catalogTypeService from '../../../services/catalog/type.service';
-import convertToBase64 from '../../../services/image/image.render';
+import catalogBrandService from '../../../services/catalog/brand.service';
 import Swal from 'sweetalert2';
-// import { Buffer } from 'buffer';
 export default {
   data() {
     return {
-      oldCatlogType: null,
-      typeName: null,
-      typeDescription: null,
+      brandName: null,
+      brandCountry: null,
       image: null,
       reviewImage: null,
       errors: {
-        typeName: '',
-        typeDescription: '',
+        brandName: '',
+        brandCountry: '',
         image: ''
       }
     };
@@ -72,17 +69,20 @@ export default {
       this.reviewImage = URL.createObjectURL(file);
       this.errors.image = '';
     },
-
     validateFeild() {
       var isValid = true;
-      if (!this.typeName) {
+      if (!this.brandNameName) {
         isValid = false;
-        this.errors.typeName = 'Type name is required.';
+        this.errors.brandName = 'Type name is required.';
       }
-      if (!this.typeDescription) {
+      if (!this.brandCountry) {
         isValid = false;
 
-        this.errors.typeDescription = 'Description is required.';
+        this.errors.brandCountry = 'Country is required.';
+      }
+      if (!this.image) {
+        isValid = false;
+        this.errors.image = 'Image is required.';
       }
       return isValid;
     },
@@ -95,59 +95,32 @@ export default {
       let formData = new FormData();
 
       // Append the data
-      formData.append('name', this.typeName);
-      formData.append('description', this.typeDescription);
-      if (this.image) {
-        formData.append('image', this.image);
-      }
+      formData.append('name', this.brandName);
+      formData.append('country', this.brandCountry);
+      formData.append('image', this.image);
 
       console.log(formData);
-      await catalogTypeService
-        .putCatalogType(this.$route.params.id, formData)
+      await catalogBrandService
+        .postNewCatalogType(formData)
         .then((response) => {
           console.log(response.data);
           Swal.fire({
-            text: 'Catalog type added Successfully!',
+            text: 'Catalog brand added Successfully!',
             icon: 'success',
             allowOutsideClick: false
           });
-
-          //TODO: return the admin catalog type
-          this.fetchCatalogTypeByIdParam();
         })
         .catch((error) => {
           console.error(error);
           Swal.fire({
-            text: 'Catalog type added failed!',
+            text: 'Catalog brand added failed!',
             icon: 'error',
             closeOnClickOutside: false
           });
         });
-    },
-    async fetchCatalogTypeByIdParam() {
-      await catalogTypeService
-        .getCatalogType(this.$route.params.id)
-        .then((response) => {
-          const catalogType = response.data;
-          this.oldCatlogType = catalogType;
-
-          this.typeName = catalogType.name;
-          this.typeDescription = catalogType.description;
-          if (catalogType && catalogType.image && catalogType.image.data) {
-            this.reviewImage = convertToBase64(catalogType.image.data);
-          } else {
-            console.error('Image data not available', catalogType);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
     }
   },
-
-  mounted() {
-    this.fetchCatalogTypeByIdParam();
-  }
+  mounted() {}
 };
 </script>
 
