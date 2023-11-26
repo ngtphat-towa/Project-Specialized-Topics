@@ -150,7 +150,7 @@ const getCatlogBrands = async (
 
 const createItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    var image = validateAndReturnImage(req, false);
+    var image =(await validateAndReturnImage(req, false))!;
     const body: ICreateCatalogItem = validateBody(req, createCatalogItemSchema);
     const item: ICatalogItem = new CatalogItem({ ...body, image });
     const result = await item.save();
@@ -162,7 +162,7 @@ const createItem = async (req: Request, res: Response, next: NextFunction) => {
 
 const updateItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    var image = validateAndReturnImage(req, false);
+    var image =await validateAndReturnImage(req, false);
     const params: IIdParam = validateParams(req, idSchema);
     const updateItemData: IUpdateCatalogItem = validateBody(
       req,

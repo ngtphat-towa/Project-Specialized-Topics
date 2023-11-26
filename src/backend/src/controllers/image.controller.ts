@@ -3,25 +3,26 @@ import { BadRequestError } from "../common/err.common";
 import path from "path";
 import fs from "fs";
 import logging from "../configs/logging";
-export function validateAndReturnImage(
-  req: Request,
-  isRequired: boolean = true
-): {
-  data: Buffer;
-  contentType: String;
-} | null {
+import sharp from 'sharp';
+
+export async function validateAndReturnImage(req: Request, isRequired: boolean = true) {
   if (!req.file) {
     if (isRequired) throw new BadRequestError("No file provided", req.url);
     return null;
   }
 
+  // Read the image file
   const img = fs.readFileSync(path.join(__dirname, "..", "..", req.file.path));
-  const encode_img = img.toString("base64");
-  const data = Buffer.from(encode_img, "base64");
+
+  // Resize and compress the image using sharp
+  const resizedImageBuffer = await sharp(img)
+    .resize(500, 500, { fit: 'inside', withoutEnlargement: true })
+    .jpeg({ quality: 80, progressive: true, optimizeScans: true })
+    .toBuffer();
 
   var image = {
-    data: data,
-    contentType: req.file.mimetype,
+    data: resizedImageBuffer,
+    contentType: 'image/jpeg',
   };
 
   fs.unlink(req.file.path, (err) => {
@@ -31,6 +32,7 @@ export function validateAndReturnImage(
       logging.debug("IMAGE FILE", `Deleted file: ${req?.file?.path}`);
     }
   });
+
   return image;
 }
 

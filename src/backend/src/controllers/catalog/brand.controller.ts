@@ -45,7 +45,7 @@ const getBrand = async (req: Request, res: Response, next: NextFunction) => {
 
 const createBrand = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    var image = validateAndReturnImage(req);
+    var image =await validateAndReturnImage(req);
     const body: ICreateBrand = validateBody(req, createBrandSchema);
     const brand: IBrand = new Brand({
       ...body,
@@ -61,7 +61,7 @@ const createBrand = async (req: Request, res: Response, next: NextFunction) => {
 
 const updateBrand = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    var image = validateAndReturnImage(req, false);
+    var image =await validateAndReturnImage(req, false);
     const params: IIdParam = validateParams(req, idSchema);
     const updateBrandData: IUpdateBrand = validateBody(req, updateBrandSchema);
 
