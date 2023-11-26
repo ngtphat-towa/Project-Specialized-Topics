@@ -104,7 +104,7 @@ export default {
         .postNewCatalogBrand(formData)
         .then(() => {
           Swal.fire({
-            text: 'Catalog brand added Successfully!',
+            text: 'Catalog brand added successfully!',
             icon: 'success',
             allowOutsideClick: false
           });

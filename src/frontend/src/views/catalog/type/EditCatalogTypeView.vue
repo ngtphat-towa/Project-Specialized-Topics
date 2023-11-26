@@ -107,7 +107,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           Swal.fire({
-            text: 'Catalog type added Successfully!',
+            text: 'Catalog type added successfully!',
             icon: 'success',
             allowOutsideClick: false
           });

@@ -1,7 +1,97 @@
 <template>
   <div class="container">
-    <h1>Catalog Item:</h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1>Catalog Item Table</h1>
+      <button class="btn btn-primary" @click="showAddForm = !showAddForm">Add Catalog Item</button>
+    </div>
+    <div class="mb-3 d-flex justify-content-between">
+      <input v-model="searchTerm" class="form-control" placeholder="Search..." />
+      <select v-model="searchField" class="form-control">
+        <option value="" selected>Select field to search...</option>
+        <option value="name">Name</option>
+        <option value="department">Department</option>
+        <option value="age">Age</option>
+        <option value="dateOfBirth">Date Of Birth</option>
+      </select>
+      <select v-model="sortField" class="form-control">
+        <option value="" selected>Select field to sort...</option>
+        <option value="name">Name</option>
+        <option value="department">Department</option>
+        <option value="age">Age</option>
+        <option value="dateOfBirth">Date Of Birth</option>
+      </select>
+      <select v-model="sortMode" class="form-control">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </div>
+    <div v-if="showAddForm" class="mb-3 border p-3 rounded">
+      <h2>Add new item</h2>
+      <form @submit.prevent="addNewItem" class="p-3 border rounded">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" class="form-control" v-model="newProduct.name" />
+          <p v-if="errors.image" class="text-danger">{{ errors.image }}</p>
+        </div>
+        <div class="form-group">
+          <label>Image</label>
+          <input type="file" class="form-control" @change="onImageChange" required />
+          <p v-if="errors.image" class="text-danger">{{ errors.image }}</p>
+        </div>
+        <div class="form-group" v-if="reviewImage">
+          <label>Review Image</label>
+          <img class="review-image" :src="reviewImage" alt="Image preview" />
+        </div>
+        <div class="form-group">
+          <label>Price</label>
+          <input
+            type="number"
+            min="0"
+            step="0.01"
+            class="form-control"
+            v-model="newProduct.price"
+          />
+        </div>
+        <div class="form-group">
+          <label>SKU</label>
+          <input type="number" min="0" class="form-control" v-model="newProduct.availableStock" />
+        </div>
+        <div class="form-group">
+          <label>Type</label>
 
+          <select class="form-control" v-model="newProduct.catalogBrand">
+            <option v-for="option in catalogBrandOptions" :value="option" :key="option._id">
+              {{ option.name }}
+            </option>
+          </select>
+          <p v-if="errors.catalogBrand" class="text-danger">{{ errors.catalogBrand }}</p>
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+
+          <select class="form-control" v-model="newProduct.catalogType">
+            <option v-for="option in catalogTypeOptions" :value="option" :key="option._id">
+              {{ option.name }}
+            </option>
+          </select>
+          <p v-if="errors.catalogType" class="text-danger">{{ errors.catalogType }}</p>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea
+            class="form-control"
+            id="w3review"
+            name="description"
+            v-model="newProduct.description"
+            rows="4"
+            cols="50"
+          ></textarea>
+          <p v-if="errors.description" class="text-danger">{{ errors.description }}</p>
+        </div>
+        <button class="btn btn-success" @click="updateItem(item)" type="submit">Save</button>
+        <button class="btn btn-danger" @click="cancelEdit(item)">Cancel</button>
+      </form>
+    </div>
     <table class="table table-bordered">
       <thead class="thead-dark">
         <tr>
@@ -49,8 +139,13 @@
               <h2>Edit Product</h2>
               <form @submit.prevent="updateItem" class="p-3 border rounded">
                 <div class="form-group">
+                  <label>Name</label>
+                  <input type="text" class="form-control" v-model="items[editingIndex].name" />
+                  <p v-if="errors.image" class="text-danger">{{ errors.image }}</p>
+                </div>
+                <div class="form-group">
                   <label>Image</label>
-                  <input type="file" class="form-control" @change="onImageChange" required />
+                  <input type="file" class="form-control" @change="onImageChange" />
                   <p v-if="errors.image" class="text-danger">{{ errors.image }}</p>
                 </div>
                 <div class="form-group" v-if="reviewImage">
@@ -60,7 +155,12 @@
                 </div>
                 <div class="form-group">
                   <label>Price</label>
-                  <input type="number" class="form-control" v-model="items[editingIndex].price" />
+                  <input
+                    type="number"
+                    step="0.01"
+                    class="form-control"
+                    v-model="items[editingIndex].price"
+                  />
                 </div>
                 <div class="form-group">
                   <label>SKU</label>
@@ -127,7 +227,19 @@ export default {
     const editingIndex = ref(null);
     const showDetailIndex = ref(null);
     const showAddForm = ref(false);
-    const searchTerm = ref(false);
+    const searchTerm = ref('');
+    const searchField = ref('');
+    const sortField = ref('');
+    const sortMode = ref('asc');
+    const newProduct = ref({
+      name: '',
+      description: '',
+      price: 0,
+      catalogType: '',
+      catalogBrand: '',
+      availableStock: 0,
+      image: null
+    });
 
     // Options
 
@@ -157,6 +269,10 @@ export default {
 
     return {
       items,
+      searchField,
+      sortField,
+      sortMode,
+      newProduct,
       reviewImage,
       searchTerm,
       editingIndex,
@@ -167,8 +283,6 @@ export default {
       cancelEdit,
       showDetails,
       cancelAdd
-      // fetch data
-      // getCatalogItemData
     };
   },
   data() {
@@ -178,7 +292,10 @@ export default {
       errors: {
         name: '',
         price: '',
-        availableStock: 1,
+        availableStock: '',
+        description: '',
+        catalogType: '',
+        catalogBrand: '',
         image: ''
       }
     };
@@ -213,7 +330,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           Swal.fire({
-            text: 'Catalog type added Successfully!',
+            text: 'Catalog item added successfully!',
             icon: 'success',
             allowOutsideClick: false
           });
@@ -224,13 +341,55 @@ export default {
         .catch((error) => {
           console.error(error);
           Swal.fire({
-            text: 'Catalog type added failed!',
+            text: 'Catalog item added failed!',
             icon: 'error',
             allowOutsideClick: false
           });
         });
     },
+    addNewItem() {
+      console.log(this.newProduct);
+      if (!this.validateFeild(this.newProduct)) {
+        return;
+      }
+      const item = this.newProduct;
+      // Create a new FormData instance
+      let formData = new FormData();
 
+      // Append the data
+      formData.append('name', item.name);
+      formData.append('price', item.price);
+      formData.append('availableStock', item.availableStock);
+      formData.append('description', item.description);
+      formData.append('catalogType', item.catalogType._id);
+      formData.append('catalogBrand', item.catalogBrand._id);
+      if (this.image) {
+        formData.append('image', this.image);
+      }
+      console.log(formData);
+
+      catalogItemService
+        .createCatalogItem(formData)
+        .then((response) => {
+          console.log(response.data);
+          Swal.fire({
+            text: 'Catalog itemadded successfully!',
+            icon: 'success',
+            allowOutsideClick: false
+          });
+
+          this.showAddForm = false;
+          this.getCatalogItemData();
+        })
+        .catch((error) => {
+          console.error(error);
+          Swal.fire({
+            text: 'Catalog itemadded failed!',
+            icon: 'error',
+            allowOutsideClick: false
+          });
+        });
+    },
     onImageChange(e) {
       const file = e.target.files[0];
       if (this.showAddForm && !file) {
@@ -276,7 +435,7 @@ export default {
         })
         .catch((err) => console.log('populateCatalogItemOption', err));
     },
-    validateFeild() {
+    validateFeild(validateItem) {
       let isValid = true;
 
       // Reset errors
@@ -290,19 +449,19 @@ export default {
       };
 
       // Validate name
-      if (!this.items[this.editingIndex].name) {
+      if (!validateItem.name) {
         isValid = false;
         this.errors.name = 'Name is required.';
       }
 
       // Validate price
-      if (!this.items[this.editingIndex].price) {
+      if (!validateItem.price) {
         isValid = false;
         this.errors.price = 'Price is required.';
       }
 
       // Validate available stock
-      if (!this.items[this.editingIndex].availableStock) {
+      if (!validateItem.availableStock) {
         isValid = false;
         this.errors.price = 'Available Stock is required.';
       }
@@ -314,13 +473,13 @@ export default {
       }
 
       // Validate catalog type
-      if (!this.items[this.editingIndex].catalogType) {
+      if (!validateItem.catalogType) {
         isValid = false;
-        this.errors.catalogType = 'Catalog type is required.';
+        this.errors.catalogType = 'Catalog itemis required.';
       }
 
       // Validate catalog brand
-      if (!this.items[this.editingIndex].catalogBrand) {
+      if (!validateItem.catalogBrand) {
         isValid = false;
         this.errors.catalogBrand = 'Catalog brand is required.';
       }
