@@ -18,7 +18,11 @@
         <template v-for="(item, index) in items" :key="item.name">
           <tr>
             <td>
-              <img class="review-image" :src="convertToBase64Image(item)" alt="Image preview" />
+              <img
+                class="catalog-item-image"
+                :src="convertToBase64Image(item)"
+                alt="Image preview"
+              />
             </td>
             <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>
@@ -30,7 +34,7 @@
                 <button type="button" class="btn btn-primary" @click="showDetails(index)">
                   Details
                 </button>
-                <button type="button" class="btn btn-success" @click="editItem(index)">
+                <button type="button" class="btn btn-success" @click="editItem(index, item)">
                   Edit Item
                 </button>
                 <button class="btn btn-danger" @click="confirmDelete(index)">Delete Item</button>
@@ -47,19 +51,24 @@
                 <div class="form-group">
                   <label>Image</label>
                   <input type="file" class="form-control" @change="onImageChange" required />
-                  <!-- <p v-if="errors.image" class="text-danger">{{ errors.image }}</p> -->
+                  <p v-if="errors.image" class="text-danger">{{ errors.image }}</p>
                 </div>
                 <div class="form-group" v-if="reviewImage">
                   <label>Review Image</label>
-                  <img :src="reviewImage" alt="Image preview" style="width: 100%; height: auto" />
+                  <img class="review-image" :src="reviewImage" alt="Image preview" />
+                  <p v-if="errors.description" class="text-danger">{{ errors.description }}</p>
                 </div>
                 <div class="form-group">
                   <label>Price</label>
-                  <input class="form-control" v-model="items[editingIndex].price" />
+                  <input type="number" class="form-control" v-model="items[editingIndex].price" />
                 </div>
                 <div class="form-group">
                   <label>SKU</label>
-                  <input class="form-control" v-model="items[editingIndex].availableStock" />
+                  <input
+                    type="number"
+                    class="form-control"
+                    v-model="items[editingIndex].availableStock"
+                  />
                 </div>
                 <div class="form-group">
                   <label>Type</label>
@@ -89,6 +98,7 @@
                     rows="4"
                     cols="50"
                   ></textarea>
+                  <p v-if="errors.description" class="text-danger">{{ errors.description }}</p>
                 </div>
                 <button class="btn btn-success" @click="updateItem(item)" type="submit">
                   Save
@@ -108,6 +118,7 @@ import { ref } from 'vue';
 // import { productItems } from './tempProduct.js';
 import convertToBase64 from '../../../services/image/image.render';
 import catalogItemService from '../../../services/catalog/item.service';
+import Swal from 'sweetalert2';
 
 export default {
   name: 'CatalogItemListView',
@@ -130,17 +141,10 @@ export default {
     const cancelAdd = () => {
       showAddForm.value = false;
     };
-
-    const editItem = (index) => {
-      editingIndex.value = editingIndex.value === index ? null : index;
-    };
     const cancelEdit = () => {
-      this.editingIndex = null;
-    };
-
-    const updateItem = () => {
       editingIndex.value = null;
     };
+
     const confirmDelete = (index) => {
       if (window.confirm('Are you sure you want to delete this employee?')) {
         deleteItem(index);
@@ -151,16 +155,6 @@ export default {
       items.value.splice(index, 1);
     };
 
-    const getCatalogItemData = async () =>
-      await catalogItemService
-        .getAllCatalogItems()
-        .then((response) => {
-          const itemsData = response.data.data;
-          items.value = itemsData;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     return {
       items,
       reviewImage,
@@ -170,27 +164,103 @@ export default {
       showAddForm,
       deleteItem,
       confirmDelete,
-      updateItem,
-      editItem,
       cancelEdit,
       showDetails,
-      cancelAdd,
+      cancelAdd
       // fetch data
-      getCatalogItemData
+      // getCatalogItemData
     };
   },
   data() {
     return {
       catalogTypeOptions: null,
-      catalogBrandOptions: null
+      catalogBrandOptions: null,
+      errors: {
+        name: '',
+        price: '',
+        availableStock: 1,
+        image: ''
+      }
     };
   },
   methods: {
+    editItem(index, item) {
+      this.editingIndex = this.editingIndex === index ? null : index;
+      this.reviewImage = this.convertToBase64Image(item);
+      this.image = null;
+    },
+    updateItem(item) {
+      console.log(item);
+      if (!this.validateFeild()) {
+        return;
+      }
+      // Create a new FormData instance
+      let formData = new FormData();
+
+      // Append the data
+      formData.append('name', item.name);
+      formData.append('price', item.price);
+      formData.append('availableStock', item.availableStock);
+      formData.append('description', item.description);
+      formData.append('catalogType', item.catalogType._id);
+      formData.append('catalogBrand', item.catalogBrand._id);
+      if (this.image) {
+        formData.append('image', this.image);
+      }
+
+      catalogItemService
+        .updateCatalogItem(item._id, formData)
+        .then((response) => {
+          console.log(response.data);
+          Swal.fire({
+            text: 'Catalog type added Successfully!',
+            icon: 'success',
+            allowOutsideClick: false
+          });
+
+          this.editingIndex = null;
+          this.getCatalogItemData();
+        })
+        .catch((error) => {
+          console.error(error);
+          Swal.fire({
+            text: 'Catalog type added failed!',
+            icon: 'error',
+            allowOutsideClick: false
+          });
+        });
+    },
+
+    onImageChange(e) {
+      const file = e.target.files[0];
+      if (this.showAddForm && !file) {
+        this.errors.image = 'Image is required.';
+        return;
+      }
+      if (!file.type.startsWith('image/')) {
+        this.errors.image = 'Invalid image format.';
+        return;
+      }
+      this.image = file;
+      this.reviewImage = URL.createObjectURL(file);
+      this.errors.image = '';
+    },
     convertToBase64Image(item) {
       if (!item.image) {
         return '';
       }
       return convertToBase64(item.image.data);
+    },
+    getCatalogItemData() {
+      catalogItemService
+        .getAllCatalogItems()
+        .then((response) => {
+          const itemsData = response.data.data;
+          this.items = itemsData;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     populateCatalogItemOption() {
       catalogItemService
@@ -205,6 +275,57 @@ export default {
           this.catalogTypeOptions = response.data;
         })
         .catch((err) => console.log('populateCatalogItemOption', err));
+    },
+    validateFeild() {
+      let isValid = true;
+
+      // Reset errors
+      this.errors = {
+        name: '',
+        price: '',
+        availableStock: '',
+        image: '',
+        catalogType: '',
+        catalogBrand: ''
+      };
+
+      // Validate name
+      if (!this.items[this.editingIndex].name) {
+        isValid = false;
+        this.errors.name = 'Name is required.';
+      }
+
+      // Validate price
+      if (!this.items[this.editingIndex].price) {
+        isValid = false;
+        this.errors.price = 'Price is required.';
+      }
+
+      // Validate available stock
+      if (!this.items[this.editingIndex].availableStock) {
+        isValid = false;
+        this.errors.price = 'Available Stock is required.';
+      }
+
+      // Validate image
+      if (this.showAddForm && !this.image) {
+        isValid = false;
+        this.errors.image = 'Image is required.';
+      }
+
+      // Validate catalog type
+      if (!this.items[this.editingIndex].catalogType) {
+        isValid = false;
+        this.errors.catalogType = 'Catalog type is required.';
+      }
+
+      // Validate catalog brand
+      if (!this.items[this.editingIndex].catalogBrand) {
+        isValid = false;
+        this.errors.catalogBrand = 'Catalog brand is required.';
+      }
+
+      return isValid;
     }
   },
 
@@ -223,8 +344,14 @@ export default {
 .font-weight-bold {
   font-weight: bold;
 }
+.catalog-item-image {
+  width: 65px;
+  height: auto;
+}
+
 .review-image {
-  width: 80px;
-  height: 80px;
+  display: block;
+  width: 230px;
+  height: auto;
 }
 </style>

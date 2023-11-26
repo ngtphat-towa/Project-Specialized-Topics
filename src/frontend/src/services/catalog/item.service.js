@@ -25,8 +25,7 @@ export default {
   createCatalogItem(newCatalogItem) {
     return axios.post(`/api/item/`, newCatalogItem, { withCredentials: true });
   },
-  updateCatalogItem(updatedCatalogItem) {
-    const id = updatedCatalogItem._id;
+  updateCatalogItem(id, updatedCatalogItem) {
     return axios.put(`/api/item/${id}`, updatedCatalogItem, { withCredentials: true });
   },
   deleteCatalogItem(id) {
