@@ -60,6 +60,11 @@
             >Catalog Brand List View</RouterLink
           >
         </li>
+        <li class="nav-item">
+          <RouterLink class="nav-link" :to="{ name: 'CatalogItemList' }"
+            >Catalog Item List View</RouterLink
+          >
+        </li>
       </ul>
     </div>
   </nav>

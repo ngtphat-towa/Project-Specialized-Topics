@@ -9,6 +9,7 @@ import CatalogTypeListView from '../views/catalog/type/CatalogTypeListView.vue';
 import AddCatalogBrandView from '../views/catalog/brand/AddCatalogBrandView.vue';
 import EditCatalogBrandView from '../views/catalog/brand/EditCatalogBrandView.vue';
 import CatalogBrandListView from '../views/catalog/brand/CatalogBrandListView.vue';
+import CatalogItemListView from '../views/catalog/item/CatalogItemListView.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -51,6 +52,11 @@ const router = createRouter({
       path: '/admin/catalog/brand/',
       name: 'CatalogBrandList',
       component: CatalogBrandListView
+    },
+    {
+      path: '/admin/catalog/item/',
+      name: 'CatalogItemList',
+      component: CatalogItemListView
     }
   ]
 });

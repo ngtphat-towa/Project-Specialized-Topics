@@ -25,8 +25,8 @@
 </template>
 <script>
 export default {
-  name: 'ProductBox',
-  props: ['product']
+  name: 'CatalogItemBox',
+  props: ['catalogItemBox']
 };
 </script>
 <style scoped>
