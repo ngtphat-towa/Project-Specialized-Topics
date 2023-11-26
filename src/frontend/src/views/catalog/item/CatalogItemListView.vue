@@ -1,58 +1,7 @@
 <template>
   <div class="container">
-    <h1>Employee Table</h1>
-    <div class="mb-3 d-flex justify-content-between">
-      <input v-model="searchTerm" class="form-control" placeholder="Search..." />
-      <select v-model="searchField" class="form-control">
-        <label for=""></label>
-        <option value="name" selected>Name</option>
-        <option value="department">Department</option>
-        <option value="age">Age</option>
-        <option value="dateOfBirth">Date Of Birth</option>
-      </select>
-      <select v-model="sortField" class="form-control">
-        <option value="">Select field to sort...</option>
-        <option value="name">Name</option>
-        <option value="department">Department</option>
-        <option value="age">Age</option>
-        <option value="dateOfBirth">Date Of Birth</option>
-      </select>
-      <select v-model="sortMode" class="form-control">
-        <option value="asc">Ascending</option>
-        <option value="desc">Descending</option>
-      </select>
-    </div>
-    <div v-if="showAddForm" class="mb-3 border p-3 rounded">
-      <h2>Add Employee</h2>
-      <form @submit.prevent="addEmployee">
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label font-weight-bold">Name</label>
-          <div class="col-sm-10">
-            <input class="form-control" v-model="newEmployee.name" />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label font-weight-bold">Department</label>
-          <div class="col-sm-10">
-            <input class="form-control" v-model="newEmployee.department" />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label font-weight-bold">Age</label>
-          <div class="col-sm-10">
-            <input class="form-control" v-model="newEmployee.age" />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label font-weight-bold">Date Of Birth</label>
-          <div class="col-sm-10">
-            <input class="form-control" v-model="newEmployee.dateOfBirth" />
-          </div>
-        </div>
-        <button class="btn btn-success" type="submit">Save</button>
-        <button class="btn btn-danger" @click="showAddForm = false">Cancel</button>
-      </form>
-    </div>
+    <h1>Catalog Item:</h1>
+
     <table class="table table-bordered">
       <thead class="thead-dark">
         <tr>
@@ -114,11 +63,21 @@
                 </div>
                 <div class="form-group">
                   <label>Type</label>
-                  <input class="form-control" v-model="items[editingIndex].catalogBrand.name" />
+
+                  <select class="form-control" v-model="items[editingIndex].catalogBrand">
+                    <option v-for="option in catalogBrandOptions" :value="option" :key="option._id">
+                      {{ option.name }}
+                    </option>
+                  </select>
                 </div>
                 <div class="form-group">
-                  <label>Brand</label>
-                  <input class="form-control" v-model="items[editingIndex].catalogType.name" />
+                  <label>Type</label>
+
+                  <select class="form-control" v-model="items[editingIndex].catalogType">
+                    <option v-for="option in catalogTypeOptions" :value="option" :key="option._id">
+                      {{ option.name }}
+                    </option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label>Description</label>
@@ -148,7 +107,7 @@
 import { ref } from 'vue';
 // import { productItems } from './tempProduct.js';
 import convertToBase64 from '../../../services/image/image.render';
-import catlogItemService from '../../../services/catalog/item.service';
+import catalogItemService from '../../../services/catalog/item.service';
 
 export default {
   name: 'CatalogItemListView',
@@ -157,6 +116,12 @@ export default {
     const editingIndex = ref(null);
     const showDetailIndex = ref(null);
     const showAddForm = ref(false);
+    const searchTerm = ref(false);
+
+    // Options
+
+    // Image for editing
+    const reviewImage = ref(null);
 
     const showDetails = (index) => {
       showDetailIndex.value = showDetailIndex.value === index ? null : index;
@@ -187,10 +152,9 @@ export default {
     };
 
     const getCatalogItemData = async () =>
-      await catlogItemService
-        .getAllItems()
+      await catalogItemService
+        .getAllCatalogItems()
         .then((response) => {
-          console.log(response);
           const itemsData = response.data.data;
           items.value = itemsData;
         })
@@ -199,6 +163,8 @@ export default {
         });
     return {
       items,
+      reviewImage,
+      searchTerm,
       editingIndex,
       showDetailIndex,
       showAddForm,
@@ -213,17 +179,38 @@ export default {
       getCatalogItemData
     };
   },
+  data() {
+    return {
+      catalogTypeOptions: null,
+      catalogBrandOptions: null
+    };
+  },
   methods: {
     convertToBase64Image(item) {
-      console.log(item.image.data);
       if (!item.image) {
         return '';
       }
       return convertToBase64(item.image.data);
+    },
+    populateCatalogItemOption() {
+      catalogItemService
+        .getCatalogBrands()
+        .then((response) => {
+          this.catalogBrandOptions = response.data;
+        })
+        .catch((err) => console.log('populateCatalogItemOption', err));
+      catalogItemService
+        .getCatalogTypes()
+        .then((response) => {
+          this.catalogTypeOptions = response.data;
+        })
+        .catch((err) => console.log('populateCatalogItemOption', err));
     }
   },
+
   mounted() {
     this.getCatalogItemData();
+    this.populateCatalogItemOption();
   }
 };
 </script>
@@ -237,7 +224,7 @@ export default {
   font-weight: bold;
 }
 .review-image {
-  width: 45px;
-  height: 45px;
+  width: 80px;
+  height: 80px;
 }
 </style>
