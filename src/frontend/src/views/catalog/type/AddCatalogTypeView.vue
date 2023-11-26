@@ -115,7 +115,7 @@ export default {
           Swal.fire({
             text: 'Catalog type added failed!',
             icon: 'error',
-            closeOnClickOutside: false
+            allowOutsideClick: false
           });
         });
     }

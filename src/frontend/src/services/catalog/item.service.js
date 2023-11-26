@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 export default {
-  getItemsByBrandAndTypeId(typeId, brandId) {
+  getCatalogItemsByBrandAndTypeId(typeId, brandId) {
     return axios.get(`/api/item/type/${typeId}/brand/${brandId}`, { withCredentials: true });
   },
-  getItemsByBrandId(brandId) {
+  getCatalogItemsByBrandId(brandId) {
     return axios.get(`/api/item/type/all/brand/${brandId}`, { withCredentials: true });
   },
   getCatlogTypes() {
@@ -13,25 +13,26 @@ export default {
   getCatlogBrands() {
     return axios.get(`/api/item/catalogbrands`, { withCredentials: true });
   },
-  getAllItems() {
+  getAllCatalogItems() {
     return axios.get(`/api/item/`, { withCredentials: true });
   },
-  getItemsByName(name) {
+  getCatalogItemsByName(name) {
     return axios.get(`/api/item/by?name=${name}`, { withCredentials: true });
   },
-  getItemById(id) {
+  getCatalogItemById(id) {
     return axios.get(`/api/item/${id}`, { withCredentials: true });
   },
-  createItem(newItem) {
-    return axios.post(`/api/item/`, newItem, { withCredentials: true });
+  createCatalogItem(newCatalogItem) {
+    return axios.post(`/api/item/`, newCatalogItem, { withCredentials: true });
   },
-  updateItem(id, updatedItem) {
-    return axios.put(`/api/item/${id}`, updatedItem, { withCredentials: true });
+  updateCatalogItem(updatedCatalogItem) {
+    const id = updatedCatalogItem._id;
+    return axios.put(`/api/item/${id}`, updatedCatalogItem, { withCredentials: true });
   },
-  deleteItem(id) {
+  deleteCatalogItem(id) {
     return axios.delete(`/api/item/${id}`, { withCredentials: true });
   },
-  deleteAllItems() {
+  deleteAllCatalogItems() {
     return axios.delete(`/api/item/`, { withCredentials: true });
   }
 };

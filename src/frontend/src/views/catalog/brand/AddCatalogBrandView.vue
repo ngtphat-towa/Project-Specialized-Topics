@@ -11,7 +11,7 @@
       <div class="col-md-6 px-5 px-md-0">
         <form>
           <div class="form-group">
-            <label>Type Name</label>
+            <label>Brand Name</label>
             <input type="text" class="form-control" v-model="brandName" required />
             <p v-if="errors.brandName" class="text-danger">{{ errors.brandName }}</p>
           </div>
@@ -29,7 +29,7 @@
             <label>Review Image</label>
             <img :src="reviewImage" alt="Image preview" style="width: 100%; height: auto" />
           </div>
-          <button type="button" class="btn btn-primary" @click="addCatalogType">Submit</button>
+          <button type="button" class="btn btn-primary" @click="addCatalogBrand">Submit</button>
         </form>
       </div>
       <div class="col-3"></div>
@@ -71,9 +71,9 @@ export default {
     },
     validateFeild() {
       var isValid = true;
-      if (!this.brandNameName) {
+      if (!this.brandName) {
         isValid = false;
-        this.errors.brandName = 'Type name is required.';
+        this.errors.brandName = 'Brand name is required.';
       }
       if (!this.brandCountry) {
         isValid = false;
@@ -87,7 +87,7 @@ export default {
       return isValid;
     },
 
-    async addCatalogType() {
+    async addCatalogBrand() {
       if (!this.validateFeild()) {
         return;
       }
@@ -101,9 +101,8 @@ export default {
 
       console.log(formData);
       await catalogBrandService
-        .postNewCatalogType(formData)
-        .then((response) => {
-          console.log(response.data);
+        .postNewCatalogBrand(formData)
+        .then(() => {
           Swal.fire({
             text: 'Catalog brand added Successfully!',
             icon: 'success',
@@ -115,7 +114,7 @@ export default {
           Swal.fire({
             text: 'Catalog brand added failed!',
             icon: 'error',
-            closeOnClickOutside: false
+            allowOutsideClick: false
           });
         });
     }

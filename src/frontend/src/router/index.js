@@ -13,6 +13,7 @@ import CatalogItemListView from '../views/catalog/item/CatalogItemListView.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    // main view
     {
       path: '/',
       name: 'home',
@@ -23,6 +24,7 @@ const router = createRouter({
       name: 'about',
       component: AboutView
     },
+    // catalog type
     {
       path: '/admin/catalog/type/add',
       name: 'AddCatalogType',
@@ -34,10 +36,11 @@ const router = createRouter({
       component: EditCatalogTypeView
     },
     {
-      path: '/admin/catalog/brand/',
+      path: '/admin/catalog/type/',
       name: 'CatalogTypeList',
       component: CatalogTypeListView
     },
+    // catalog brand
     {
       path: '/admin/catalog/brand/add',
       name: 'AddCatalogBrand',
@@ -53,6 +56,7 @@ const router = createRouter({
       name: 'CatalogBrandList',
       component: CatalogBrandListView
     },
+    // Catalog item
     {
       path: '/admin/catalog/item/',
       name: 'CatalogItemList',

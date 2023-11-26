@@ -113,14 +113,14 @@ export default {
           });
 
           //TODO: return the admin catalog type
-          this.fetchCatalogTypeByIdParam();
+          this.$router.push('/admin/catalog/type/');
         })
         .catch((error) => {
           console.error(error);
           Swal.fire({
             text: 'Catalog type added failed!',
             icon: 'error',
-            closeOnClickOutside: false
+            allowOutsideClick: false
           });
         });
     },

@@ -12,11 +12,17 @@
       <p class="card-text">
         {{ catalogBrand.country }}
       </p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+
+      <RouterLink
+        class="btn btn-primary"
+        :to="{ name: 'EditCatalogBrand', params: { id: catalogBrand._id } }"
+        >Edit Catalog Brand</RouterLink
+      >
     </div>
   </div>
 </template>
 <script>
+import { RouterLink } from 'vue-router';
 import convertToBase64 from '../../services/image/image.render';
 export default {
   name: 'CatalogBrandBox',
@@ -24,10 +30,10 @@ export default {
   methods: {
     convertToBase64Image() {
       const data = this.catalogBrand.image.data;
-      console.log(data);
       return convertToBase64(data);
     }
-  }
+  },
+  components: { RouterLink }
 };
 </script>
 

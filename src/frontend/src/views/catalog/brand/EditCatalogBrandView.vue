@@ -16,7 +16,7 @@
             <p v-if="errors.brandName" class="text-danger">{{ errors.brandName }}</p>
           </div>
           <div class="form-group">
-            <label>Country</label>
+            <label>Description</label>
             <input type="text" class="form-control" v-model="brandCountry" required />
             <p v-if="errors.brandCountry" class="text-danger">{{ errors.brandCountry }}</p>
           </div>
@@ -82,12 +82,8 @@ export default {
       if (!this.brandCountry) {
         isValid = false;
 
-        this.errors.brandCountry = 'Country is required.';
+        this.errors.brandCountry = 'Description is required.';
       }
-      // if (!this.image) {
-      //   isValid = false;
-      //   this.errors.image = 'Image is required.';
-      // }
       return isValid;
     },
 
@@ -100,7 +96,7 @@ export default {
 
       // Append the data
       formData.append('name', this.brandName);
-      formData.append('description', this.brandCountry);
+      formData.append('country', this.brandCountry);
       if (this.image) {
         formData.append('image', this.image);
       }
@@ -111,20 +107,19 @@ export default {
         .then((response) => {
           console.log(response.data);
           Swal.fire({
-            text: 'Catalog brand added Successfully!',
+            text: 'Catalog brand added successfully!',
             icon: 'success',
             allowOutsideClick: false
           });
 
-          //TODO: return the admin catalog brand
-          this.fetchCatalogBrandByIdParam();
+          this.$router.push('/admin/catalog/brand/');
         })
         .catch((error) => {
           console.error(error);
           Swal.fire({
             text: 'Catalog brand added failed!',
             icon: 'error',
-            closeOnClickOutside: false
+            allowOutsideClick: false
           });
         });
     },
@@ -132,7 +127,6 @@ export default {
       await catalogBrandService
         .getCatalogBrand(this.$route.params.id)
         .then((response) => {
-          console.log('catalogBrand', response.data);
           const catalogBrand = response.data;
           this.oldCatlogBrand = catalogBrand;
 

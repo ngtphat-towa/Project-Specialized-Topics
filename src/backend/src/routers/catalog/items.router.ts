@@ -24,13 +24,13 @@ ItemRouter.get("/:id", itemController.getItemById);
 // Routes for modifying catalog items.
 ItemRouter.post(
   "/",
-  requireAdmin,
+  // requireAdmin,
   processImageMiddleware,
   itemController.createItem
 );
 ItemRouter.put(
   "/:id",
-  requireAdmin,
+  // requireAdmin,
   processImageMiddleware,
   itemController.updateItem
 );

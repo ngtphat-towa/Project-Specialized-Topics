@@ -30,31 +30,13 @@
         <li class="nav-item">
           <RouterLink class="nav-link" to="/about">About</RouterLink>
         </li>
-        <li class="nav-item">
-          <RouterLink class="nav-link" to="/admin/catalog/type/add">Add new type</RouterLink>
-        </li>
-        <li class="nav-item">
-          <RouterLink
-            class="nav-link"
-            :to="{ name: 'EditCatalogType', params: { id: tempolaryTypeId } }"
-            >Edit Catalog Type</RouterLink
-          >
-        </li>
+
         <li class="nav-item">
           <RouterLink class="nav-link" :to="{ name: 'CatalogTypeList' }"
             >Catalog Type List View</RouterLink
           >
         </li>
-        <li class="nav-item">
-          <RouterLink class="nav-link" to="/admin/catalog/brand/add">Add new brand</RouterLink>
-        </li>
-        <li class="nav-item">
-          <RouterLink
-            class="nav-link"
-            :to="{ name: 'EditCatalogBrand', params: { id: tempolaryBrandId } }"
-            >Edit Catalog Brand</RouterLink
-          >
-        </li>
+
         <li class="nav-item">
           <RouterLink class="nav-link" :to="{ name: 'CatalogBrandList' }"
             >Catalog Brand List View</RouterLink
