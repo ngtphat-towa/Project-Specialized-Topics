@@ -9,5 +9,5 @@ export default function convertToBase64(imageData) {
   // Convert the string into a base64 string
   var base64String = window.btoa(binary);
 
-  return 'data:image/png;base64,' + base64String;
+  return `data:${imageData.contentType};base64,` + base64String;
 }
