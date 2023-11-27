@@ -5,9 +5,9 @@
     </div>
 
     <div class="card-body">
-      <RouterLink :to="{ name: 'home', params: { id: displayProduct._id } }">
+      <router-link :to="{ name: 'HomeView', params: { id: displayProduct._id } }">
         <h5 class="card-title">{{ displayProduct.name }}</h5>
-      </RouterLink>
+      </router-link>
 
       <p class="card-text">{{ displayProduct.description.substring(0, 65) }}...</p>
     </div>

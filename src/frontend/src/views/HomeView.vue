@@ -1,5 +1,20 @@
 <template>
   <div id="home">
+    <div id="background-div" class="page-holder bg-cover">
+      <div class="container py-5">
+        <header class="text-left text-white py-5">
+          <h3 class="mb-4 rounded">
+            <a href="#start-shopping" class="bg-white px-2 py-2 rounded" id="heading"
+              >Start Shopping</a
+            >
+          </h3>
+          <p id="content" class="lead mb-0 bg-dark p-1 rounded">
+            This project by Nguyen Thanh Phat
+          </p>
+        </header>
+      </div>
+    </div>
+
     <!--    display type -->
     <div class="container mt-4">
       <div class="row">
@@ -8,7 +23,11 @@
         </div>
       </div>
       <div class="row">
-        <div v-for="index in this.catalogTypeListSize" :key="index" class="col-md-6 col-lg-4 col-12">
+        <div
+          v-for="index in this.catalogTypeListSize"
+          :key="index"
+          class="col-md-6 col-xl-4 col-12 pt-3 justify-content-around d-flex"
+        >
           <DisplayTypeBox class="DisplayTypeBox" :catalogType="catalogTypeList[index - 1]" />
         </div>
       </div>
@@ -22,7 +41,11 @@
         </div>
       </div>
       <div class="row">
-        <div v-for="index in this.catalogBrandListSize" :key="index" class="col-md-6 col-lg-4 col-12">
+        <div
+          v-for="index in this.catalogBrandListSize"
+          :key="index"
+          class="col-md-6 col-xl-4 col-12 pt-3 justify-content-around d-flex"
+        >
           <DisplayBrandBox class="DisplayBrandBox" :catalogBrand="catalogBrandList[index - 1]" />
         </div>
       </div>
@@ -37,8 +60,15 @@
 
       <!-- display products-->
       <div class="row">
-        <div v-for="index in this.catlogItemListSize" :key="index" class="col-md-6 col-lg-4 col-12">
-          <DisplayProductBox class="DisplayProductBox" :displayProduct="catlogItemList[index - 1]" />
+        <div
+          v-for="index in this.catlogItemListSize"
+          :key="index"
+          class="col-md-6 col-xl-4 col-12 pt-3 justify-content-around d-flex"
+        >
+          <DisplayProductBox
+            class="DisplayProductBox"
+            :displayProduct="catlogItemList[index - 1]"
+          />
         </div>
       </div>
     </div>
@@ -55,8 +85,7 @@ import brandService from '../services/catalog/brand.service';
 import itemService from '../services/catalog/item.service';
 
 export default {
-  // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Home',
+  name: 'HomeView',
   components: { DisplayProductBox, DisplayBrandBox, DisplayTypeBox },
   // props: ['categories', 'products'],
   data() {
@@ -123,6 +152,15 @@ export default {
 
 .container {
   margin-top: 20px;
+}
+.page-holder {
+  min-height: 100vh;
+}
+.bg-cover {
+  background-size: cover !important;
+}
+#background-div {
+  background: url(../assets/home.jpg);
 }
 
 .row {

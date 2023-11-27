@@ -19,12 +19,17 @@ const router = createRouter({
     // main view
     {
       path: '/',
-      name: 'home',
+      name: 'HomeView',
       component: HomeView
     },
     {
       path: '/about',
-      name: 'about',
+      name: 'AboutView',
+      component: AboutView
+    },
+    {
+      path: '/admin',
+      name: 'AdminView',
       component: AboutView
     },
     // catalog type
@@ -63,6 +68,37 @@ const router = createRouter({
     {
       path: '/admin/catalog/item/',
       name: 'CatalogItemList',
+      component: CatalogItemListView
+    },
+    // Authenication
+    {
+      path: '/auth/login',
+      name: 'LoginView',
+      component: CatalogItemListView
+    },
+    {
+      path: '/auth/register',
+      name: 'RegisterView',
+      component: CatalogItemListView
+    },
+    {
+      path: '/user/wishlist',
+      name: 'WishlistView',
+      component: CatalogItemListView
+    },
+    {
+      path: '/item/search',
+      name: 'SearchView',
+      component: CatalogItemListView
+    },
+    {
+      path: '/user/basket',
+      name: 'BasketView',
+      component: CatalogItemListView
+    },
+    {
+      path: '/user/order',
+      name: 'MyOrderView',
       component: CatalogItemListView
     },
     // testing

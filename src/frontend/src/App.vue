@@ -22,3 +22,8 @@ export default {
   components: { NavigateBarComponent, FooterComponent }
 };
 </script>
+<style>
+html {
+  overflow-y: scroll;
+}
+</style>
