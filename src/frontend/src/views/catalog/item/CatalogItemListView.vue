@@ -4,10 +4,10 @@
       <h1>Catalog Item Table</h1>
       <button class="btn btn-primary" @click="addNewProduct">Add Catalog Item</button>
     </div>
+    <!-- SearchAndFilter -->
     <div class="mb-3 d-flex justify-content-between">
       <input v-model="searchTerm" class="form-control" placeholder="Search..." />
       <select v-model="searchField" class="form-control">
-        <option value="" selected>Select field to search...</option>
         <option value="name">Name</option>
         <option value="catalogType">Type</option>
         <option value="catalogBrand">Brand</option>
@@ -27,13 +27,14 @@
         <option value="desc">Descending</option>
       </select>
     </div>
+    <!-- AddNewProductForm -->
     <div v-if="showAddForm" class="mb-3 border p-3 rounded">
       <h2>Add new item</h2>
       <form @submit.prevent="addNewItem" class="p-3 border rounded">
         <div class="form-group">
           <label>Name</label>
           <input type="text" class="form-control" v-model="newProduct.name" />
-          <p v-if="errors.image" class="text-danger">{{ errors.image }}</p>
+          <p v-if="errors.name" class="text-danger">{{ errors.name }}</p>
         </div>
         <div class="form-group">
           <label>Image</label>
@@ -94,6 +95,7 @@
         <button class="btn btn-danger" @click="cancelAdd()">Cancel</button>
       </form>
     </div>
+    <!-- Product Table -->
     <table class="table table-bordered">
       <thead class="thead-dark">
         <tr>
@@ -133,9 +135,11 @@
               </div>
             </td>
           </tr>
+          <!-- Description Tab -->
           <tr v-if="showDetailIndex === index">
             <td colspan="7">{{ item.description }}</td>
           </tr>
+          <!-- Edit Product Information Tab -->
           <tr v-if="editingIndex === index">
             <td colspan="7">
               <h2>Edit Product</h2>
@@ -143,7 +147,7 @@
                 <div class="form-group">
                   <label>Name</label>
                   <input type="text" class="form-control" v-model="items[editingIndex].name" />
-                  <p v-if="errors.image" class="text-danger">{{ errors.image }}</p>
+                  <p v-if="errors.name" class="text-danger">{{ errors.name }}</p>
                 </div>
                 <div class="form-group">
                   <label>Image</label>
@@ -212,11 +216,30 @@
         </template>
       </tbody>
     </table>
+    <!-- Navigation Bar -->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item" :class="{ disabled: pageIndex === 1 }">
+          <a class="page-link" href="#" @click.prevent="pageIndex--">Previous</a>
+        </li>
+        <li
+          class="page-item"
+          v-for="page in totalPages"
+          :key="page"
+          :class="{ active: page === pageIndex }"
+        >
+          <a class="page-link" href="#" @click.prevent="pageIndex = page">{{ page }}</a>
+        </li>
+        <li class="page-item" :class="{ disabled: pageIndex === totalPages }">
+          <a class="page-link" href="#" @click.prevent="pageIndex++">Next</a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 // import { productItems } from './tempProduct.js';
 import convertToBase64 from '../../../services/image/image.render';
 import catalogItemService from '../../../services/catalog/item.service';
@@ -230,11 +253,12 @@ export default {
     const showDetailIndex = ref(null);
     const showAddForm = ref(false);
     const searchTerm = ref('');
-    const searchField = ref('');
-    const sortField = ref('');
+    const searchField = ref('name');
+    const sortField = ref('name');
     const sortMode = ref('asc');
     const pageIndex = ref(1);
     const pageSize = ref(6);
+    const totalPages = ref(1);
     const newProduct = ref({
       name: '',
       description: '',
@@ -245,7 +269,41 @@ export default {
       image: null
     });
 
-    // Options
+    const errors = ref({
+      name: '',
+      price: '',
+      availableStock: '',
+      description: '',
+      catalogType: '',
+      catalogBrand: '',
+      image: ''
+    });
+    // get catalog item data and search or short
+    const getCatalogItemData = () => {
+      const payload = {
+        searchField: searchField.value,
+        sortField: sortField.value,
+        sortMode: sortMode.value,
+        pageSize: pageSize.value,
+        pageIndex: pageIndex.value - 1
+      };
+      if (searchTerm.value !== '') {
+        payload.searchTerm = searchTerm.value;
+      }
+      catalogItemService
+        .getCatalogItemsSearchAndSort(payload)
+        .then((response) => {
+          const itemsData = response.data.data;
+          items.value = itemsData;
+          totalPages.value = Math.ceil(Number(response.data.totalItems) / pageSize.value);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    watch([searchTerm, searchField, sortField, sortMode, pageSize, pageIndex], getCatalogItemData, {
+      immediate: true
+    });
 
     // Image for editing
     const reviewImage = ref(null);
@@ -273,8 +331,10 @@ export default {
     };
 
     return {
+      errors,
       pageIndex,
       pageSize,
+      totalPages,
       items,
       searchField,
       sortField,
@@ -285,6 +345,7 @@ export default {
       editingIndex,
       showDetailIndex,
       showAddForm,
+      getCatalogItemData,
       deleteItem,
       confirmDelete,
       cancelEdit,
@@ -295,16 +356,7 @@ export default {
   data() {
     return {
       catalogTypeOptions: null,
-      catalogBrandOptions: null,
-      errors: {
-        name: '',
-        price: '',
-        availableStock: '',
-        description: '',
-        catalogType: '',
-        catalogBrand: '',
-        image: ''
-      }
+      catalogBrandOptions: null
     };
   },
   methods: {
@@ -327,6 +379,7 @@ export default {
       this.reviewImage = this.convertToBase64Image(item);
       this.image = null;
     },
+    // update catalog Item
     updateItem(item) {
       console.log(item);
       if (!this.validateFeild(item)) {
@@ -368,6 +421,7 @@ export default {
           });
         });
     },
+    // add new product
     addNewItem() {
       console.log(this.newProduct);
       if (!this.validateFeild(this.newProduct)) {
@@ -431,32 +485,7 @@ export default {
       }
       return convertToBase64(item.image.data);
     },
-    getCatalogItemData() {
-      const payload = {
-        searchTerm: this.searchTerm,
-        searchField: this.searchField,
-        sortField: this.sortField,
-        sortMode: this.sortMode,
-        pageSize: 6,
-        pageIndex: 0
-      };
-      if (!this.searchTerm || this.searchTerm.length === 0) {
-        delete payload.searchTerm;
-        delete payload.searchField;
-      }
-      if (this.sortField === '') {
-        payload.sortField = 'name';
-      }
-      catalogItemService
-        .getCatalogItemsSearchAndSort(payload)
-        .then((response) => {
-          const itemsData = response.data.data;
-          this.items = itemsData;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+
     populateCatalogItemOption() {
       catalogItemService
         .getCatalogBrands()

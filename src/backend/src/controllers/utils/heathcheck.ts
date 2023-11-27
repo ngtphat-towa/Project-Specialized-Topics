@@ -5,5 +5,8 @@ const serverHealthCheck = (req: Request, res: Response, next: NextFunction) => {
     message: "pong",
   });
 };
-
-export default { serverHealthCheck };
+const checkPostDataForm = (req: Request, res: Response) => {
+  console.log(req.body);
+  res.send("Form data logged!");
+};
+export default { serverHealthCheck, checkPostDataForm };
