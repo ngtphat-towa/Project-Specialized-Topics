@@ -16,6 +16,9 @@ export default {
   getAllCatalogItems() {
     return axios.get(`/api/item/`, { withCredentials: true });
   },
+  getCatalogItemsSearchAndSort(payload) {
+    return axios.post(`/api/item/admin/query`, payload, { withCredentials: true });
+  },
   getCatalogItemsByName(name) {
     return axios.get(`/api/item/by?name=${name}`, { withCredentials: true });
   },

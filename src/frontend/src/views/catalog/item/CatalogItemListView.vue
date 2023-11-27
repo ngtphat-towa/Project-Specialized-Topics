@@ -2,23 +2,25 @@
   <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h1>Catalog Item Table</h1>
-      <button class="btn btn-primary" @click="showAddForm = !showAddForm">Add Catalog Item</button>
+      <button class="btn btn-primary" @click="addNewProduct">Add Catalog Item</button>
     </div>
     <div class="mb-3 d-flex justify-content-between">
       <input v-model="searchTerm" class="form-control" placeholder="Search..." />
       <select v-model="searchField" class="form-control">
         <option value="" selected>Select field to search...</option>
         <option value="name">Name</option>
-        <option value="department">Department</option>
-        <option value="age">Age</option>
-        <option value="dateOfBirth">Date Of Birth</option>
+        <option value="catalogType">Type</option>
+        <option value="catalogBrand">Brand</option>
+        <option value="price">Price</option>
+        <option value="availableStock">Available Stock</option>
       </select>
       <select v-model="sortField" class="form-control">
         <option value="" selected>Select field to sort...</option>
         <option value="name">Name</option>
-        <option value="department">Department</option>
-        <option value="age">Age</option>
-        <option value="dateOfBirth">Date Of Birth</option>
+        <option value="catalogType">Type</option>
+        <option value="catalogBrand">Brand</option>
+        <option value="price">Price</option>
+        <option value="availableStock">Available Stock</option>
       </select>
       <select v-model="sortMode" class="form-control">
         <option value="asc">Ascending</option>
@@ -88,8 +90,8 @@
           ></textarea>
           <p v-if="errors.description" class="text-danger">{{ errors.description }}</p>
         </div>
-        <button class="btn btn-success" @click="updateItem(item)" type="submit">Save</button>
-        <button class="btn btn-danger" @click="cancelEdit(item)">Cancel</button>
+        <button class="btn btn-success" @click="addNewItem()" type="submit">Save</button>
+        <button class="btn btn-danger" @click="cancelAdd()">Cancel</button>
       </form>
     </div>
     <table class="table table-bordered">
@@ -231,6 +233,8 @@ export default {
     const searchField = ref('');
     const sortField = ref('');
     const sortMode = ref('asc');
+    const pageIndex = ref(1);
+    const pageSize = ref(6);
     const newProduct = ref({
       name: '',
       description: '',
@@ -248,6 +252,7 @@ export default {
 
     const showDetails = (index) => {
       showDetailIndex.value = showDetailIndex.value === index ? null : index;
+      editingIndex.value = null;
     };
 
     const cancelAdd = () => {
@@ -268,6 +273,8 @@ export default {
     };
 
     return {
+      pageIndex,
+      pageSize,
       items,
       searchField,
       sortField,
@@ -301,14 +308,28 @@ export default {
     };
   },
   methods: {
+    addNewProduct() {
+      this.showAddForm = !this.showAddForm;
+      this.newProduct = {
+        name: '',
+        description: '',
+        price: 0,
+        catalogType: '',
+        catalogBrand: '',
+        availableStock: 0,
+        image: null
+      };
+    },
     editItem(index, item) {
       this.editingIndex = this.editingIndex === index ? null : index;
+      this.showDetailIndex = null;
+
       this.reviewImage = this.convertToBase64Image(item);
       this.image = null;
     },
     updateItem(item) {
       console.log(item);
-      if (!this.validateFeild()) {
+      if (!this.validateFeild(item)) {
         return;
       }
       // Create a new FormData instance
@@ -411,8 +432,23 @@ export default {
       return convertToBase64(item.image.data);
     },
     getCatalogItemData() {
+      const payload = {
+        searchTerm: this.searchTerm,
+        searchField: this.searchField,
+        sortField: this.sortField,
+        sortMode: this.sortMode,
+        pageSize: 6,
+        pageIndex: 0
+      };
+      if (!this.searchTerm || this.searchTerm.length === 0) {
+        delete payload.searchTerm;
+        delete payload.searchField;
+      }
+      if (this.sortField === '') {
+        payload.sortField = 'name';
+      }
       catalogItemService
-        .getAllCatalogItems()
+        .getCatalogItemsSearchAndSort(payload)
         .then((response) => {
           const itemsData = response.data.data;
           this.items = itemsData;
