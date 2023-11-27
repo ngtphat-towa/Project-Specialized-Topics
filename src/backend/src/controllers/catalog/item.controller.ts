@@ -21,7 +21,9 @@ import { validateAndReturnImage } from "../image.controller";
 import {
   ICreateCatalogItem,
   IUpdateCatalogItem,
+  SearchAndSortDto,
   createCatalogItemSchema,
+  searchAndSortSchema,
   updateCatalogItemSchema,
 } from "../../models/catalog/items/item.dto";
 
@@ -43,6 +45,77 @@ const getAllItems = async (req: Request, res: Response, next: NextFunction) => {
       totalItems,
       items
     );
+    return res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getBySearchAndSort = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const searchAndSortParams: SearchAndSortDto = validateBody(
+      req,
+      searchAndSortSchema
+    );
+    let query = CatalogItem.find();
+    if (
+      (!searchAndSortParams.searchTerm && searchAndSortParams.searchField) ||
+      (searchAndSortParams.searchTerm?.length === 0 &&
+        searchAndSortParams.searchField)
+    ) {
+      delete searchAndSortParams.searchField;
+    }
+    if (searchAndSortParams.searchField) {
+      // Apply search term if it exists
+      if (searchAndSortParams.searchField === "catalogType") {
+        // If searching by catalogType, find the catalogType by name first
+        const catalogType = await Type.findOne({
+          name: new RegExp(searchAndSortParams.searchTerm || "", "i"),
+        });
+        if (catalogType) {
+          query = query.find({ catalogType: catalogType._id });
+        }
+      } else if (searchAndSortParams.searchField === "catalogBrand") {
+        // If searching by catalogBrand, find the catalogBrand by name first
+        const catalogBrand = await Brand.findOne({
+          name: new RegExp(searchAndSortParams.searchTerm || "", "i"),
+        });
+        if (catalogBrand) {
+          query = query.find({ catalogBrand: catalogBrand._id });
+        }
+      } else {
+        const searchObject: { [key: string]: any } = {};
+        searchObject[searchAndSortParams.searchField] = new RegExp(
+          searchAndSortParams.searchTerm || "",
+          "i"
+        );
+        query = query.find(searchObject);
+      }
+    }
+
+    // Apply sort if it exists
+    if (searchAndSortParams.sortField) {
+      const sortObject: { [key: string]: any } = {};
+      sortObject[searchAndSortParams.sortField] =
+        searchAndSortParams.sortMode === "asc" ? 1 : -1;
+      query = query.sort(sortObject);
+    }
+
+    // Apply pagination
+    const { pageSize = 10, pageIndex = 0 } = searchAndSortParams;
+    query = query.skip(pageSize * pageIndex).limit(pageSize);
+
+    const items = await query
+      .populate("catalogType", "name") // only return the 'name' field
+      .populate("catalogBrand", "name"); // only return the 'name' field
+
+    const totalItems = await CatalogItem.countDocuments();
+    const result = new PaginatedItems(pageIndex, pageSize, totalItems, items);
+
     return res.status(200).json(result);
   } catch (error) {
     next(error);
@@ -225,4 +298,5 @@ export default {
   updateItem,
   deleteItem,
   deleteAllItems,
+  getBySearchAndSort,
 };

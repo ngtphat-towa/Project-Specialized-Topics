@@ -22,6 +22,14 @@ ItemRouter.get("/by", itemController.getItemsByName);
 ItemRouter.get("/:id", itemController.getItemById);
 
 // Routes for modifying catalog items.
+
+ItemRouter.post(
+  "/admin/query/",
+  // requireAdmin,
+  processImageMiddleware,
+  itemController.getBySearchAndSort
+);
+
 ItemRouter.post(
   "/",
   // requireAdmin,
