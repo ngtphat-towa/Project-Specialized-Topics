@@ -18,6 +18,7 @@ import CatalogBrandListView from '../views/catalog/brand/CatalogBrandListView.vu
 import CatalogItemListView from '../views/catalog/item/CatalogItemListView.vue';
 // Display View
 import DisplayItemDetailView from '../views/catalog/item/DisplayItemDetailView.vue';
+import WishlistListView from '../views/basket/WishlistListView.vue';
 //Testing
 import DisplayProductBox from '../components/catalog/DisplayProductBox.vue';
 
@@ -96,8 +97,8 @@ const router = createRouter({
     },
     {
       path: '/user/wishlist',
-      name: 'WishlistView',
-      component: CatalogItemListView
+      name: 'WishlistListView',
+      component: WishlistListView
     },
     {
       path: '/item/search',

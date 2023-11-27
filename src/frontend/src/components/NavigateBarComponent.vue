@@ -1,7 +1,7 @@
 <template>
   <div class="header navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">
-      <RouterLink class="nav-link" to="/"> Apple Reseller </RouterLink>
+      <RouterLink class="nav-link" to="/"> ElForture </RouterLink>
     </a>
     <nav class="navbar">
       <li class="nav-item">
@@ -11,7 +11,7 @@
         <router-link class="nav-link" :to="{ name: 'SearchView' }">Shop</router-link>
       </li>
       <li class="nav-item">
-        <router-link class="nav-link" :to="{ name: 'WishlistView' }">Wishlist</router-link>
+        <router-link class="nav-link" :to="{ name: 'WishlistListView' }">Wishlist</router-link>
       </li>
       <li class="nav-item">
         <router-link class="nav-link" :to="{ name: 'MyOrderView' }">My Orders</router-link>
