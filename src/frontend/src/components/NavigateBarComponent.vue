@@ -14,7 +14,7 @@
         <router-link class="nav-link" :to="{ name: 'WishlistListView' }">Wishlist</router-link>
       </li>
       <li class="nav-item">
-        <router-link class="nav-link" :to="{ name: 'MyOrderView' }">My Orders</router-link>
+        <router-link class="nav-link" :to="{ name: 'CustomerOrderView' }">My Orders</router-link>
       </li>
     </nav>
 
