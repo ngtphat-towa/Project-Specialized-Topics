@@ -1,16 +1,23 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { createRouter, createWebHistory } from 'vue-router';
+// Main View
 import HomeView from '../views/HomeView.vue';
 import AboutView from '../views/AboutView.vue';
+// Admin
+// Type
 import AddCatalogTypeView from '../views/catalog/type/AddCatalogTypeView.vue';
 import EditCatalogTypeView from '../views/catalog/type/EditCatalogTypeView.vue';
 import CatalogTypeListView from '../views/catalog/type/CatalogTypeListView.vue';
+// Brand
 import AddCatalogBrandView from '../views/catalog/brand/AddCatalogBrandView.vue';
 import EditCatalogBrandView from '../views/catalog/brand/EditCatalogBrandView.vue';
 import CatalogBrandListView from '../views/catalog/brand/CatalogBrandListView.vue';
+// Item
 import CatalogItemListView from '../views/catalog/item/CatalogItemListView.vue';
-
+// Display View
+import DisplayItemDetailView from '../views/catalog/item/DisplayItemDetailView.vue';
+//Testing
 import DisplayProductBox from '../components/catalog/DisplayProductBox.vue';
 
 const router = createRouter({
@@ -69,6 +76,11 @@ const router = createRouter({
       path: '/admin/catalog/item/',
       name: 'CatalogItemList',
       component: CatalogItemListView
+    },
+    {
+      path: '/product/details/:id',
+      name: 'DisplayItemDetailView',
+      component: DisplayItemDetailView
     },
     // Authenication
     {

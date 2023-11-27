@@ -5,7 +5,7 @@
     </div>
 
     <div class="card-body">
-      <router-link :to="{ name: 'HomeView', params: { id: displayProduct._id } }">
+      <router-link :to="{ name: 'DisplayItemDetailView', params: { id: displayProduct._id } }">
         <h5 class="card-title">{{ displayProduct.name }}</h5>
       </router-link>
 

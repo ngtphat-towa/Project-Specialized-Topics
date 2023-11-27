@@ -24,7 +24,6 @@ export default {
   methods: {
     convertToBase64Image() {
       const data = this.catalogType.image.data;
-      console.log(data);
       return convertToBase64(data);
     }
   }
