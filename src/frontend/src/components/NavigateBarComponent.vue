@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import { ref } from 'vue';
 
 import getCookie from '../services/cookies.service';
@@ -84,7 +84,7 @@ export default {
           console.log('LOGIN', getCookie('refreshToken'));
           this.$emit('resetCartCount');
           this.$router.push({ name: 'HomeView' });
-          swal({
+          Swal.fire({
             text: 'Logged you out. Visit again',
             icon: 'success'
           });

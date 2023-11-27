@@ -21,7 +21,6 @@
   </div>
 </template>
 <script>
-// import swal from 'sweetalert';
 import { useToast } from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
 const $toast = useToast();

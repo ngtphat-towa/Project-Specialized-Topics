@@ -24,7 +24,7 @@
 <script>
 import authService from '../services/auth/auth.service';
 import getCookie from '../services/cookies.service';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 export default {
   name: 'LoginView',
   data() {
@@ -44,7 +44,7 @@ export default {
         .login(credentials)
         .then(() => {
           this.$router.push({ name: 'HomeView' });
-          swal({
+          Swal.fire({
             text: 'Login successful',
             icon: 'success'
           });

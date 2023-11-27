@@ -20,8 +20,11 @@ import CatalogItemListView from '../views/catalog/item/CatalogItemListView.vue';
 import DisplayItemDetailView from '../views/catalog/item/DisplayItemDetailView.vue';
 import WishlistListView from '../views/basket/WishlistListView.vue';
 import BasketListView from '../views/basket/BasketListView.vue';
+// Checkout
+import ProcessToPaymentView from '../views/checkout/ProcessToPaymentView.vue';
+import FailedCheckoutView from '../views/checkout/FailedCheckoutView.vue';
+import SuccessCheckoutView from '../views/checkout/SuccessCheckoutView.vue';
 //Testing
-import DisplayProductBox from '../components/catalog/DisplayProductBox.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -108,6 +111,22 @@ const router = createRouter({
       component: BasketListView
     },
     {
+      path: '/user/basket/checkout',
+      name: 'ProcessToPaymentView',
+      component: ProcessToPaymentView
+    },
+    // Checkout
+    {
+      path: '/payment/success',
+      name: 'SuccessCheckoutView',
+      component: SuccessCheckoutView
+    },
+    {
+      path: '/payment/failed',
+      name: 'FailedCheckoutView',
+      component: FailedCheckoutView
+    },
+    {
       path: '/item/search',
       name: 'SearchView',
       component: CatalogItemListView
@@ -117,12 +136,13 @@ const router = createRouter({
       name: 'MyOrderView',
       component: CatalogItemListView
     },
+
     // testing
     // Catalog item
     {
       path: '/testing',
       name: 'DisplayProduct',
-      component: DisplayProductBox
+      component: CatalogItemListView
     }
   ]
 });
