@@ -172,7 +172,7 @@ function setCookies(
   httpOnly: boolean = false
 ) {
   res.cookie("accessToken", accessToken, {
-    maxAge: 300000, // TODO: set config
+    maxAge: 300000000, // TODO: set config
     httpOnly: httpOnly,
   });
   res.cookie("refreshToken", refreshToken, {

@@ -9,13 +9,13 @@ const TypeRouter = express.Router();
 
 TypeRouter.route("/")
   .get(typeController.getTypesByFilter)
-  // .post(requireAdmin, processImageMiddleware, typeController.createType)
-  .post(processImageMiddleware, typeController.createType)
+  .post(requireAdmin, processImageMiddleware, typeController.createType)
+  // .post(processImageMiddleware, typeController.createType)
   .all(methodNotAllowed);
 TypeRouter.route("/:id")
   .get(typeController.getType)
-  .put(processImageMiddleware, typeController.updateType)
-  // .put(requireAdmin, processImageMiddleware, typeController.updateType)
+  // .put(processImageMiddleware, typeController.updateType)
+  .put(requireAdmin, processImageMiddleware, typeController.updateType)
   .all(methodNotAllowed);
 
 export default TypeRouter;

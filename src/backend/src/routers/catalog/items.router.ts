@@ -25,20 +25,20 @@ ItemRouter.get("/:id", itemController.getItemById);
 
 ItemRouter.post(
   "/admin/query/",
-  requireAdmin,
+  // requireAdmin,
   processImageMiddleware,
   itemController.getBySearchAndSort
 );
 
 ItemRouter.post(
   "/",
-  // requireAdmin,
+  requireAdmin,
   processImageMiddleware,
   itemController.createItem
 );
 ItemRouter.put(
   "/:id",
-  // requireAdmin,
+  requireAdmin,
   processImageMiddleware,
   itemController.updateItem
 );
