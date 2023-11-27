@@ -10,7 +10,7 @@
 export default {
   name: 'FailedPayment',
   mounted() {
-    // localStorage.removeItem('sessionId');
+    localStorage.removeItem('sessionId');
     this.$router.push({ name: 'BasketListView' });
   }
 };

@@ -166,7 +166,7 @@ export default {
         .catch((err) => console.log('err', err));
     },
     checkout() {
-      this.$router.push({ name: 'Checkout' });
+      this.$router.push({ name: 'ProcessToPaymentView' });
     }
   },
   mounted() {

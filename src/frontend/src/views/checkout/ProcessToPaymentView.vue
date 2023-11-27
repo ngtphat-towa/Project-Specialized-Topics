@@ -12,13 +12,14 @@
 </template>
 
 <script>
-import cartService from '../../services/cart.service';
-import orderService from '../../services/order.service';
+import basketService from '../../services/basket/basket.service';
+// import orderService from '../../services/order/order.service';
+import checkoutService from '../../services/checkout/checkout.service';
 export default {
   data() {
     return {
       stripeAPIToken: null,
-      stripe: '',
+      stripe: null,
       token: null,
       checkoutBodyArray: []
     };
@@ -27,19 +28,19 @@ export default {
   props: [],
   methods: {
     async getAllItems() {
-      // Get all data from current cart
-      await cartService
-        .getCartItems(this.token)
+      // Get all data from current basket
+      await basketService
+        .getBasketByUserId()
         .then((response) => {
           console.log(response.data);
           if (response.status == 200) {
             let products = response.data;
-            for (let i = 0; i < products.cartItems.length; i++) {
+            for (let i = 0; i < products.basketItems?.length; i++) {
               this.checkoutBodyArray.push({
-                price: products.cartItems[i].price,
-                quantity: products.cartItems[i].quantity,
-                productName: products.cartItems[i].name,
-                productId: products.cartItems[i].id
+                price: products.basketItems[i].price,
+                quantity: products.basketItems[i].quantity,
+                productName: products.basketItems[i].name,
+                productId: products.basketItems[i].id
               });
             }
           }
@@ -49,15 +50,17 @@ export default {
     async goToCheckout() {
       console.log('checkoutBodyArray', this.checkoutBodyArray);
 
-      await orderService
-        .checkoutList(this.checkoutBodyArray, this.token)
+      await checkoutService
+        .createCheckoutSession()
         .then((response) => {
-          // Store checkout session key
-          localStorage.setItem('sessionId', response.data.sessionId);
+          console.log(response.data);
+          // // Store checkout session key
+          const sessionId = response.data.sessionId.id;
+          localStorage.setItem('sessionId', sessionId);
 
           // Wait for the payment
           this.stripe.redirectToCheckout({
-            sessionId: response.data.sessionId
+            sessionId: sessionId
           });
         })
         .catch((err) => console.log(err));
@@ -65,7 +68,7 @@ export default {
   },
   mounted() {
     this.token = localStorage.getItem('token');
-    this.stripeAPIToken = import.meta.env.STRIPE_API_KEY;
+    this.stripeAPIToken = import.meta.env.VITE_STRIPE_API_KEY;
     this.stripe = window.Stripe(this.stripeAPIToken);
     this.getAllItems();
   }

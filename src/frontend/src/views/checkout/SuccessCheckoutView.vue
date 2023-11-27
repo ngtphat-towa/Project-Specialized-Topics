@@ -7,12 +7,12 @@
 </template>
 
 <script>
-import orderService from '../../services/order.service';
+import checkoutService from '../../services/checkout/checkout.service';
 import Swal from 'sweetalert2';
 
 export default {
   name: 'PaymentSuccess',
-  props: ['baseURL'],
+  props: ['session_id'],
   data() {
     return {
       token: null,
@@ -21,11 +21,22 @@ export default {
   },
   methods: {
     async saveOrder() {
-      if (this.sessionId !== null && this.token !== null) {
-        await orderService
-          .placeOrder(this.sessionId, this.token)
+      if (this.sessionId !== null ) {
+        const paayload = {
+          sessionId: this.sessionId
+        }
+        await checkoutService
+          .placeOrder(paayload)
           .then(() => {
-            // this.$router.push({ name: 'OrderListView' });
+            Swal.fire({
+              title: 'Sweet!',
+              text: 'Thank your purchase!',
+              imageUrl: 'https://picsum.photos/seed/picsum/200/300',
+              imageWidth: 400,
+              imageHeight: 200,
+              imageAlt: 'Custom image'
+            });
+            this.$router.push({ name: 'OrderListView' });
           })
           .catch((error) => {
             console.log(error);

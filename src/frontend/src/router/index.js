@@ -119,7 +119,8 @@ const router = createRouter({
     {
       path: '/payment/success',
       name: 'SuccessCheckoutView',
-      component: SuccessCheckoutView
+      component: SuccessCheckoutView,
+      props: (route) => ({ session_id: route.query.session_id })
     },
     {
       path: '/payment/failed',
