@@ -36,7 +36,7 @@ export const createBasketItemSchema = Joi.object({
   productId: Joi.string().required().messages({
     "string.empty": "Product id is required. Please provide a valid productId.",
   }),
-  productName: Joi.string().required().messages({
+  productName: Joi.string().optional().messages({
     "string.empty":
       "Product name is required. Please provide a valid productName.",
   }),
@@ -44,7 +44,7 @@ export const createBasketItemSchema = Joi.object({
     "number.base":
       "Unit price is required and must be a number. Please provide a valid unitPrice.",
   }),
-  oldUnitPrice: Joi.number().required().messages({
+  oldUnitPrice: Joi.number().optional().messages({
     "number.base":
       "Old unit price is required and must be a number. Please provide a valid oldUnitPrice.",
   }),
