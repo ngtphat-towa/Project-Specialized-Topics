@@ -1,15 +1,7 @@
 <template>
   <div class="header navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">
-      <RouterLink class="nav-link" to="/">
-        <img
-          src="@/assets/logo.svg"
-          width="30"
-          height="30"
-          class="d-inline-block align-top"
-          alt="Vue logo"
-        />
-      </RouterLink>
+      <RouterLink class="nav-link" to="/"> Apple Reseller </RouterLink>
     </a>
     <nav class="navbar">
       <li class="nav-item">
@@ -58,14 +50,23 @@
 
 <script>
 import swal from 'sweetalert';
+import { ref } from 'vue';
+
+import getCookie from '../services/cookies.service';
+import authService from '../services/auth/auth.service';
 export default {
   name: 'NavigateBarComponent',
   props: ['cartCount'],
+  setup() {
+    const token = ref(null);
+    return {
+      token
+    };
+  },
   data() {
     return {
       searchTerm: '',
-      showSearch: false,
-      token: null
+      showSearch: false
     };
   },
   methods: {
@@ -75,18 +76,29 @@ export default {
     },
 
     signout() {
-      localStorage.removeItem('token');
-      this.token = null;
-      swal({
-        text: 'Logged you out. Visit again',
-        icon: 'success'
-      });
-      this.$emit('resetCartCount');
-      this.$router.push({ name: 'Home' });
+      authService
+        .logout()
+        .then(() => {
+          this.token = null;
+          console.log('LOGIN', getCookie('accessToken'));
+          console.log('LOGIN', getCookie('refreshToken'));
+          this.$emit('resetCartCount');
+          this.$router.push({ name: 'HomeView' });
+          swal({
+            text: 'Logged you out. Visit again',
+            icon: 'success'
+          });
+          console.log('LOGIN', getCookie('accessToken'));
+          console.log('LOGIN', getCookie('refreshToken'));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   },
-  mounted() {
-    this.token = localStorage.getItem('accessToken');
+
+  created() {
+    this.token = getCookie('accessToken');
   }
 };
 </script>
@@ -107,7 +119,7 @@ export default {
 }
 
 .header .logo {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bolder;
   color: #130f40;
 }

@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 // Main View
 import HomeView from '../views/HomeView.vue';
 import AboutView from '../views/AboutView.vue';
+import LoginView from '../views/LoginView.vue';
 // Admin
 // Type
 import AddCatalogTypeView from '../views/catalog/type/AddCatalogTypeView.vue';
@@ -86,7 +87,7 @@ const router = createRouter({
     {
       path: '/auth/login',
       name: 'LoginView',
-      component: CatalogItemListView
+      component: LoginView
     },
     {
       path: '/auth/register',

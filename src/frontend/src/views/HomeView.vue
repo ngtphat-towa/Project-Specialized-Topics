@@ -4,7 +4,7 @@
       <div class="container py-5">
         <header class="text-left text-white py-5">
           <h3 class="mb-4 rounded">
-            <a href="#start-shopping" class="bg-white px-2 py-2 rounded" id="heading"
+            <a href="start-shopping" class="bg-white px-2 py-2 rounded" id="heading"
               >Start Shopping</a
             >
           </h3>
@@ -37,7 +37,7 @@
     <div class="container mt-4">
       <div class="row">
         <div class="col-12 text-center">
-          <h3 class="display-5">Feature Categories</h3>
+          <h3 class="display-5">Feature Brands</h3>
         </div>
       </div>
       <div class="row">
@@ -104,33 +104,30 @@ export default {
       typeService
         .fetchCatelogTypes()
         .then((response) => {
-          console.log(response.data);
           this.catalogTypeList = response.data;
           this.catalogTypeListSize = Math.min(6, this.catalogTypeList.length);
         })
-        .then((err) => {
+        .catch((err) => {
           console.log(err);
         });
 
       brandService
         .fetchCatelogBrands()
         .then((response) => {
-          console.log(response.data);
           this.catalogBrandList = response.data;
           this.catalogBrandListSize = Math.min(6, this.catalogBrandList.length);
         })
-        .then((err) => {
+        .catch((err) => {
           console.log(err);
         });
 
       itemService
         .getAllCatalogItems({ pageIndex: 0, pageSize: 10 })
         .then((response) => {
-          console.log(response.data);
           this.catlogItemList = response.data.data;
           this.catlogItemListSize = Math.min(10, this.catlogItemList.length);
         })
-        .then((err) => {
+        .catch((err) => {
           console.log(err);
         });
     }

@@ -4,7 +4,7 @@
       <div class="col-md-1"></div>
       <!--            display image-->
       <div class="col-md-4 col-12">
-        <img :src="convertToBase64Image()" class="img-fluid" />
+        <img :src="displayImage" class="img-fluid" />
       </div>
       <!--            display product details-->
       <div class="col-md-6 col-12 pt-3 pt-md-0">
@@ -46,26 +46,38 @@
 <script>
 import { useToast } from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
-import convertToBase64 from './../../../services/image/image.render';
-import { productItems } from './tempProduct';
+import convertToBase64 from '../../../services/image/image.render';
+import itemService from '../../../services/catalog/item.service.js';
+
 const $toast = useToast();
 
-// import wishlistService from '../../services/wishlist.service';
-// import cartService from '../../services/cart.service';
 export default {
   name: 'DisplayItemDetailView',
   data() {
     return {
-      product: productItems.data[0],
-      id: null,
+      product: null,
+
       token: null,
-      quantity: 1
+      quantity: 1,
+      displayImage: null
     };
   },
+  created() {
+    this.fetchCurrentData();
+  },
   methods: {
-    convertToBase64Image() {
-      const data = this.product.image;
-      return convertToBase64(data.data);
+    fetchCurrentData() {
+      const id = this.$route.params.id;
+      itemService
+        .getCatalogItemById(id)
+        .then((response) => {
+          this.product = response.data;
+          const data = this.product.image;
+          this.displayImage = convertToBase64(data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     async addToWishlist() {
       if (!this.token) {
@@ -140,9 +152,7 @@ export default {
       //     .catch((err) => console.log('err', err));
     }
   },
-  mounted() {
-    this.token = localStorage.getItem('accessToken');
-  }
+  mounted() {}
 };
 </script>
 <style scoped>
