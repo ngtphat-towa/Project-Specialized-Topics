@@ -70,14 +70,12 @@ export default {
         .then(() => {
           this.fetchWishList();
           $toast.success('Removed Successfully', {
-            // override the global option
             position: 'top-right'
           });
         })
         .catch((err) => {
           console.log('err', err);
           $toast.error('Something wrong, try again!', {
-            // override the global option
             position: 'top-right'
           });
         });

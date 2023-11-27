@@ -19,6 +19,7 @@ import CatalogItemListView from '../views/catalog/item/CatalogItemListView.vue';
 // Display View
 import DisplayItemDetailView from '../views/catalog/item/DisplayItemDetailView.vue';
 import WishlistListView from '../views/basket/WishlistListView.vue';
+import BasketListView from '../views/basket/BasketListView.vue';
 //Testing
 import DisplayProductBox from '../components/catalog/DisplayProductBox.vue';
 
@@ -95,19 +96,20 @@ const router = createRouter({
       name: 'RegisterView',
       component: CatalogItemListView
     },
+    //Display
     {
       path: '/user/wishlist',
       name: 'WishlistListView',
       component: WishlistListView
     },
     {
-      path: '/item/search',
-      name: 'SearchView',
-      component: CatalogItemListView
+      path: '/user/basket',
+      name: 'BasketListView',
+      component: BasketListView
     },
     {
-      path: '/user/basket',
-      name: 'BasketView',
+      path: '/item/search',
+      name: 'SearchView',
       component: CatalogItemListView
     },
     {

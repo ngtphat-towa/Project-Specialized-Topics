@@ -53,6 +53,7 @@ import itemService from '../../../services/catalog/item.service.js';
 import basketService from '../../../services/basket/basket.service';
 import wishlistService from '../../../services/basket/wishlist.service';
 import getToken from '../../../services/cookies.service.js';
+
 import { ref } from 'vue';
 
 const $toast = useToast();
@@ -131,13 +132,16 @@ export default {
       }
 
       const basketItem = {
-        productId: this.product.id,
-        quantity: this.quantity
+        productId: this.product._id,
+        productName: this.product.name,
+        unitPrice: this.product.price,
+        oldUnitPrice: this.product.price,
+        quantity: this.quantity,
+        image: this.product.image
       };
-
       // add to basket
       basketService
-        .addToBasket(basketItem, this.token)
+        .createBasketItem(this.product._id, basketItem)
         .then(() => {
           $toast.success('Product added to your basket', {
             position: 'top-right'

@@ -20,7 +20,7 @@
 
     <div class="icons">
       <div id="menu-btn" class="fas fa-bars menu-btn" @click="showNav"></div>
-      <router-link :to="{ name: 'BasketView' }">
+      <router-link :to="{ name: 'BasketListView' }">
         <div class="fas fa-shopping-cart cart"></div>
       </router-link>
 
