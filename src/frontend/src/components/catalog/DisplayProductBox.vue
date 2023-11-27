@@ -5,28 +5,24 @@
     </div>
 
     <div class="card-body">
-      <RouterLink :to="{ name: 'ShowDetails', params: { id: displayProduct.id } }">
+      <RouterLink :to="{ name: 'home', params: { id: displayProduct._id } }">
         <h5 class="card-title">{{ displayProduct.name }}</h5>
       </RouterLink>
 
       <p class="card-text">{{ displayProduct.description.substring(0, 65) }}...</p>
-      <!-- <RouterLink
-        :to="{ name: 'EditProduct', params: { id: displayProduct.id } }"
-        v-show="$route.name == 'Product'"
-      >
-        <button class="btn btn-primary">Edit</button>
-      </RouterLink> -->
     </div>
   </div>
 </template>
 <script>
 import convertToBase64 from '../../services/image/image.render';
+// import { productItems } from '../../views/catalog/item/tempProduct.js';
 export default {
   name: 'DisplayProductBox',
   props: ['displayProduct'],
   data() {
     return {
-      base64Image: ''
+      base64Image: '',
+      // displayProduct: productItems.data[0]
     };
   },
   watch: {

@@ -10,6 +10,9 @@ import AddCatalogBrandView from '../views/catalog/brand/AddCatalogBrandView.vue'
 import EditCatalogBrandView from '../views/catalog/brand/EditCatalogBrandView.vue';
 import CatalogBrandListView from '../views/catalog/brand/CatalogBrandListView.vue';
 import CatalogItemListView from '../views/catalog/item/CatalogItemListView.vue';
+
+import DisplayProductBox from '../components/catalog/DisplayProductBox.vue';
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -61,6 +64,13 @@ const router = createRouter({
       path: '/admin/catalog/item/',
       name: 'CatalogItemList',
       component: CatalogItemListView
+    },
+    // testing
+    // Catalog item
+    {
+      path: '/testing',
+      name: 'DisplayProduct',
+      component: DisplayProductBox
     }
   ]
 });

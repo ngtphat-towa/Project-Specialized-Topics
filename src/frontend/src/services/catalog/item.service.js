@@ -13,8 +13,8 @@ export default {
   getCatalogBrands() {
     return axios.get(`/api/item/catalogbrands`, { withCredentials: true });
   },
-  getAllCatalogItems() {
-    return axios.get(`/api/item/`, { withCredentials: true });
+  getAllCatalogItems(queryParams) {
+    return axios.get(`/api/item/`, { params: queryParams, withCredentials: true });
   },
   getCatalogItemsSearchAndSort(payload) {
     return axios.post(`/api/item/admin/query`, payload, { withCredentials: true });
