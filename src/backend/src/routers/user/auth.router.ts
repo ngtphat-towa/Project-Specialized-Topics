@@ -6,8 +6,11 @@ import requireUser from "../../middlewares/auth/validate.middleware";
 const AuthRouter = express.Router();
 // Session
 AuthRouter.post("/login", controller.createSessionHandler);
-AuthRouter.get("/session", requireUser, controller.getSessionHandler);
+AuthRouter.post("/refresh-token", controller.refreshTokenHandler);
+
+AuthRouter.get("/session", controller.getSessionHandler);
 AuthRouter.delete("/logout", requireUser, controller.deleteSessionHandler);
+
 AuthRouter.route("/").all(methodNotAllowed);
 
 export default AuthRouter;

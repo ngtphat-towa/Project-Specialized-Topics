@@ -25,7 +25,7 @@ ItemRouter.get("/:id", itemController.getItemById);
 
 ItemRouter.post(
   "/admin/query/",
-  // requireAdmin,
+  requireAdmin,
   processImageMiddleware,
   itemController.getBySearchAndSort
 );
