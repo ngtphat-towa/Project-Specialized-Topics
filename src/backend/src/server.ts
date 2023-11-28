@@ -19,9 +19,14 @@ const PORT = config.server.port;
 const NAMESPACE = "SERVER";
 // Set config middlewares
 server.use(cookieParser());
-server.use(cors());
+server.use(
+  cors({
+    origin: config.client.baseUrl, // Specify the allowed origin
+    credentials: true, // Allow cookies
+  })
+);
 server.use(express.json());
-server.use(express.urlencoded({ extended: true }));
+server.use(express.urlencoded({ extended: false }));
 
 mongoose
   .connect(config.mongo.url, config.mongo.options)
@@ -38,6 +43,7 @@ const StartServer = () => {
   // login
 
   server.get("/ping", samples.serverHealthCheck);
+  server.get("/log-form-data", samples.checkPostDataForm);
 
   // This will logger the request
   server.use(loggerMiddleware.apiRequestLogger);

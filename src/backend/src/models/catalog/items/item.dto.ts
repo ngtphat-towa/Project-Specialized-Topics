@@ -1,11 +1,22 @@
 import Joi from "joi";
 import { IImage } from "../../commons/image.model";
 
+export const searchAndSortSchema = Joi.object({
+  searchTerm: Joi.string().optional(),
+  searchField: Joi.string()
+    .valid("name", "catalogType", "catalogBrand", "price", "availableStock", "")
+    .optional(),
+  sortField: Joi.string()
+    .valid("name", "catalogType", "catalogBrand", "price", "availableStock", "")
+    .optional(),
+  sortMode: Joi.string().valid("asc", "desc").optional(),
+  pageSize: Joi.number().integer().min(1).optional(),
+  pageIndex: Joi.number().integer().min(0).optional(),
+}).options({ stripUnknown: true });
+
 // Define the Joi validation schema
 export const createCatalogItemSchema = Joi.object({
-  name: Joi.string()
-    .required()
-    .messages({ "string.empty": "Name is required" }),
+  name: Joi.string().optional().messages({ "string.empty": "Name is empty" }),
   description: Joi.string().optional(),
   price: Joi.number().required(),
   catalogType: Joi.string().required(), // assuming the catalogType will be passed as an id
@@ -56,4 +67,25 @@ export interface IUpdateCatalogItem {
   catalogBrand?: string;
   availableStock?: number;
   image?: IImage;
+}
+export interface SearchAndSortDto {
+  searchTerm?: string;
+  searchField?:
+    | "name"
+    | "catalogType"
+    | "catalogBrand"
+    | "price"
+    | "availableStock"
+    | "";
+  sortField?:
+    | "name"
+    | "catalogType"
+    | "catalogBrand"
+    | "price"
+    | "availableStock"
+    | "";
+  sortMode?: "asc" | "desc";
+  pageSize?: number;
+  pageIndex?: number;
+  [key: string]: any;
 }

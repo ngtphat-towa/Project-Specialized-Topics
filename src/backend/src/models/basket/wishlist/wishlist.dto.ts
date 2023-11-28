@@ -1,5 +1,6 @@
 import Joi from "joi";
 import { IWishlistItem } from "./wishlist.item.model";
+import { IImage } from "../../commons/image.model";
 
 // DTO Models
 export interface ICreateWishlistItem {
@@ -7,6 +8,7 @@ export interface ICreateWishlistItem {
   productId: string;
   productName: string;
   oldUnitPrice: number;
+  image?: IImage;
 }
 
 export interface IGetWishlistByUserId {
@@ -51,6 +53,14 @@ export const createCustomWishlistSchema = Joi.object({
           "number.base":
             "Quantity is required and must be a number. Please provide a valid quantity.",
         }),
+        image: Joi.array()
+          .items(
+            Joi.binary()
+              .encoding("base64")
+              .max(5242880)
+              .messages({ "binary.max": "Each image should be less than 5MB" })
+          )
+          .optional(),
       })
     )
     .optional()
@@ -75,10 +85,11 @@ export const createWishlistItemSchema = Joi.object({
     "number.base":
       "Old unit price is required and must be a number. Please provide a valid oldUnitPrice.",
   }),
-  quantity: Joi.number().required().messages({
+  quantity: Joi.number().optional().messages({
     "number.base":
       "Quantity is required and must be a number. Please provide a valid quantity.",
   }),
+  image: Joi.optional(),
 }).options({ stripUnknown: true });
 
 export const getWishlistByUserIdSchema = Joi.object({

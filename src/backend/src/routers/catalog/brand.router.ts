@@ -9,10 +9,12 @@ const BrandRouter = express.Router();
 BrandRouter.route("/")
   .get(brandController.getBrandsByFilter)
   .post(requireAdmin, processImageMiddleware, brandController.createBrand)
+  // .post(processImageMiddleware, brandController.createBrand)
   .all(methodNotAllowed);
 BrandRouter.route("/:id")
   .get(brandController.getBrand)
   .put(requireAdmin, processImageMiddleware, brandController.updateBrand)
+  // .put(processImageMiddleware, brandController.updateBrand)
   .all(methodNotAllowed);
 
 export default BrandRouter;

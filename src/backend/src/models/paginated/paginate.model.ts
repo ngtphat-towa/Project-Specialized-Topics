@@ -15,7 +15,7 @@ export interface IPaginationRequest {
 export interface IPaginatedItems<T> {
   pageIndex: number;
   pageSize: number;
-  count: number;
+  totalItems: number;
   data: T[];
 }
 
@@ -23,7 +23,7 @@ export class PaginatedItems<T> implements IPaginatedItems<T> {
   constructor(
     public pageIndex: number,
     public pageSize: number,
-    public count: number,
+    public totalItems: number,
     public data: T[]
   ) {}
 }

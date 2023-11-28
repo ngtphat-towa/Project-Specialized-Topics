@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { signJWT } from "../../handlers/jwt.handler";
+import { signJWT, verifyJWT } from "../../handlers/jwt.handler";
 import {
   ILoginUserAccount,
   loginUserSchema,
@@ -9,6 +9,7 @@ import { UserAccount } from "../../models/auth/account/user.account.model";
 import { UnauthorizedError } from "../../common/err.common";
 import { Session } from "../../models/auth/session/session.model";
 import config from "../../configs/config";
+import { JwtPayload } from "jsonwebtoken";
 
 /**
  * This module exports handlers for creating, getting, and deleting sessions.
@@ -17,7 +18,45 @@ export default {
   createSessionHandler,
   getSessionHandler,
   deleteSessionHandler,
+  refreshTokenHandler,
 };
+
+// In your controller file
+async function refreshTokenHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    // Extract refresh token from request body
+    const { refreshToken } = req.body;
+
+    // Verify the refresh token
+    const payload: JwtPayload = verifyJWT(refreshToken) as JwtPayload;
+
+    // Find the associated user
+    const user = await UserAccount.findById(payload.userId);
+
+    if (!user) {
+      throw new UnauthorizedError("Invalid refresh token", req.path);
+    }
+
+    // Generate new access and refresh tokens
+    const newAccessToken = signJWT(
+      { userId: user._id },
+      config.jwt.accessTokenExpireTime
+    );
+    const newRefreshToken = signJWT(
+      { userId: user._id },
+      config.jwt.refreshTokenExpireTime
+    );
+
+    // Send the new tokens in the response
+    res.json({ accessToken: newAccessToken, refreshToken: newRefreshToken });
+  } catch (error) {
+    next(error);
+  }
+}
 
 /**
  * Handler for creating a new session.
@@ -56,10 +95,14 @@ async function createSessionHandler(
     );
 
     // set access token in cookie
-    setCookies(res, accessToken, refreshToken, true);
+    setCookies(res, accessToken, refreshToken, false);
 
     // send user back
-    return res.send(session);
+    return res.send({
+      session,
+      accessToken,
+      refreshToken,
+    });
   } catch (error) {
     next(error);
   }
@@ -129,7 +172,7 @@ function setCookies(
   httpOnly: boolean = false
 ) {
   res.cookie("accessToken", accessToken, {
-    maxAge: 300000, // TODO: set config
+    maxAge: 300000000, // TODO: set config
     httpOnly: httpOnly,
   });
   res.cookie("refreshToken", refreshToken, {

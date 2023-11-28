@@ -17,8 +17,8 @@ const stripe = new Stripe(config.payment.secret, {
 
 // supply success and failure url for stripe
 const successURL =
-  config.client.baseUrl + "payment/success?session_id={CHECKOUT_SESSION_ID}";
-const failedURL = config.client.baseUrl + "payment/failed";
+  config.client.baseUrl + "/payment/success?session_id={CHECKOUT_SESSION_ID}";
+const failedURL = config.client.baseUrl + "/payment/failed";
 
 // recevice the data from order
 export default async function createCheckouStripetSession(

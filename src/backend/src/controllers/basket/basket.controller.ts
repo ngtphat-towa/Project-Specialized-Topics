@@ -114,12 +114,16 @@ const createBasketItem = async (
       createBasketItemSchema
     );
     // check if the basket exist
-    const existingBasket = await CustomerBasket.findOne({
+    let existingBasket = await CustomerBasket.findOne({
       $or: [{ id: params.id }, { userId: createBasketItem.userId }],
     });
 
     if (!existingBasket) {
-      throw new NotFoundError("Basket not found", req.originalUrl);
+      const newBasket = new CustomerBasket({
+        userId: createBasketItem.userId,
+        items: [],
+      });
+      existingBasket = await newBasket.save();
     }
     // Check if the item already exists in the basket
     const existingItem = existingBasket.items.find(

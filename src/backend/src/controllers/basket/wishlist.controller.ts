@@ -1,7 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import { IIdParam, idSchema } from "../../models/commons/id.dto";
+import {
+  IIdParam,
+  IUserId,
+  idSchema,
+  userIdSchema,
+} from "../../models/commons/id.dto";
 import {
   validateBody,
+  validateHeaders,
   validateParams,
 } from "../../models/commons/validate.dto";
 import {
@@ -88,12 +94,16 @@ const addWishlistItem = async (
     );
 
     // Check if the wishlist exists
-    const existingWishlist = await CustomerWishlist.findOne({
+    let existingWishlist = await CustomerWishlist.findOne({
       $or: [{ id: params.id }, { userId: createWishlistItem.userId }],
     });
 
     if (!existingWishlist) {
-      throw new NotFoundError("Wishlist not found", req.originalUrl);
+      const newWishlist = new CustomerWishlist({
+        userId: createWishlistItem.userId,
+        items: [],
+      });
+      existingWishlist = await newWishlist.save();
     }
 
     // Check if the item already exists in the wishlist
@@ -127,10 +137,12 @@ const deleteWishlistItem = async (
   next: NextFunction
 ) => {
   try {
-    const userId = req.params.userId;
-    const productId = req.params.productId;
+    const user: IUserId = validateBody(req, userIdSchema);
+    const productId = req.params.id;
 
-    const existingWishlist = await CustomerWishlist.findOne({ userId: userId });
+    const existingWishlist = await CustomerWishlist.findOne({
+      userId: user.userId,
+    });
 
     if (!existingWishlist) {
       throw new NotFoundError("Wishlist not found", req.originalUrl);

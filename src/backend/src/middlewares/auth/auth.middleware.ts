@@ -40,7 +40,7 @@ async function refreshAccessToken(refreshToken: string, res: Response) {
 
   res.cookie("accessToken", newAccessToken, {
     maxAge: 300000, // 5 minutes
-    httpOnly: true,
+    httpOnly: false,
   });
 
   return verifyJWT(newAccessToken).payload;
