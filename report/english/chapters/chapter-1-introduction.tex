@@ -3,61 +3,51 @@
 % What are your research questions?
 % What are the main contributions of your thesis?
 \section{Background}
-% What is the motivation for your research?
-% ver2: The rapid development of information technology has revolutionized various fields, including business operations. To enhance management quality and increase revenue, businesses are increasingly integrating software applications into their sales operations. However, selecting a suitable software application and platform can be challenging, especially for small and medium-sized enterprises.
-The advent of information technology has brought about significant changes in various sectors, including business operations. Businesses, in their quest to enhance management quality and increase revenue, are increasingly integrating software applications into their sales operations. However, the task of selecting a suitable software application and platform can be daunting, especially for small and medium-sized enterprises (SMEs).
+The rise of information technology has significantly impacted business operations, with software applications becoming integral to sales operations. However, choosing the right software and platform can be challenging, especially for small and medium-sized enterprises (SMEs).
 
-% ver2 Monolithic architecture is a traditional model of software design that is built as a unified unit, self-contained, and independent from other applications. It can be convenient early on in a project's life for ease of code management, cognitive overhead, and deployment. However, as the size of the application increases, its start-up and deployment time also increases.
-% ver1: Monolithic architecture is a traditional way of designing software. It's built as one unit that is separate from other applications. It can be useful at the start of a project because it's easy to manage the code and deploy the application. But, as the application gets bigger, it takes longer to start up and deploy.
-One of the traditional models of software design is the monolithic architecture. This model is built as a unified unit, self-contained, and independent from other applications. It can be convenient early on in a project’s life due to its ease of code management, cognitive overhead, and deployment. However, as the size of the application increases, so does its start-up and deployment time. For instance, an e-commerce platform like Amazon started with a monolithic architecture but as it grew, the architecture became more complex and harder to manage.
+Traditionally, many businesses have used monolithic architecture, a unified and self-contained model. While this model is convenient in the early stages of a project, it can become complex and hard to manage as the application grows.
 
-% ver2: Other way to address the challenges of selecting a software application and platform is to adopt microservices architecture. Microservices architecture is a software design approach that breaks down an application into a collection of small, independent services. Each microservice has its own business logic and database, and it can be deployed and scaled independently.
-% ver1: Microservices architecture is another way to choose software and platform. It breaks an application into small, independent services. Each service has its own business logic and database. It can be deployed and scaled on its own.
-To address these challenges, businesses are turning to microservices architecture. Microservices architecture is a software design approach that breaks down an application into a collection of small, independent services. Each microservice has its own business logic and database, and it can be deployed and scaled independently. This approach offers several advantages such as improved scalability, faster deployment times, and better fault isolation.
+To address these challenges, businesses are now turning to the MEVN stack (MongoDB, Express.js, Vue.js, Node.js). This stack allows for a scalable and maintainable system, providing a rich, user-friendly interface.
 
-% Example of transtiion to mircoservices:
-For example, Netflix transitioned from a monolithic architecture to a microservices architecture to handle their growing user base and the need for rapid innovation. By breaking down their application into smaller services (like one for recommendations, one for user profiles etc.), they were able to scale their services independently based on demand and deploy updates more frequently without disrupting the entire system.
+For instance, a sport equipment shop website can be developed using the MEVN stack. By breaking down the application into smaller parts, it's easier to scale services based on demand and deploy updates more frequently without disrupting the entire system.
 
-% Souvenir e-shops can adopt microservices architecture by breaking down their e-shop application into smaller, more manageable services. For example, they could create separate microservices for product management, inventory management, order processing, and payment processing. This would make it easier to develop and deploy new features, scale their e-shop as needed, and improve the overall reliability of their system.
-Souvenir e-shops can use microservices architecture by breaking their e-shop application into smaller services. They could have separate services for managing products, inventory, orders, and payments. This would make it easier to add new features, scale their e-shop as needed, and make their system more reliable.
-% What problem are you trying to solve with your application?
+Sport equipment shop websites can use the MEVN stack to manage products, inventory, orders, and payments, making it easier to add new features, scale as needed, and ensure system reliability.
 \section{Problem statement}
 % The traditional monolithic architecture, while convenient early on, becomes less efficient as the application grows in size. To address these challenges, the e-shop needs to adopt microservices architecture.
-E-commerce enterprises, particularly SMEs, face the challenge of selecting scalable software solutions that can accommodate their growth trajectory. While monolithic architectures initially offer simplicity in code management and deployment, they become increasingly complex and unwieldy as applications expand.
+\textbf{Challenge}: E-commerce enterprises, particularly SMEs, face the challenge of selecting scalable software solutions that can accommodate their growth trajectory. While monolithic architectures initially offer simplicity in code management and deployment, they become increasingly complex and unwieldy as applications expand.
 
-To address these challenges, there is a need for a new approach: microservices architecture. This allows for improved scalability, faster deployment times, better fault isolation, and more flexibility in implementing new features.
+\textbf{Solution}: To address these challenges, there is a need for a new approach: the MEVN stack (MongoDB, Express.js, Vue.js, Node.js). This stack allows for a scalable and maintainable system, providing a rich, user-friendly interface.
 
-The objective of this project is not to transition an existing e-shop from a monolithic architecture to a microservices architecture but to implement a new e-shop using microservices architecture from the ground up. The e-shop will have minimal features due to the project’s short deadline.
+\textbf{Objective}: The objective of this project is to implement a new sport equipment shop website using the MEVN stack from the ground up. The website will have minimal features due to the project's short deadline.
 
-By adopting microservices architecture from the start, the souvenir e-shop aims to develop and deploy new features more easily, scale as needed, and improve the overall reliability of the system.
+\textbf{Aim:} By adopting the MEVN stack from the start, the sport equipment shop website aims to develop and deploy new features more easily, scale as needed, and improve the overall reliability of the system.
 
 % What are your research questions?
 \section{Research Objectives}
 The primary aim of this project is to design and implement a microservices-based e-commerce application for a souvenir e-shop, along with a front-end application using Flutter. The specific objectives are as follows:
 \begin{itemize}
-    \item[-] \textbf{Literature Review:} Conduct a comprehensive review of existing literature on microservices architecture, its benefits, challenges, and best practices. This will provide a theoretical foundation for the project.
-    \item[-] \textbf{Design:} Design a microservices-based e-commerce application model. The design should consider factors such as scalability, fault tolerance, and ease of adding new features. In parallel, design a front-end application using Flutter following Clean Architecture principles.
-    \item[-] \textbf{Development:} Develop a minimum viable product (MVP) of an e-commerce application for a souvenir shop using the proposed model. The MVP will include key features such as product management, inventory management, order processing, and payment processing.
+    \item[-] \textbf{Literature Review:} Conduct a comprehensive review of existing literature on the MEVN stack, its benefits, challenges, and best practices. This will provide a theoretical foundation for the project.
+    \item[-] \textbf{Design:} Design a MEVN-based e-commerce application model. The design should consider factors such as scalability, fault tolerance, and ease of adding new features. In parallel, design a front-end application using Vue.js.
+    \item[-] \textbf{Development:} Develop a minimum viable product (MVP) of an e-commerce application for a sport equipment shop website using the proposed model. The MVP will include key features such as product management, inventory management, order processing, and payment processing.
     \item[-] \textbf{Documentation:} Document the entire process, including the design decisions made, challenges encountered, solutions implemented, and lessons learned. This will serve as a valuable resource for future projects of similar nature.
 \end{itemize}
 % What are the main contributions of your thesis?
 \section{Research Scope}
-The scope of this research is focused on the design and implementation of a microservices-based e-commerce application for a souvenir e-shop, along with a front-end application using Flutter.
-
+The focus of this research is on the design and implementation of a MEVN-based e-commerce application for a sport equipment shop website.
 The specific areas covered in this research include:
 \begin{itemize}
-    \item[-] \textbf{Microservices Architecture:} The research will delve into the principles and practices of microservices architecture. It will explore how to design and implement an e-commerce application using this architecture.
-    \item[-] \textbf{Front-end Development with Flutter:} The research will also cover the design and implementation of a front-end application using Flutter. It will follow the principles of Clean Architecture.
-    \item[-] \textbf{Key Features:} The research will focus on implementing key features for an e-commerce application, such as product management, inventory management, order processing, and payment processing.
+    \item[-] \textbf{MEVN Stack:} The research will delve into the principles and practices of the MEVN stack. It will explore how to design and implement an e-commerce application using this stack.
+    \item[-] \textbf{Front-end Development with Vue.js: } he research will also cover the design and implementation of a front-end application using Vue.js.
+    \item[-] \textbf{Key Features: } The research will focus on implementing key features for an e-commerce application, such as product management, inventory management, order processing, and payment processing.
     \item[-] \textbf{Evaluation:} The research will include an evaluation of the implemented system in terms of functionality, performance, scalability, and reliability.
 \end{itemize}
 
-Please note that while the research aims to cover these areas, it is limited by the project’s short deadline. Therefore, the e-shop application developed as part of this project will be a minimum viable product (MVP) with basic features.
+Please note that while the research aims to cover these areas, it is limited by the project's short time. Therefore, the e-shop application developed as part of this project will be a minimum viable product (MVP) with basic features.
 \section{Solution approach}
 The approach to solving the problem at hand involves several steps, each designed to ensure the successful implementation of a microservices-based e-commerce application for a souvenir e-shop, along with a front-end application using Flutter. The steps are as follows:
 \begin{enumerate}
-    \item[-] \textbf{Literature Review:} he first step involves conducting a comprehensive review of existing literature on microservices architecture and front-end development using Flutter. This will provide a theoretical foundation for the project and inform the design and implementation stages.
-    \item[-] \textbf{Design:} The next step is to design the microservices-based e-commerce application model and the front-end application using Flutter. The design will take into account factors such as scalability, fault tolerance, and ease of adding new features.
+    \item[-] \textbf{Literature Review:} The first step involves conducting a comprehensive review of existing literature on the MEVN stack. This will provide a theoretical foundation for the project and inform the design and implementation stages.
+    \item[-] \textbf{Design:} The next step is to design the MEVN-based e-commerce application model. The design will take into account factors such as scalability, fault tolerance, and ease of adding new features.
     \item[-] \textbf{Development:} Once the design is complete, the development of the minimum viable product (MVP) begins. This involves coding the back-end services and front-end application, and setting up the necessary databases and interfaces.
     \item[-] \textbf{Testing: :} After the MVP is developed, it will be thoroughly tested to ensure it functions as expected. This includes unit testing, integration testing, and system testing.
     \item[-] \textbf{Evaluation:} The MVP will then be evaluated in terms of its functionality, performance, scalability, and reliability. Feedback from this evaluation will be used to identify areas for improvement.
@@ -67,12 +57,12 @@ The approach to solving the problem at hand involves several steps, each designe
 % Trong giai đoạn luận văn đề tài  đã thực hiện được một số công việc liên quan sẽ trình bày trong báo cáo như sau:
 % % \setlist[enumerate]{leftmargin=*}
 \begin{enumerate}[label=\bfseries Chapter \arabic*.,leftmargin=*]
-    \item \textbf{Introduction:} Introduction to the general overview of the , also the current chapter. In this chapter, it will give a general overview of the topic, its potential and practical applications in the future.
-    \item \textbf{Literature review} This section provides a summary of relevant research on the topic and the foundational knowledge necessary to develop a microservices model using ASP.NET and build an MVP application using the Clean Architecture model in Flutter.
+    \item \textbf{Introduction:} This chapter provides a general overview of the topic, its potential, and practical applications in the future. It introduces the concept of a MEVN-based e-commerce application for a sport equipment shop website.
+    \item \textbf{Literature review} This section provides a summary of relevant research on the topic and the foundational knowledge necessary to develop an e-commerce application using the MEVN stack.
           % \item \textbf{Methods} This section provides 
     \item \textbf{System design and implementation} This section presents the approach to the problem. It discusses the details of the implementation approach, including the tools used.
-    \item \textbf{Testing and evaluation.} This chapter presents the testing plan and management, testing scenarios for the main functions of the system.
-    \item \textbf{Conclusion}.This section presents the results achieved, the remaining limitations, and the system's further development.
+    \item \textbf{Testing and evaluation.}  This chapter presents the testing plan and management, testing scenarios for the main functions of the system.
+    \item \textbf{Conclusion} This section presents the results achieved, the remaining limitations, and the system’s further development.
 \end{enumerate}
 
 
