@@ -12,7 +12,6 @@
       <p class="card-text">
         {{ catalogType.description }}
       </p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
     </div>
   </div>
 </template>

@@ -112,9 +112,6 @@ export default {
               position: 'top-right'
             });
           }
-          $toast.success('Product added to your wishlist', {
-            position: 'top-right'
-          });
         })
         .catch((err) => {
           console.log('err', err);

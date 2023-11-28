@@ -16,6 +16,7 @@ import EditCatalogBrandView from '../views/catalog/brand/EditCatalogBrandView.vu
 import CatalogBrandListView from '../views/catalog/brand/CatalogBrandListView.vue';
 // Item
 import CatalogItemListView from '../views/catalog/item/CatalogItemListView.vue';
+import ShoppingListView from '../views/catalog/item/ShoppingListView.vue';
 // Display View
 import DisplayItemDetailView from '../views/catalog/item/DisplayItemDetailView.vue';
 import WishlistListView from '../views/basket/WishlistListView.vue';
@@ -134,7 +135,7 @@ const router = createRouter({
     {
       path: '/item/search',
       name: 'SearchView',
-      component: CatalogItemListView
+      component: ShoppingListView
     },
     {
       path: '/user/order',
