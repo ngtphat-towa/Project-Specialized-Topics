@@ -1,12 +1,7 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h3 class="mt-4">Your WishList</h3>
-      </div>
-    </div>
-
+  <div class="container" style="padding: 20px">
     <!-- diaplay products -->
+    <h3 class="text-center text-white bg-dark p-2">Shopping</h3>
 
     <div class="row">
       <div
@@ -14,7 +9,7 @@
         :key="product.id"
         class="col-md-6 col-xl-4 col-12 pt-3 justify-content-around d-flex"
       >
-        <WishlistItemBox :product="product" @onDeleteWishlistItem="deleteWishlistItem(product)">
+      <WishlistItemBox :product="product" @onDeleteWishlistItem="deleteWishlistItem(product)">
         </WishlistItemBox>
       </div>
     </div>

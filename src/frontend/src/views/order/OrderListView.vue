@@ -1,6 +1,6 @@
 <template>
   <div class="container my-orders">
-    <h3 class="text-center text-white bg-dark p-2">My Orders</h3>
+    <h3 class="text-center text-white bg-dark p-2">Admin order</h3>
     <div v-if="orders.length > 0">
       <div v-for="(order, index) in orders" :key="order.id" class="list-group mt-4">
         <div class="list-group-item list-group-item-light">

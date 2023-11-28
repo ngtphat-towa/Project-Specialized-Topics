@@ -1,8 +1,12 @@
 <template>
-  <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h1>Shopping</h1>
-    </div>
+  <div
+    class="container"
+    style="
+
+  padding: 20px;
+}"
+  >
+    <h3 class="text-center text-white bg-dark p-2">Shopping</h3>
     <!-- SearchAndFilter -->
     <div class="mb-3 row">
       <div class="form-group col-md-3">
@@ -182,7 +186,7 @@ export default {
   height: auto;
 }
 .card-title:hover {
-  color: #FF0099; 
+  color: #ff0099;
 }
 .review-image {
   display: block;

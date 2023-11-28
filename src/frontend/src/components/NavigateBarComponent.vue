@@ -40,7 +40,7 @@
       <div v-else class="fas fa-user account" style="background: #f38609; color: white">
         <ul class="drop-down-select">
           <li class="drop-down-item">
-            <router-link :to="{ name: 'AdminView' }">Admin</router-link>
+            <router-link :to="{ name: 'AdminPanelView' }">Admin</router-link>
           </li>
           <li>
             <router-link @click="signout" to="/">Sign out</router-link>

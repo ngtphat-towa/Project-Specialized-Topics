@@ -14,7 +14,7 @@
 
 <script>
 import NavigateBarComponent from './components/NavigateBarComponent.vue';
-import FooterComponent from './components/FooterComponent.vue';
+import FooterComponent from './components/footercomponent.vue';
 export default {
   data() {
     return {};
