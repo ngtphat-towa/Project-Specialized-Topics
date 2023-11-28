@@ -15,7 +15,12 @@
               <p class="mb-1"><strong>Total:</strong> ${{ order.total }}</p>
               <p class="mb-1">
                 <strong>Status:</strong>
-                <span :class="{ 'text-success': order.orderStatus === 'Paid', 'text-danger': order.orderStatus !== 'Paid' }">
+                <span
+                  :class="{
+                    'text-success': order.orderStatus === 'Paid',
+                    'text-danger': order.orderStatus !== 'Paid'
+                  }"
+                >
                   {{ order.orderStatus }}
                 </span>
               </p>
@@ -23,11 +28,19 @@
             <div class="col-md-3">
               <p class="mb-1">
                 <strong>Shipping Address:</strong>
-                {{ order.shippingStreet }}, {{ order.shippingCity }}, {{ order.shippingState }}, {{ order.shippingCountry }}, {{ order.shippingZipCode }}
+                {{ order.shippingStreet }}, {{ order.shippingCity }}, {{ order.shippingState }},
+                {{ order.shippingCountry }}, {{ order.shippingZipCode }}
               </p>
             </div>
             <div class="col-md-3 d-flex align-items-center justify-content-center">
-              <button class="btn btn-primary" type="button" data-toggle="collapse" :data-target="'#collapse' + index" aria-expanded="false" aria-controls="collapseExample">
+              <button
+                class="btn btn-primary"
+                type="button"
+                data-toggle="collapse"
+                :data-target="'#collapse' + index"
+                aria-expanded="false"
+                aria-controls="collapseExample"
+              >
                 Show Details
               </button>
             </div>
@@ -35,7 +48,11 @@
           <div class="collapse" :id="'collapse' + index">
             <div class="card card-body">
               <ul class="list-group list-group-flush">
-                <li class="list-group-item list-group-item-secondary" v-for="item in order.orderItems" :key="item._id">
+                <li
+                  class="list-group-item list-group-item-secondary"
+                  v-for="item in order.orderItems"
+                  :key="item._id"
+                >
                   <div class="row">
                     <div class="col-md-3">
                       <h6 class="mb-1"><strong>Product ID:</strong> {{ item.productId }}</h6>
@@ -55,6 +72,17 @@
             </div>
           </div>
         </div>
+        <div class="mt-3">
+          <select class="form-control" v-model="order.orderStatus">
+            <option value="Submitted">Submitted</option>
+            <option value="AwaitingValidation">Awaiting Validation</option>
+            <option value="StockConfirmed">Stock Confirmed</option>
+            <option value="Paid">Paid</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+          <button class="btn btn-primary mt-3" @click="updateOrderStatus(order)">Update</button>
+        </div>
       </div>
     </div>
     <nav aria-label="Page navigation example">
@@ -62,7 +90,12 @@
         <li class="page-item" :class="{ disabled: currentPage === 1 }">
           <a class="page-link" href="#" @click.prevent="currentPage--">Previous</a>
         </li>
-        <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
+        <li
+          class="page-item"
+          v-for="page in totalPages"
+          :key="page"
+          :class="{ active: currentPage === page }"
+        >
           <a class="page-link" href="#" @click.prevent="currentPage = page">{{ page }}</a>
         </li>
         <li class="page-item" :class="{ disabled: currentPage === totalPages }">
@@ -79,6 +112,8 @@
 <script>
 import { ref, watch } from 'vue';
 import orderService from '../../services/order/order.service';
+import { useToast } from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
 export default {
   name: 'CustomerOrderView',
@@ -87,6 +122,7 @@ export default {
     const itemsPerPage = ref(4);
     const currentPage = ref(1);
     const totalPages = ref(0);
+    const toast = useToast();
 
     watch(
       currentPage,
@@ -105,11 +141,37 @@ export default {
       { immediate: true }
     );
 
+    async function updateOrderStatus(newStatusOrder) {
+      const oldStatusOrder = orders.value.find((order) => order._id === newStatusOrder._id);
+
+      try {
+        var updateStatusDTO = {
+          id: newStatusOrder._id,
+          orderStatus: newStatusOrder.orderStatus
+        };
+
+        await orderService.updateOrderStatus(oldStatusOrder._id, updateStatusDTO);
+        orders.value = [];
+        toast.success('Order status updated successfully', { position: 'top-right' });
+        // Refresh the list of orders after updating status
+        const query = { pageIndex: currentPage.value - 1, pageSize: itemsPerPage.value };
+        const response = await orderService.getAllOrders(query);
+        if (response.status === 200) {
+          orders.value = response.data.data;
+          totalPages.value = Math.ceil(response.data.totalItems / itemsPerPage.value);
+        }
+      } catch (error) {
+        console.error('Error updating order status:', error);
+        toast.error('Failed to update order status', { position: 'top-right' });
+      }
+    }
+
     return {
       orders,
       itemsPerPage,
       currentPage,
       totalPages,
+      updateOrderStatus
     };
   },
   methods: {
@@ -117,8 +179,8 @@ export default {
       const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const date = new Date(dateString);
       return date.toLocaleDateString(undefined, options);
-    },
-  },
+    }
+  }
 };
 </script>
 

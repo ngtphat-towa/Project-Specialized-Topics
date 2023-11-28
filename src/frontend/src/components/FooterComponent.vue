@@ -2,19 +2,21 @@
   <footer>
     <div class="container pt-4">
       <div class="row">
-        <p class="text-light font-weigh-bold pb-2">Web Project 2023</p>
+        <p class="text-light font-weight-bold pb-2">Final Project 2023 - Cantho University</p>
       </div>
       <div class="row">
-        <p class="text-light font-weigh-bold pb-2">Made by <a href="#">Nguyen Thanh Phat</a></p>
+        <p class="text-light font-weight-bold pb-2">Made by <a href="#">Nguyen Thanh Phat</a></p>
       </div>
     </div>
   </footer>
 </template>
+
 <script>
 export default {
   name: 'FooterComponent'
 };
 </script>
+
 <style scoped>
 footer {
   margin-top: 100px;

@@ -4,18 +4,21 @@
       <RouterLink class="nav-link" to="/"> ElForture </RouterLink>
     </a>
     <nav class="navbar">
-      <li class="nav-item">
-        > <router-link class="nav-link" :to="{ name: 'HomeView' }">Home</router-link>
-      </li>
-      <li class="nav-item">
+      <div class="nav-item">
+        <router-link class="nav-link" :to="{ name: 'HomeView' }">Home</router-link>
+      </div>
+      <div class="nav-item">
         <router-link class="nav-link" :to="{ name: 'SearchView' }">Shop</router-link>
-      </li>
-      <li class="nav-item">
+      </div>
+      <div class="nav-item">
         <router-link class="nav-link" :to="{ name: 'WishlistListView' }">Wishlist</router-link>
-      </li>
-      <li class="nav-item">
+      </div>
+      <div class="nav-item">
         <router-link class="nav-link" :to="{ name: 'CustomerOrderView' }">My Orders</router-link>
-      </li>
+      </div>
+      <div class="nav-item">
+        <router-link class="nav-link" :to="{ name: 'AboutView' }">About</router-link>
+      </div>
     </nav>
 
     <div class="icons">
