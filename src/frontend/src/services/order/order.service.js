@@ -36,7 +36,7 @@ export default {
     });
   },
   updateOrderStatus(orderId, orderStatus) {
-    return axios.put(`/api/order/update/status/${orderId}`, orderStatus, {
+    return axios.put(`/api/order/admin/update/status/${orderId}`, orderStatus, {
       headers: {
         'Content-Type': 'application/json'
       },

@@ -25,8 +25,9 @@ import ProcessToPaymentView from '../views/checkout/ProcessToPaymentView.vue';
 import FailedCheckoutView from '../views/checkout/FailedCheckoutView.vue';
 import SuccessCheckoutView from '../views/checkout/SuccessCheckoutView.vue';
 // Order view
-import CustomerOrderDetailView from '../views/order/CustomerOrderDetailView.vue';
+
 import CustomerOrderView from '../views/order/CustomerOrderView.vue';
+import OrderListView from '../views/order/OrderListView.vue';
 //Testing
 
 const router = createRouter({
@@ -136,14 +137,14 @@ const router = createRouter({
       component: CatalogItemListView
     },
     {
-      path: '/user/order/:id',
-      name: 'CustomerOrderDetailView',
-      component: CustomerOrderDetailView
-    },
-    {
       path: '/user/order',
       name: 'CustomerOrderView',
       component: CustomerOrderView
+    },
+    {
+      path: '/admin/order',
+      name: 'OrderListView',
+      component: OrderListView
     },
 
     // testing
