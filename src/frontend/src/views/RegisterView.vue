@@ -74,7 +74,8 @@ export default {
       state: '',
       country: '',
       zipCode: '',
-      phoneNumber: ''
+      phoneNumber: '',
+      createdAccountResponseData: null
     };
   },
   methods: {
@@ -87,36 +88,39 @@ export default {
 
       try {
         // Create account
-        const accountResponse = await accountService.createAccount(userAccount);
-        console.log(accountResponse.data);
+        this.createdAccountResponseData = await accountService.createAccount(userAccount);
+        console.log(this.createdAccountResponseData.data);
+
         // Login
-        const responseID = (await authService.login(userAccount)).data.session._id;
+        const loginResponse = await authService.login(userAccount);
 
-        const userProfile = {
-          email: this.email,
-          userAccount: responseID,
-          firstName: this.firstName,
-          lastName: this.lastName,
-          street: this.street,
-          city: this.city,
-          state: this.state,
-          country: this.country,
-          zipCode: this.zipCode,
-          phoneNumber: this.phoneNumber
-        };
+        if (loginResponse.data) {
+          const userProfile = {
+            email: this.email,
+            userAccount: loginResponse.data.session._id,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            street: this.street,
+            city: this.city,
+            state: this.state,
+            country: this.country,
+            zipCode: this.zipCode,
+            phoneNumber: this.phoneNumber
+          };
 
-        // Create profile
-        await profileService
-          .createProfile(userProfile)
-          .then(() => {
-            Swal.fire({
-              text: 'User profile was created successfully!',
-              icon: 'success',
-              allowOutsideClick: false
-            });
-            this.$router.push('/');
-          })
-          .catch((err) => console.log(err));
+          // Create profile
+          await profileService
+            .createProfile(userProfile)
+            .then(() => {
+              Swal.fire({
+                text: 'User profile was created successfully!',
+                icon: 'success',
+                allowOutsideClick: false
+              });
+              this.$router.push('/');
+            })
+            .catch((err) => console.log(err));
+        }
       } catch (error) {
         console.error(error);
       }
