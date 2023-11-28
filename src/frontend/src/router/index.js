@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import AboutView from '../views/AboutView.vue';
 import LoginView from '../views/LoginView.vue';
+import RegisterView from '../views/RegisterView.vue';
 // Admin
 import AdminPanelView from '../views/AdminPanelView.vue';
 // Type
@@ -38,7 +39,7 @@ const router = createRouter({
     { path: '/', name: 'HomeView', component: HomeView },
     { path: '/about', name: 'AboutView', component: AboutView },
     { path: '/auth/login', name: 'LoginView', component: LoginView },
-    { path: '/auth/register', name: 'RegisterView', component: CatalogItemListView },
+    { path: '/auth/register', name: 'RegisterView', component: RegisterView },
     { path: '/item/search', name: 'SearchView', component: ShoppingListView },
     { path: '/user/wishlist', name: 'WishlistListView', component: WishlistListView },
     { path: '/user/basket', name: 'BasketListView', component: BasketListView },
