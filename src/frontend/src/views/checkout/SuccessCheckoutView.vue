@@ -21,10 +21,10 @@ export default {
   },
   methods: {
     async saveOrder() {
-      if (this.sessionId !== null ) {
+      if (this.sessionId !== null) {
         const paayload = {
           sessionId: this.sessionId
-        }
+        };
         await checkoutService
           .placeOrder(paayload)
           .then(() => {
@@ -36,7 +36,7 @@ export default {
               imageHeight: 200,
               imageAlt: 'Custom image'
             });
-            this.$router.push({ name: 'OrderListView' });
+            this.$router.push({ name: 'CustomerOrderView' });
           })
           .catch((error) => {
             console.log(error);
