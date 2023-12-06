@@ -1,4 +1,4 @@
-# Project Title: ASP.NET Souvenir Shop Application
+# Project Title: Sport Shop Application
 
 ## Table of Contents
 
@@ -28,4 +28,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 For more information, please contact: `ngtphat.towa@gmail.com`
-    

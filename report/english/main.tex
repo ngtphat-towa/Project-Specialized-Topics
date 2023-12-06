@@ -24,14 +24,16 @@
 \usepackage{fancyhdr}	
 % \usepackage[square]{natbib}
 \usepackage{url}
+\usepackage[edges]{forest}
 \usetikzlibrary{calc}
 \graphicspath{ {../images/} }
+\usetikzlibrary{shapes,arrows,positioning}
 
 
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{tikz}
 
-\title{ASP.NET Souvenir Shop Application}
+\title{Sport Equipment Shop App with MEVN Stack}
 \author{Nguyen Thanh Phat}
 
 % Header and footer 
@@ -40,10 +42,9 @@
 \setlength{\headheight}{20.45002pt}
 
 \rhead{\fontsize{9}{11} \selectfont Intructor:\\DR. Lam Van Khang}						
-\lhead{\fontsize{9}{11} \selectfont Topic:\\ Souvenir Shop App with ASP.NET Microservices \& Flutter}		
+\lhead{\fontsize{9}{11} \selectfont Topic:\\ Sport Equipment Shop App with MEVN Stack}		
 \rfoot{\fontsize{9}{11} \selectfont \thepage}														
 \lfoot{\fontsize{9}{11} \selectfont Nguyen Thanh Phat - B2005853}		
-
 
 \begin{document}
 
@@ -64,25 +65,19 @@
 \input{outsides/vi-abstract.tex}
 \pagenumbering{roman}
 
+
 \clearpage
+\renewcommand\thesection{\arabic{section}}
 \pagenumbering{arabic}
-\chapter{Introduction}
-\input{chapters/chapter-1-introduction.tex}
+\part{Introduction}
+\input{chapters/part-1-introduction.tex}
 
-\chapter{Literature reiview}
-\input{chapters/chapter-2-literature-review.tex}
+\part{Content}
+\input{chapters/part-2-content.tex}
 
-% \chapter{Methods}
-% \input{chapters/chapter-3-methods.tex}
+\part{Conclusion}
+\input{chapters/part-3-conclusion.tex}
 
-\chapter{System design and implementation}
-\input{chapters/chapter-4-system-design-and-implementation.tex}
-
-\chapter{Testing and evaluation.}
-\input{chapters/chapter-5-testing-and-evaluation..tex}
-
-\chapter{Conclusion}
-\input{chapters/chapter-6-conclusion.tex}
 
 \bibliography{references}{}
 \bibliographystyle{plain}
